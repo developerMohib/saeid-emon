@@ -5,18 +5,21 @@ import "./globals.css";
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
-  display : "swap"
+  display: "swap"
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display : "swap"
+  display: "swap"
 });
 
 export const metadata: Metadata = {
   title: "Saeid Emon",
   description: "A profession Graphics Designer",
+  icons: {
+    icon: "/favicon.png",
+  }
 };
 
 export default function RootLayout({
@@ -29,7 +32,9 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <main className="container mx-auto p-0 m-0">
+          {children}
+        </main>
       </body>
     </html>
   );
