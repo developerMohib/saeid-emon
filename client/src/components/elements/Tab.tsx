@@ -39,7 +39,7 @@ const Tabs = () => {
         </li>
       </ul>
 
-      <div className="w-full mt-4">
+      <div className="w-full mt-4 bg-red-300">
         {openTab === 1 && <div> <Works /> </div>}
         {openTab === 2 && <div>Tab #2</div>}
         {openTab === 3 && <div>Tab #3</div>}
