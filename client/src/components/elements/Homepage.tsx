@@ -1,3 +1,4 @@
+import Tabs from "./Tab";
 
 const Homepage = () => {
     return (
@@ -6,6 +7,7 @@ const Homepage = () => {
                 <h1>User profile and logo and details</h1>
             </div>
             <div className="grid-cols-2">
+                <Tabs />
                 <h1>Home page banner section also from backend bcoz change hote pare</h1>
             </div>
         </div>
