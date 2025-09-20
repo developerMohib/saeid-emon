@@ -11,7 +11,7 @@ const Tabs = () => {
     "hover:text-blue-700 inline-block py-2 px-4 font-semibold";
 
   return (
-    <div className="p-6">
+    <div className="py-6">
       <ul className="flex border-b">
         <li className="-mb-px mr-1">
           <button
