@@ -7,44 +7,45 @@ type SocialLink = {
     url: string;
 };
 const socials: SocialLink[] = [
-    { name: "Facebook", icon: <Facebook  className="w-5 h-5 text-blue-600" />, url: "#" },
-    { name: "LinkedIn", icon: <Linkedin className="w-5 h-5 text-blue-600" />, url: "#" },
-    { name: "Instagram", icon: <Instagram className="w-5 h-5 text-pink-600" />, url: "#" },
+    { name: "Facebook", icon: <Facebook  className="w-4 h-4 text-seBlack" />, url: "/" },
+    { name: "LinkedIn", icon: <Linkedin className="w-4 h-4 text-seBlack" />, url: "/" },
+    { name: "Instagram", icon: <Instagram className="w-4 h-4 text-seBlack rounded-full" />, url: "/" },
 ];
 const Aboutme = () => {
     return (
-        <div className='my-5'>
+        <div className='my-10'>
             <div className="w-full">
+            <h1 className='text-xs uppercase font-semibold text-seGray'>On The Web</h1>
                 <ul className="w-full">
                     {socials.map((s, i) => (
-                        <li key={i}>
+                        <li className='my-2' key={i}>
                             <a
                                 href={s.url}
                                 target="_blank"
-                                className="w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-green-200 hover:opacity-50 transition"
+                                className="w-full flex justify-between items-center px-4 py-3 rounded-md hover:bg-seGray/20 transition border border-seGray/20"
                             >
-                                <span className='flex gap-2'>{s.icon}{s.name}</span>
-                                <SquareArrowOutUpRight />
+                                <span className='flex gap-2 text-xs font-semibold'>{s.icon}{s.name}</span>
+                                <SquareArrowOutUpRight className='text-seGray/80 w-4 h-4' />
                             </a>
                         </li>
                     ))}
                 </ul>
             </div>
 
-            <div className='mt-5'>
-                <h1 className='my-2'>Wprk experience</h1>
-                <h1 className='my-2'>Graphic Designer</h1>
-                <p>Santos Soul Productions - CA, USA</p>
+            <div className='mt-10'>
+                <h1 className='my-2 uppercase text-seGray text-xs font-semibold'>Work experience</h1>
+                <h1 className='my-2 font-semibold text-sm'>Graphic Designer</h1>
+                <p className='text-seGray text-xs' >Santos Soul Productions - CA, USA</p>
                 <br />
-                <h1 className='my-2'>Graphic Designer</h1>
-                <p>Santos Soul Productions - CA, USA</p>
+                <h1 className='my-2 font-semibold text-sm'>Senior Graphic Designer</h1>
+                <p className='text-seGray text-xs'>Studio Norman - Israel</p>
             </div>
             <div className='my-5'>
-            <Link href={'/resume'} className='flex hover:bg-gray-400' >View Full Resume <span> <ChevronRight /> </span> </Link>
+            <Link href={'/resume'} className='flex text-seGray items-center hover:text-seBlack text-sm' >View Full Resume <span> <ChevronRight className='w-4 h-4' /> </span> </Link>
             </div>
             <div className='mt-5'>
-                <h1 className='my-2'>About Me</h1>
-                <p>Experienced Graphic Designer with 6 years of expertise in print and social media post design, as well as merchandise and branding. Let&apos;s create captivating visuals together!</p>
+                <h1 className='my-2 uppercase text-seGray text-xs font-semibold'>About Me</h1>
+                <p className='text-sm text-seBlack leading-6'>Experienced Graphic Designer with 6 years of expertise in print and social media post design, as well as merchandise and branding. Let&apos;s create captivating visuals together!</p>
             </div>
         </div>
     );

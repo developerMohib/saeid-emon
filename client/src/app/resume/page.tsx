@@ -4,9 +4,14 @@ import React from 'react';
 
 const page = () => {
     return (
-        <main className='bg-white'>
+        <main>
             <div className='max-w-6xl mx-auto pb-20'>
-                <div className='text-right py-10'>
+                <div className='flex justify-between items-center py-10'>
+                    <Link href={"/"}>
+                    <button className='text-black px-4 py-2 rounded-full border border-gray-300 shadow-sm hover:bg-gray-50 transition-colors cursor-pointer'>
+                        Back Home
+                    </button></Link>
+
                     <button className='text-black px-4 py-2 rounded-full border border-gray-300 shadow-sm hover:bg-gray-50 transition-colors cursor-pointer'>
                         Print Resume
                     </button>

@@ -1,11 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F5F5F5;
+  --foreground: #121212;
   --font-roboto: "Roboto", sans-serif; /* Roboto as default */
 
   --color-seblack: #0a0a0a;
+  --color-sered: #C51D34;
+  --color-seslack: #2E2E30;
+  --color-segray: #808080;
+  --color-seblue: #2600ff;
+  --color-sewhite: #ffffff;
 }
 
 @theme inline {
@@ -13,13 +18,20 @@
   --color-foreground: var(--foreground);
   --font-mono: var(--font-geist-mono);
 
-  --colo-seBlack: var(--color-seblack);
+  --color-seBlack: var(--color-seblack);
+  --color-seSlack: var(--color-seslack);
+  --color-seGray: var(--color-segray);
+  --color-seRed: var(--color-sered);
+  --color-seBlue: var(--color-seblue);
+  --color-seWhite: var(--color-sewhite);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --background: #121212;
+    --foreground: #F5F5F5;
+
+    /*------------- Custom colors making for dark theme -------------*/
   }
 }
 
