@@ -9,7 +9,7 @@ const iconMap = {
 };
 const Author = () => {
     return (
-        <div className='w-3/4 mx-auto'>
+        <div>
             <div className='relative'>
                 <Image src={"https://mir-s3-cdn-cf.behance.net/user/230/4821b1302963013.5d29ed92444b7.jpg"} alt='saeid emon' width={900} height={900} className='rounded-full h-24 w-24 absolute left-0 -top-16 border-2 border-white' />
             </div>
@@ -28,11 +28,11 @@ const Author = () => {
                     ))}
                 </ul>
             </div>
-<div>
-    <button className="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
-    <Mail /> Message
-  </button>
-</div>
+            <div>
+                <button className="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    <Mail /> Message
+                </button>
+            </div>
         </div>
     );
 };

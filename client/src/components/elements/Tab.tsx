@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import Works from "./Works";
+import Services from "./Services";
 
 const Tabs = () => {
   const [openTab, setOpenTab] = useState<number>(1);
@@ -39,9 +40,9 @@ const Tabs = () => {
         </li>
       </ul>
 
-      <div className="w-full mt-4 bg-red-300">
+      <div className="w-full mt-4">
         {openTab === 1 && <div> <Works /> </div>}
-        {openTab === 2 && <div>Tab #2</div>}
+        {openTab === 2 && <div> <Services /> </div>}
         {openTab === 3 && <div>Tab #3</div>}
       </div>
     </div>
