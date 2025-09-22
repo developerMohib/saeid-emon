@@ -20,18 +20,18 @@ const page = () => {
                 </div>
 
                 {/* resume card */}
-                <div className="py-10 sm:py-16 px-4 sm:px-8 md:px-14 lg:px-24 rounded-lg shadow-lg bg-white">
-                    <div className="divide-y divide-slate-300">
+                <div className="py-10 sm:py-16 px-4 sm:px-8 md:px-14 lg:px-24 rounded-lg shadow-lg bg-seWhite">
+                    <div className="divide-y divide-seGray/20">
                         {/* header */}
                         <header className="text-start py-6">
-                            <h1 className="text-2xl sm:text-3xl font-bold text-black">Saeid Emon</h1>
-                            <h2 className="text-lg sm:text-xl text-black">Graphic Designer</h2>
-                            <p className="text-gray-700 text-sm sm:text-base">Toronto, Ontario, Canada</p>
+                            <h1 className="text-2xl sm:text-3xl font-bold text-seBlack/90">Saeid Emon</h1>
+                            <h2 className="text-lg sm:text-xl text-seBlack/90">Graphic Designer</h2>
+                            <p className="text-seBlack/60 text-sm sm:text-base">Toronto, Ontario, Canada</p>
                         </header>
 
                         {/* about */}
-                        <div className="pt-6 divide-y divide-slate-300">
-                            <p className="text-gray-800 font-medium py-6 text-sm sm:text-base">
+                        <div className="md:pt-6 pt-3 divide-y divide-seWhite/20">
+                            <p className="text-seBlack font-medium py-6 text-sm sm:text-base">
                                 Experienced Graphic Designer with 6 years of expertise in print and
                                 social media post design, as well as merchandise and branding.
                                 Let&apos;s create captivating visuals together! 🎨✨
@@ -40,7 +40,7 @@ const page = () => {
 
                         {/* work experience */}
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-4 text-gray-800 my-10 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-4 text-seBlack my-10 gap-6">
                                 <div>
                                     <h1 className="font-semibold text-lg">Work Experience</h1>
                                 </div>
@@ -90,7 +90,7 @@ const page = () => {
 
                         {/* education */}
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-4 text-gray-800 my-10 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-4 text-seBlack my-10 gap-6">
                                 <div>
                                     <h1 className="font-semibold text-lg">Education</h1>
                                 </div>
@@ -118,7 +118,7 @@ const page = () => {
 
                         {/* languages */}
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-4 text-gray-800 my-10 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-4 text-seBlack my-10 gap-6">
                                 <div>
                                     <h1 className="font-semibold text-lg">Languages</h1>
                                 </div>
@@ -135,7 +135,7 @@ const page = () => {
 
                         {/* skills */}
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-4 text-gray-800 my-10 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-4 text-seBlack my-10 gap-6">
                                 <div>
                                     <h1 className="font-semibold text-lg">Skills</h1>
                                 </div>

@@ -4,7 +4,7 @@ import Homepage from "@/components/elements/Homepage";
 export default function Home() {
   return (
     <main>
-      <Banner/>
+      <Banner />
       <Homepage />
     </main>
   );

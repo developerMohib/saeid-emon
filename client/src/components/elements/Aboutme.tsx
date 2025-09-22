@@ -32,14 +32,6 @@ const Aboutme = () => {
                 </ul>
             </div>
 
-            <div className='mt-10'>
-                <h1 className='my-2 uppercase text-seGray text-xs font-semibold'>Work experience</h1>
-                <h1 className='my-2 font-semibold text-sm'>Graphic Designer</h1>
-                <p className='text-seGray text-xs' >Santos Soul Productions - CA, USA</p>
-                <br />
-                <h1 className='my-2 font-semibold text-sm'>Senior Graphic Designer</h1>
-                <p className='text-seGray text-xs'>Studio Norman - Israel</p>
-            </div>
             <div className='my-5'>
             <Link href={'/resume'} className='flex text-seGray items-center hover:text-seBlack text-sm' >View Full Resume <span> <ChevronRight className='w-4 h-4' /> </span> </Link>
             </div>

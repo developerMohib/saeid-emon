@@ -11,20 +11,22 @@ const page = async ({ params }: Props) => {
     if (!card) {
         return <div className="p-6 text-red-500">Card not found</div>;
     }
-    const {description} = card ;
+    const { description } = card;
     return (
         <div className="p-6 container mx-auto">
             <h1 className="text-3xl font-bold mb-4">{card.name}</h1>
             <p className="text-gray-500 mb-6">{card.category}</p>
 
-            <Image
-                src={card.image}
-                alt={card.name}
-                width={900}
-                height={600}
-                className="rounded-lg shadow-md mb-6"
-            />
-            <div className="max-w-3xl text-gray-800 px-10">
+            <div className='text-center mx-auto'>
+                <Image
+                    src={card.image}
+                    alt={card.name}
+                    width={900}
+                    height={600}
+                    className="rounded-lg shadow-md mb-6"
+                />
+            </div>
+            <div className="max-w-3xl text-seBlack/70 px-10">
                 <h1 className="mb-4">
                     {description.intro}
                 </h1>
@@ -93,7 +95,7 @@ const page = async ({ params }: Props) => {
                     Let me bring your magazine to life with a design that speaks to your audience! Whether you’re launching a new publication or need a fresh redesign, I’m here to help.
                 </p>
 
-                <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+                <button className="text-seBlack/80 py-2 rounded">
                     Message me now to discuss your project or request a custom quote. Let’s create something extraordinary together!
                 </button>
             </div>

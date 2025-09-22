@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Roboto } from "next/font/google";
+import { Geist_Mono, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/elements/Footer";
+import Navbar from "@/components/elements/Navbar";
 
-const roboto = Roboto({
-  variable: "--font-roboto",
+const roboto = Roboto_Mono({
+  variable: "--font-roboto-mono",
   subsets: ["latin"],
   display: "swap"
 });
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${geistMono.variable} antialiased`}
       >
+      <Navbar />
         <main className="container mx-auto p-0 m-0">
           {children}
         </main>
