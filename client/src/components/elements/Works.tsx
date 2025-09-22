@@ -1,41 +1,42 @@
-import { cards } from '@/data/workCard';
+import { cardsData } from '@/data/workCard';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 const Works = () => {
     return (
         <div className="p-1 grid grid-cols-2 gap-6 justify-items-center">
-            {cards?.map((card) => (
+            {cardsData?.map((card) => (
                 <div
                     key={card.id}
-                    className={`relative overflow-hidden ${card.bgColor} rounded-lg shadow-lg group `}
+                    className="relative overflow-hidden rounded-lg shadow-lg group"
                 >
-
-                    <div className="relative pt-10 p-10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        
+                    {/* Image Section */}
+                    <div className="relative pt-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                         <Image
-                            className="relative w-full "
+                            className="relative"
                             src={card.image}
                             alt={card.name}
                             width={900}
-                            height={400}
+                            height={900}
                         />
                     </div>
-                    <div className="relative text-red-800 px-6 pb-6 mt-6">
-                        <span className="block opacity-75 -mb-1">{card.category}</span>
-                        <div className="flex justify-between">
+
+                    {/* Hidden Details - Visible on Hover */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-seBlack/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="block text-seGray text-sm">{card.category}</span>
+                        <div className="flex justify-between items-center text-seWhite">
                             <span className="block font-semibold text-xl">{card.name}</span>
-                            <span
-                                className={`bg-white rounded-full ${card.textColor} text-xs font-bold px-3 py-2 leading-none flex items-center`}
-                            >
-                                {card.price}
-                            </span>
+                            <Link href={`/design-details/${card.id}`}>
+                                <span className="rounded-full text-xs font-bold px-3 py-2 bg-seGray/40 backdrop-blur-md hover:bg-seWhite/40">
+                                    View Details
+                                </span>
+                            </Link>
                         </div>
                     </div>
                 </div>
             ))}
         </div>
-
     );
 };
 

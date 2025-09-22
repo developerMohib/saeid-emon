@@ -4,6 +4,12 @@ export type ICard = {
   name: string;
   price: string;
   image: string;
-  bgColor: string;
-  textColor: string;
+  description: {
+    intro: string;
+    whatIOffer: string[];
+    whyChooseMe: string[];
+    whatYouProvide: string[];
+    extras: string[];
+    closing: string;
+  };
 };
