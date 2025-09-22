@@ -5,7 +5,7 @@ import React from 'react';
 
 const Works = () => {
     return (
-        <div className="p-1 grid grid-cols-2 gap-6 justify-items-center">
+        <div className="p-1 md:grid grid-cols-2 gap-6 justify-items-center">
             {cardsData?.map((card) => (
                 <div
                     key={card.id}

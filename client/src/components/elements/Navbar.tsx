@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import ThemeChanger from './ThemeChanger';
+import Link from 'next/link';
 
 const Navbar = () => {
     // Navigation links data
@@ -14,13 +15,13 @@ const Navbar = () => {
                 <div className="flex items-center justify-end gap-6">
                     <nav className="flex items-center gap-6">
                         {navLinks.map((link) => (
-                            <a
+                            <Link
                                 key={link.label}
                                 href={link.href}
-                                className="text-sm font-medium text-seBlack hover:text-gray-900 transition-colors"
+                                className="text-sm font-medium text-seBlack hover:text-seRed transition-colors"
                             >
                                 {link.label}
-                            </a>
+                            </Link>
                         ))}
                     </nav>
                     <ThemeChanger />

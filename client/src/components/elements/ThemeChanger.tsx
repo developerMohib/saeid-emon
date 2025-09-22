@@ -28,7 +28,7 @@ const ThemeChanger = () => {
     }, [])
 
     return (
-        <button className='rounded-full shadow-lg'
+        <button className='rounded-full shadow-lg cursor-pointer'
             onClick={handleTheme}>
             {isDark ? <Moon className="text-base text-seGreen" /> : <Sun className="text-base text-seRed" />}
         </button>
