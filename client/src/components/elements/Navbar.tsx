@@ -7,7 +7,7 @@ const Navbar = () => {
     // Navigation links data
     const navLinks = [
         { href: "/", label: "Home" },
-        { href: "/contact", label: "Contact" },
+        { href: "/contact", label: "Hire me" },
     ];
     return (
         <header className="backdrop-blur-sm sticky top-0 z-50 w-full">
