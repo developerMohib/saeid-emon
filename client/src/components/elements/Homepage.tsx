@@ -12,7 +12,7 @@ const Homepage = () => {
                     <Aboutme />
                 </div>
             </div>
-            <div className="col-span-2">
+            <div className="col-span-2 md:px-0 px-5">
                 <Tabs />
             </div>
         </div>

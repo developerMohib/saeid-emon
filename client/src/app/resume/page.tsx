@@ -5,15 +5,9 @@ import React from 'react';
 const page = () => {
     return (
         <main>
-            <div className="max-w-6xl mx-auto pb-20 px-4 sm:px-6 lg:px-10">
+            <div className="max-w-6xl mx-auto pb-5 md:pb-20 px-4 sm:px-6 lg:px-10">
                 {/* top buttons */}
-                <div className="flex justify-between items-center py-6 sm:py-10 gap-4">
-                    <Link href={"/"}>
-                        <button className="text-seBlack px-4 py-2 rounded-full border border-seGray/30 shadow-sm hover:bg-seGray/10 transition-colors cursor-pointer w-full sm:w-auto">
-                            Back Home
-                        </button>
-                    </Link>
-
+                <div className="py-6 sm:py-10 gap-4 text-right">
                     <button className="text-seBlack px-4 py-2 rounded-full border border-seGray/30 shadow-sm hover:bg-seGray/10 transition-colors cursor-pointer w-full sm:w-auto">
                         Print Resume
                     </button>

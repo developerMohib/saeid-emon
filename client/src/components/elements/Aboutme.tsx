@@ -13,7 +13,7 @@ const socials: SocialLink[] = [
 ];
 const Aboutme = () => {
     return (
-        <div className='my-10'>
+        <div className='my-10 md:px-0 px-5'>
             <div className="w-full">
             <h1 className='text-xs uppercase font-semibold text-seGray'>On The Web</h1>
                 <ul className="w-full">

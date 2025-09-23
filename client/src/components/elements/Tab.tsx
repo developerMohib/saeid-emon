@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Works from "./Works";
 import Services from "./Services";
 import { TabConfig, TabsProps } from "@/types/tabsInfoTypes";
+import Aboutme from "./Aboutme";
 
 const Tabs = ({ tabsConfig, defaultTab = 1 }: TabsProps) => {
   const [openTab, setOpenTab] = useState<number>(defaultTab);
@@ -24,7 +25,7 @@ const Tabs = ({ tabsConfig, defaultTab = 1 }: TabsProps) => {
     defaultTabs.push({
       id: 1,
       label: "Info",
-      component: <div>Mobile Info Content</div>,
+      component: <div> <Aboutme /> </div>,
     });
   }
 
