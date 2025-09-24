@@ -6,6 +6,7 @@ yarn-error.log*
 
 # Environment variables
 .env
+.env.*
 
 # Logs
 logs/
@@ -23,5 +24,15 @@ out/
 # IDE files
 .vscode/
 .idea/
-*.sublime-workspace
-*.sublime-project
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Misc
+*.local

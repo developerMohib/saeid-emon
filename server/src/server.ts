@@ -1,14 +1,17 @@
 import express from 'express';
+import app from './app';
 
-const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
+// Middleware
 app.use(express.json());
 
+// Basic route
 app.get('/', (req, res) => {
     res.send('Server is running!');
 });
 
+// Start server
 app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+    console.log(`Server listening on port ${PORT}`);
 });
