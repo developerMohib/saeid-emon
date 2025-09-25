@@ -1,9 +1,31 @@
 import express, { Application, Request, Response, NextFunction } from "express";
-
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import cors from "cors";
 const app: Application = express();
 
 // ─── Middleware
 app.use(express.json());
+// Middleware
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    credentials: true, // Allow cookies to be sent
+  }),
+);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+
+
+
+
 
 // ─── Health Check Route
 app.get("/health", (_req: Request, res: Response) => {
@@ -14,7 +36,7 @@ app.get("/health", (_req: Request, res: Response) => {
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
-    message: "Saeid Emon Server is ready",
+    message: "Saeid Emon Server is ready 🚀",
   });
 });
 
