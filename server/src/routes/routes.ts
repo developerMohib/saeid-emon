@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/all", getAllCards);
-router.get("/:id", getCardById);
+router.get("/single/:id", getCardById);
 router.post("/", createCard);
 router.put("/:id", updateCard);
 router.delete("/:id", deleteCard);

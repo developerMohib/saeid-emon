@@ -14,12 +14,15 @@ export default function ImageGallery({ src, alt }: Props) {
   return (
     <div className="w-full flex justify-center mb-6">
       {/* Thumbnail */}
-      
+
       <Image
         src={src}
         alt={alt}
-        width={900}
-        height={600}
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "100%", height: "auto" }}
+        priority
         className="rounded-lg shadow-md mb-6 cursor-pointer"
         onClick={() => setIsOpen(true)}
       />
@@ -36,6 +39,7 @@ export default function ImageGallery({ src, alt }: Props) {
               alt={alt}
               width={1600}
               height={1000}
+              priority
               className="w-full h-auto rounded-lg shadow-lg"
             />
             <button

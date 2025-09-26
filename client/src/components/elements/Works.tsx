@@ -1,3 +1,4 @@
+import Loading from '@/app/loading';
 import useProducts from '@/hooks/useProducts';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -5,7 +6,7 @@ import React from 'react';
 
 const Works = () => {
     const { data, error, isPending, isError } = useProducts();
-    if (isPending) return 'Loading...'
+    if (isPending) return <Loading />
     const cardsData = data
     if (error || isError) return 'An error has occurred: ' + error?.message
     return (

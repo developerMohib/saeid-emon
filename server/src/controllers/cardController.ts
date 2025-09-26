@@ -5,7 +5,6 @@ import Card from "../models/detailsCard";
 export const getAllCards = async (req: Request, res: Response) => {
   try {
     const cards = await Card.find();
-    
     res.json({
       success: true,
       message: "All Data Retrived Successfully",
@@ -24,8 +23,10 @@ export const getAllCards = async (req: Request, res: Response) => {
 // GET single card by ID
 export const getCardById = async (req: Request, res: Response) => {
   try {
-    const card = await Card.findOne({ id: req.params.id });
-    if (!card) return res.status(404).json({ error: "Card not found" });
+    console.log('id 26', typeof req.params.id , req.params.id)
+    const card = await Card.findById(req.params.id);
+    console.log(27, card)
+    if (!card) return res.status(404).json({ error: "Card not found from server" });
     res.json(card);
   } catch (err: unknown) {
     if (err instanceof Error) {
