@@ -2,6 +2,7 @@ import express, { Application, Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cors from "cors";
+import router from "./routes/routes";
 const app: Application = express();
 
 // ─── Middleware
@@ -20,9 +21,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// ─── API Route
 
-
-
+app.use('/api',router)
+app.use("/api/cards", router)
 
 
 
