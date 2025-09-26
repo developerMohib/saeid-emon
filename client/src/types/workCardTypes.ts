@@ -1,8 +1,8 @@
-export type ICard = {
-  id: number;
-  category: string;
+
+export interface ICard extends Document {
+  _id : string,
+  category?: string;
   name: string;
-  price: string;
   image: string;
   description: {
     intro: string;
@@ -12,4 +12,4 @@ export type ICard = {
     extras: string[];
     closing: string;
   };
-};
+}

@@ -5,7 +5,7 @@ import Card from "../models/detailsCard";
 export const getAllCards = async (req: Request, res: Response) => {
   try {
     const cards = await Card.find();
-    console.log("card data", cards);
+    
     res.json({
       success: true,
       message: "All Data Retrived Successfully",
