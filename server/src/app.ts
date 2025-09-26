@@ -53,7 +53,7 @@ app.use((_req: Request, res: Response) => {
 // ─── Centralized Error Handler
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.error("Error:", err);
-
+  
   // Handle known errors
   if (err instanceof Error) {
     return res.status(500).json({
