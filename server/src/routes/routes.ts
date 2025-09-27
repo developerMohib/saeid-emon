@@ -6,6 +6,8 @@ import {
   getCardById,
   updateCard,
 } from "../controllers/cardController";
+import { sendOtp } from "../controllers/sendEmailController";
+import { verifyOtp } from "../controllers/verifyOtp";
 
 const router = Router();
 
@@ -19,5 +21,7 @@ router.get("/single/:id", getCardById);
 router.post("/", createCard);
 router.put("/:id", updateCard);
 router.delete("/:id", deleteCard);
-// Add more routes here
+// auth related routes
+router.post("/send-otp", sendOtp);
+router.post("/verify-otp", verifyOtp);
 export default router;

@@ -4,13 +4,14 @@ import React from 'react';
 import ImageGallery from './ImageGallery';
 import useProduct from '@/hooks/useProduct';
 import Loading from '@/app/loading';
-
-const ProductDetails = ({ id }) => {
-    console.log('id 7',id)
+type Props = {
+    id: string
+};
+const ProductDetails = ({ id }: Props) => {
     const { data, isPending, isError, error } = useProduct(id);
- 
+
     if (isPending) return <Loading />;
-    if (isError) return <p>Error: {(error as Error).message}</p>;
+    if (isError || error) return <p>Error: {(error as Error).message}</p>;
     return (
         <div className="py-6 px-10 container mx-auto">
             <h1 className="text-3xl font-bold mb-4">{data.name}</h1>
