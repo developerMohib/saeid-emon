@@ -33,12 +33,6 @@ const Tabs = ({ tabsConfig, defaultTab = 1 }: TabsProps) => {
     ...defaultTabs,
     { id: isMobile ? 2 : 1, label: "Work", component: <Works /> },
     { id: isMobile ? 3 : 2, label: "Services", component: <Services /> },
-    {
-      id: isMobile ? 4 : 3,
-      label: "Admin panel",
-      component: <div>Admin Content</div>,
-      condition: true,
-    },
   ];
 
   const tabs = tabsConfig || defaultTabs;
