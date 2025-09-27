@@ -3,13 +3,16 @@ import useProducts from "@/hooks/useProducts";
 import Link from "next/link";
 import Loading from "../loading";
 import Image from "next/image";
+import { useUser } from "@/context/UserContext";
 
 const Dashboard = () => {
+  const { user, logout } = useUser();
   const { data, isPending, refetch, error, isError } = useProducts();
   if (isPending) return <Loading />;
   if (isError || error) return <p>Error: {(error as Error).message}</p>;
 
   console.log(' data',data)
+  console.log('user',user)
 
   if (!data || data.length === 0) {
     return <p className="text-center py-4">No users found.</p>;
@@ -23,10 +26,24 @@ const Dashboard = () => {
     console.log(' prp', prod)
     refetch()
   }
-  const status = "Active"
+
   return (
     <div className="grid grid-cols-4 gap-x-3">
       <div className="grid-cols-1">
+        {user ? (
+        <div className="flex items-center gap-2">
+          <Image
+            src={user.avatar || "https://i.pravatar.cc/50"}
+            alt="avatar"
+            className="w-8 h-8 rounded-full"
+          />
+          <span>{user.name}</span>
+          <button onClick={logout}>Logout</button>
+        </div>
+      ) : (
+        <span>Guest</span>
+      )}
+
         <Link href={'/create-project'} > <button className="cursor-pointer"> Create Project </button> </Link>
       </div>
       <div className="col-span-3">

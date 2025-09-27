@@ -3,7 +3,9 @@ import { Geist_Mono, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/elements/Footer";
 import Navbar from "@/components/elements/Navbar";
-import ReactQueryProvider from "./provider/ReactQueryProvider";
+import ReactQueryProvider from "../provider/ReactQueryProvider";
+import { UserProvider } from "@/context/UserContext";
+import { Toaster } from "react-hot-toast";
 
 const roboto = Roboto_Mono({
   variable: "--font-roboto-mono",
@@ -35,13 +37,16 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${geistMono.variable} antialiased`}
       >
-        <ReactQueryProvider>
-          <Navbar />
-          <main className="container mx-auto p-0 m-0">
-            {children}
-          </main>
-          <Footer />
-        </ReactQueryProvider>
+        <UserProvider>
+          <ReactQueryProvider>
+            <Navbar />
+            <main className="container mx-auto p-0 m-0">
+              {children}
+            </main>
+            <Toaster />
+            <Footer />
+          </ReactQueryProvider>
+        </UserProvider>
       </body>
     </html>
   );

@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { otpStore } from "./sendEmailController";
 import { User } from "../models/userModel";
+import jwt from "jsonwebtoken";
+const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key";
 
 export const verifyOtp = async (req: Request, res: Response) => {
   const { email, otp } = req.body;
@@ -21,7 +23,7 @@ export const verifyOtp = async (req: Request, res: Response) => {
   }
   delete otpStore[email]; // optional: remove after success
 
-   // Try to find the user
+  // Try to find the user
   let user = await User.findOne({ email });
 
   // If user does not exist, create with default data
@@ -47,7 +49,25 @@ export const verifyOtp = async (req: Request, res: Response) => {
     await user.save();
   }
 
-  // TODO: Create token/session here
-  return res.json({ message: "Login success", user });
+  // Create token/session here
 
+  // Create JWT payload
+  const payload = { id: user._id, email: user.email, role: user.role };
+
+  // Sign token
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" });
+  // Set HTTP-only cookie
+  res
+    .cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    })
+    .json({
+      message: "OTP verified successfully",
+      user,
+    });
+
+  return res.json({ message: "Login success", user });
 };
