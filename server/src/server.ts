@@ -8,7 +8,7 @@ async function main() {
     await connectDB();
 
     app.listen(config.port, () => {
-      console.log(`server of saeid emon listening on port ${config.port}`);
+      console.log(`server of saeid emon is listening on port ${config.port}`);
     });
   } catch (err) {
     console.log(err);

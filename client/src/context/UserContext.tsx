@@ -25,7 +25,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     // Optionally call logout API to clear cookies
   };
-
+console.log('user context', user)
   return (
     <UserContext.Provider value={{ user, setUser, logout }}>
       {children}

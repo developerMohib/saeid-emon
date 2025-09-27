@@ -14,7 +14,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const router = useRouter()
-  console.log(' emial', email)
+  
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -39,13 +39,11 @@ const SignIn = () => {
     try {
       const res = await verifyOtpRequest(email, otp);
       setMessage(res.data.message);
-      // Redirect later if needed
-      console.log('res', res)
       if (res.data.user) {
         toast.success('login success')
         setUser(res.data.user);
+        router.push("/dashboard");
       }
-      router.push("/dashboard");
 
     } catch (error: any) {
       setMessage(error.response?.data?.message || "Invalid OTP");
