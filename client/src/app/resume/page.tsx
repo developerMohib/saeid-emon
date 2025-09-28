@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-const page = () => {
+const ResumePage = () => {
     return (
         <main>
             <div className="max-w-6xl mx-auto pb-5 md:pb-20 px-4 sm:px-6 lg:px-10">
@@ -145,8 +145,7 @@ const page = () => {
                 </div>
             </div>
         </main>
-
     );
 };
 
-export default page;
+export default ResumePage;

@@ -3,12 +3,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { CircleAlert, FilePen, Mail, MapPinCheck, ShoppingBag } from "lucide-react";
 import { useAuthUser } from '@/hooks/useAuthUser';
+import Loading from '@/app/loading';
 
 
 const Author = () => {
     const { isPending, isError, error, data } = useAuthUser();
     const user = false;
-    if (isPending) return <p>Loading...</p>;
+    if (isPending) return <Loading />;
     if (isError) return <p>Error: {error?.message}</p>;
 
     const newdata = data[0];

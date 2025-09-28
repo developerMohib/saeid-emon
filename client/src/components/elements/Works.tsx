@@ -7,7 +7,7 @@ import React from 'react';
 
 const Works = () => {
     const { data: cardsData, error, isPending, isError } = useProducts();
-    const user = true;
+    const user = false;
     if (isPending) return <Loading />
     if (error || isError) return 'An error has occurred: ' + error?.message
     return (
