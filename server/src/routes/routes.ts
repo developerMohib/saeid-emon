@@ -28,6 +28,7 @@ router.delete("/delete/:id", deleteProject);
 // auth related routes
 router.post("/send-otp", sendOtp);
 router.post("/verify-otp", verifyOtp);
+
 router.get("/me", getAdminUser);
 
 export default router;

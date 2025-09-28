@@ -1,21 +1,23 @@
-import { author } from '@/data/authorData';
+"use client";
 import Image from 'next/image';
 import Link from 'next/link';
-import { CircleAlert, Mail, MapPinCheck, ShoppingBag } from "lucide-react";
+import { CircleAlert, FilePen, Mail, MapPinCheck, ShoppingBag } from "lucide-react";
+import { useAuthUser } from '@/hooks/useAuthUser';
 
-const iconMap = {
-    Title: <CircleAlert className="w-4 h-4 text-seRed" />,
-    Company: <ShoppingBag className="w-4 h-4 text-seBlue" />,
-    Location: <MapPinCheck className="w-4 h-4 text-seBlack" />,
-};
 
 const Author = () => {
+    const { isPending, isError, error, data } = useAuthUser();
+    const user = false;
+    if (isPending) return <p>Loading...</p>;
+    if (isError) return <p>Error: {error?.message}</p>;
+
+    const newdata = data[0];
     return (
         <section aria-labelledby="author-heading" className="relative">
             {/* Profile image */}
             <div className="absolute left-0 -top-16">
                 <Image
-                    src="https://mir-s3-cdn-cf.behance.net/user/230/4821b1302963013.5d29ed92444b7.jpg"
+                    src={newdata?.avatar}
                     alt="Portrait of Saeid Emon"
                     width={900}
                     height={900}
@@ -27,18 +29,13 @@ const Author = () => {
             {/* Author Info */}
             <header className="pt-16 pb-6 space-y-8 text-start">
                 <h1 id="author-heading" className="text-2xl font-semibold">
-                    Saeid Emon
+                    {newdata?.name}
                 </h1>
 
                 <ul className="space-y-2">
-                    {author.map((item, index) => (
-                        <li key={index} className="flex items-center gap-2">
-                            {/* Icon based on label */}
-                            {iconMap[item.label]}
-                            {/* Value */}
-                            <span className="text-seSlack">{item.value}</span>
-                        </li>
-                    ))}
+                    <li className="flex items-center gap-2"> <CircleAlert className="w-4 h-4 text-seRed" />  <span className="text-seSlack">{newdata?.proffession}</span> </li>
+                    <li className="flex items-center gap-2"> <ShoppingBag className="w-4 h-4 text-seBlue" />  <span className="text-seSlack">{newdata?.description}</span> </li>
+                    <li className="flex items-center gap-2"> <MapPinCheck className="w-4 h-4 text-seBlack" /> <span className="text-seSlack">{newdata?.location}</span> </li>
                 </ul>
             </header>
 
@@ -52,6 +49,15 @@ const Author = () => {
                         Hire Me
                     </button>
                 </Link>
+                {/* Edit Profile Info button */}
+                {user && (<div className='mt-3'>
+                    <button
+                        className="flex items-center justify-center gap-2 w-full bg-seBlue/90 text-seWhite hover:text-seSlack py-2 rounded-lg hover:bg-seRed/80 transition-colors cursor-pointer"
+                    >
+                        <FilePen />
+                        Edit Profile Info
+                    </button>
+                </div>)}
             </footer>
         </section>
     );

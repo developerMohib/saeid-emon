@@ -1,6 +1,5 @@
-import { ICard } from "@/types/workCardTypes";
 
-export const cardsData: ICard[] = [
+export const cardsData = [
   {
     id: 1,
     category: "Indoor",

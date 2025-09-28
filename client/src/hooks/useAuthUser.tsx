@@ -1,25 +1,27 @@
 "use client";
-import { useEffect, useState } from "react";
 import instance from "@/hooks/instance";
 import { useUser } from "@/context/UserContext";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export const useAuthUser = () => {
   const { setUser } = useUser();
-const [loading, setLoading] = useState(true);
+
+  const { isPending, isError, error, data, refetch } = useQuery({
+    queryKey: ["admin-user"],
+    queryFn: async () => {
+      const res = await instance.get("/auth/me");
+      if (!res?.data?.data) throw new Error("No user data found");
+      return res.data.data;
+    },
+  });
 
   useEffect(() => {
-  const fetchUser = async () => {
-    try {
-      const res = await instance.get("/auth/me", { withCredentials: true });
-      if (res.data?.user) setUser(res.data.user);
-    } catch {
-      setUser(null);
-    } finally {
-      setLoading(false);
+    if (data) {
+      setUser(data);
+      console.log(data);
     }
-  };
+  }, [data, setUser]);
 
-  fetchUser();
-}, [setUser]);
-return {loading}
+  return { isPending, isError, error, data, refetch };
 };

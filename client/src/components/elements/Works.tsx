@@ -21,8 +21,8 @@ const Works = () => {
                     <div className="relative flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                         <Image
                             className="relative"
-                            src={card.image}
-                            alt={card.name}
+                            src={card.images[0]}
+                            alt={card.title}
                             width={900}
                             height={900}
                         />
@@ -32,11 +32,11 @@ const Works = () => {
                     <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-seBlack/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span className="block text-seGray text-sm">{card.category}</span>
                         <div className="flex justify-between items-center text-seWhite">
-                            <Link href={`/design-details/${card._id}`}><span className="block font-semibold text-xl hover:underline">{card.name}</span></Link>
+                            <Link href={`/design-details/${card._id}`}><span className="block font-semibold text-xl hover:underline">{card.title}</span></Link>
                             <Link href={`/design-details/${card._id}`}>
-                                <span className="rounded-full text-xs font-bold px-3 py-2 bg-seGray/40 backdrop-blur-md hover:bg-seWhite/40">
+                                <button className="rounded-full text-xs font-bold px-3 py-2 bg-seGray/40 backdrop-blur-md hover:bg-seWhite/40 transition-colors cupsor-pointer">
                                     View Details
-                                </span>
+                                </button>
                             </Link>
                         </div>
                     </div>
@@ -44,7 +44,7 @@ const Works = () => {
             ))}
 
 
-            {user && (<div className="w-full rounded-lg flex items-center justify-center border border-dashed">
+            {user && (<div className="w-full h-80 rounded-lg flex items-center justify-center border border-dashed">
                 <div>
                     <span >
                         <Plus

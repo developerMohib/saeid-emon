@@ -5,7 +5,7 @@ import { Product } from "../models/product";
 // GET all cards
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
-    const cards = await Card.find();
+    const cards = await Product.find();
     res.json({
       success: true,
       message: "All Data Retrived Successfully",

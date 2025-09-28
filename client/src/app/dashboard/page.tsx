@@ -14,11 +14,10 @@ const Dashboard = () => {
 const [loading, setLoading] = useState(false);
   const { user, logout } = useUser();
   const { data, isPending, refetch, error, isError } = useProducts();
+console.log('data user', user)
   if (isPending || loading) return <Loading />;
   if (isError || error) return <p>Error: {(error as Error).message}</p>;
-
   console.log('user', user)
-
   if (!data || data.length === 0) {
     return <p className="text-center py-4">No design found.</p>;
   }
@@ -30,7 +29,6 @@ setLoading(true);
 
   try {
     const res = await instance.delete(`/products/delete/${prod._id}`);
-    console.log('res', res)
     if(res.data.success){
       toast.success(res.data.message);
       refetch(); // refresh data
@@ -49,7 +47,7 @@ setLoading(true);
   }
 
   return (
-    <div className="grid grid-cols-4 gap-x-3">
+    <div className="grid grid-cols-6 gap-x-3">
       <div className="grid-cols-1">
         {user ? (
           <div className="flex items-center gap-2">
@@ -67,14 +65,14 @@ setLoading(true);
 
         <Link href={'/create-project'} > <button className="cursor-pointer"> Create Project </button> </Link>
       </div>
-      <div className="col-span-3">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className="col-span-5">
+        <table className="divide-y divide-seGray/20">
           <thead>
             <tr>
               {["#", "Image", "Name", "Category", "visit", "Action"].map((head) => (
                 <th
                   key={head}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-seSlack/70 uppercase tracking-wider"
                 >
                   {head}
                 </th>
@@ -82,30 +80,30 @@ setLoading(true);
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-200">
-            {data.map((prod, i) => (
+          <tbody className="divide-y divide-seGray/20">
+            {data?.map((prod, i) => (
               <tr key={i}>
                 <td className="px-6 py-4 whitespace-nowrap">{i + 1}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <Image src={prod.image} alt={prod.name} width={500} height={500} className="w-28 h-28 rounded-lg" />
+                  <Image src={prod.images[0]} alt={prod.title} width={500} height={500} className="w-28 h-28 rounded-lg" />
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{prod.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{prod.title}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{prod.category}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <Link href={`/design-details/${prod._id}`} className="text-blue-600 hover:underline">
+                  <Link href={`/design-details/${prod._id}`} className="text-seBlue hover:text-seRed hover:underline">
                     View
                   </Link>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button
                     onClick={() => handleEdit?.(prod)}
-                    className="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 transition"
+                    className="px-4 py-2 font-medium text-seWhite bg-seBlue rounded-md hover:bg-blue-500 transition"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete?.(prod)}
-                    className="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 transition"
+                    className="ml-2 px-4 py-2 font-medium text-seWhite bg-seRed rounded-md hover:bg-red-500 transition"
                   >
                     Delete
                   </button>

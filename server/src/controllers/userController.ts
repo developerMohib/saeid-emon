@@ -1,16 +1,16 @@
-import {  Response } from "express";
+import { Request, Response } from "express";
 import { User } from "../models/userModel";
-import { AuthRequest } from "../types/express";
 
-export const getAdminUser = async (req: AuthRequest, res: Response) => {
+export const getAdminUser = async (req: Request, res: Response) => {
   try {
-    console.log("user 6", req?.user); 
+    const users = await User.find();
 
-    const user = await User.findById(req?.user?.id).select("-password");
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
+    }
 
-    res.json({ user });
+    res.json({ data: users });
   } catch (err) {
-    res.status(500).json({ message: "Server error" ,err});
+    res.status(500).json({ message: "Server error", err });
   }
 };
