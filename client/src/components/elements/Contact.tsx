@@ -1,7 +1,12 @@
 "use client"
-import React from "react";
+import instance from "@/hooks/instance";
+import axios from "axios";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 
-const Contact = () => {
+const Contact: React.FC = () => {
+    const [loading, setLoading] = useState(false);
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.currentTarget;
@@ -14,15 +19,27 @@ const Contact = () => {
             email,
             message,
         };
-        console.log(formData);
-        const res = await fetch("/contact/api", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-        });
-
-        const data = await res.json();
-        alert(data.message);
+        try {
+            if (!name || !email || !message) {
+                toast.error("Please fill in all fields");
+                return;
+            }
+            setLoading(true);
+            const response = await instance.post(
+                "/api/contact",
+                formData
+            );
+            toast.success(response.data.message || "Message sent successfully");
+            form.reset();
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                toast.error(err.response?.data?.error || "Failed to send message");
+            } else {
+                toast.error("Failed to send message");
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -77,11 +94,11 @@ const Contact = () => {
                         </div>
 
                         {/* Submit */}
-                        <button
+                        <button disabled={loading}
                             type="submit"
-                            className="w-full bg-seRed hover:bg-seGreen text-black font-bold py-3 px-6 rounded-lg transition-colors"
+                            className={`w-full bg-seRed text-seWhite font-seum py-3 rounded-lg hover:bg-seDarkRed transition-colors cursor-pointer ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
-                            Send Message
+                            {loading ? "Sending..." : "Send Message"}
                         </button>
                     </form>
                 </div>

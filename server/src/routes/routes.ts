@@ -11,14 +11,11 @@ import { verifyOtp } from "../controllers/verifyOtp";
 import { getAdminUser } from "../controllers/userController";
 // import { verifyToken } from "../utils/accesstoken";
 import { upload } from "../utils/multer";
+import { contactwithUser } from "../controllers/contactController";
 
 const router = Router();
 
-// Example route
-router.get("/", (req, res) => {
-  res.send("API is running");
-});
-
+router.post("/contact", contactwithUser);
 router.get("/all", getAllProjects);
 router.get("/single/:id", getProjectById);
 router.post("/create", upload.array("images", 5), createProject);

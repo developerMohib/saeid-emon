@@ -22,13 +22,10 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // ─── API Route
-
 app.use('/api',router)
 app.use("/api/cards", router)
 app.use("/products", router)
-
 app.use("/auth", router)
-
 
 // ─── Health Check Route
 app.get("/health", (_req: Request, res: Response) => {
