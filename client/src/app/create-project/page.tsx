@@ -1,11 +1,15 @@
 "use client"
+import instance from "@/hooks/instance";
 import Image from "next/image";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const CreateProjectPage: React.FC = () => {
     const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+    const [intro, setIntro] = useState("");
+    const [category, setCategory] = useState("");
     const [images, setImages] = useState<File[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -13,10 +17,40 @@ const CreateProjectPage: React.FC = () => {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // TODO: Submit project data to backend
-        alert("Project submitted!");
+        if (!title || !intro || images.length === 0) {
+            toast.error("Fill all fields and upload at least 1 image");
+            return;
+        }
+        try {
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("intro", intro);
+            formData.append("category", category);
+            setLoading(true);
+            images.forEach((img) => {
+                formData.append("images", img);
+            });
+            const res = await instance.post("/products/create", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            if (res?.data?.success) {
+                toast.success(res?.data.message);
+                setTitle("");
+                setIntro("");
+                setCategory("");
+                setImages([]);
+                setLoading(false);
+            }
+
+
+        } catch (err: any) {
+            console.error(err);
+            toast.error(err.response?.data?.message || "Something went wrong");
+        }
     };
 
     return (
@@ -24,34 +58,46 @@ const CreateProjectPage: React.FC = () => {
             <h1 className="text-3xl font-bold mb-6">Create New Project</h1>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label className="block font-medium mb-2">Project Title</label>
+                    <label className="block font-medium mb-2">Project Name</label>
                     <input
                         type="text"
                         className="w-full border rounded px-3 py-2"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
-                        placeholder="Enter project title"
+                        placeholder="Enter project name"
                     />
                 </div>
                 <div>
-                    <label className="block font-medium mb-2">Description</label>
-                    <textarea
+                    <label className="block font-medium mb-2"> Intro </label>
+                    <input
+                        type="text"
                         className="w-full border rounded px-3 py-2"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={intro}
+                        onChange={(e) => setIntro(e.target.value)}
                         required
-                        placeholder="Describe your project"
-                        rows={5}
+                        placeholder="Are you looking for...."
                     />
                 </div>
                 <div>
-                    <label className="block font-medium mb-2">Upload Images</label>
+                    <label className="block font-medium mb-2"> Category </label>
+                    <input
+                        type="text"
+                        className="w-full border rounded px-3 py-2"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        required
+                        placeholder="Enter Project Category"
+                    />
+                </div>
+                <div>
+                    <label className="block font-medium mb-2">Upload Images <span className="text-xs text-seGray/20">max 5 </span></label>
                     <input
                         type="file"
                         multiple
                         accept="image/*"
                         onChange={handleImageUpload}
+                        className="w-full border rounded px-3 py-2"
                     />
                     <div className="flex flex-wrap mt-2 gap-2">
                         {images.map((img, idx) => (
@@ -59,17 +105,18 @@ const CreateProjectPage: React.FC = () => {
                                 key={idx}
                                 src={URL.createObjectURL(img)}
                                 alt="preview"
-                                className="w-24 h-24 object-cover rounded border"
+                                className="w-full h-52 object-cover rounded border"
                                 width={500} height={500}
                             />
                         ))}
                     </div>
                 </div>
                 <button
+                    disabled={loading}
                     type="submit"
-                    className="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700"
+                    className={`w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition ${loading ? 'opacity-50 cursor-not-allowed' : ''} `}
                 >
-                    Publish Project
+                    {loading ? 'Publishing...' : 'Publish Project'}
                 </button>
             </form>
         </div>

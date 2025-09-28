@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Card from "../models/detailsCard";
+import { Product } from "../models/product";
 
 // GET all cards
 export const getAllCards = async (req: Request, res: Response) => {
@@ -23,8 +24,9 @@ export const getAllCards = async (req: Request, res: Response) => {
 // GET single card by ID
 export const getCardById = async (req: Request, res: Response) => {
   try {
-    const card = await Card.findById(req.params.id);    
-    if (!card) return res.status(404).json({ error: "Card not found from server" });
+    const card = await Card.findById(req.params.id);
+    if (!card)
+      return res.status(404).json({ error: "Card not found from server" });
     res.json(card);
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -85,5 +87,34 @@ export const deleteCard = async (req: Request, res: Response) => {
     } else {
       res.status(500).json({ error: "Unknown error occurred" });
     }
+  }
+};
+
+export const addProduct = async (req: Request, res: Response) => {
+  try {
+    const { title, intro, category } = req.body;
+    const files = req.files as Express.Multer.File[];
+
+    if (!files || files.length === 0) {
+      return res.status(400).json({ message: "Images are required" });
+    }
+    const uploadedImages = files.map((file) => file.path);
+
+    // Save to DB with Cloudinary URL
+    const newProduct = await Product.create({
+      title,
+      intro,
+      category,
+      images: uploadedImages,
+    });
+
+    res.status(201).json({
+      message: "Product created successfully",
+      product: newProduct,
+      success: true,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };

@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api',router)
 app.use("/api/cards", router)
 app.use("/auth", router)
+app.use("/products", router)
 
 
 

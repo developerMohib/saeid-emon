@@ -1,6 +1,4 @@
-
 "use client"
-
 import Link from 'next/link';
 import React from 'react';
 import useProduct from '@/hooks/useProduct';
@@ -8,9 +6,9 @@ import Loading from '@/app/loading';
 import ImageGallery from '@/components/elements/ImageGallery';
 import { useParams } from 'next/navigation';
 
-const ProductDetails =  () => {
-      const params = useParams(); 
-  const id = params?.id as string; 
+const ProductDetails = () => {
+    const params = useParams();
+    const id = params?.id as string;
     const { data, isPending, isError, error } = useProduct(id);
 
     if (isPending) return <Loading />;
