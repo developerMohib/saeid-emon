@@ -5,25 +5,44 @@ import Loading from "../loading";
 import Image from "next/image";
 import { useUser } from "@/context/UserContext";
 import { useAuthUser } from "@/hooks/useAuthUser";
+import instance from "@/hooks/instance";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 const Dashboard = () => {
   useAuthUser();
-
+const [loading, setLoading] = useState(false);
   const { user, logout } = useUser();
   const { data, isPending, refetch, error, isError } = useProducts();
-  if (isPending) return <Loading />;
+  if (isPending || loading) return <Loading />;
   if (isError || error) return <p>Error: {(error as Error).message}</p>;
 
   console.log('user', user)
 
   if (!data || data.length === 0) {
-    return <p className="text-center py-4">No users found.</p>;
+    return <p className="text-center py-4">No design found.</p>;
   }
 
-  const handleDelete = async (prod) => {
-    console.log(' prp', prod);
-    refetch()
+const handleDelete = async (prod) => {
+  const isConfirmed = window.confirm("Are you sure you want to delete this product?");
+  if (!isConfirmed) return;
+setLoading(true);
+
+  try {
+    const res = await instance.delete(`/products/delete/${prod._id}`);
+    console.log('res', res)
+    if(res.data.success){
+      toast.success(res.data.message);
+      refetch(); // refresh data
+      setLoading(false);
+    }
+  } catch (err: any) {
+    toast.error("Failed to delete product");
+    console.error(err);
   }
+};
+
+
   const handleEdit = async (prod) => {
     console.log(' prp', prod)
     refetch()
@@ -52,7 +71,7 @@ const Dashboard = () => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
-              {["#", "Image", "Name", "Category", "Action"].map((head) => (
+              {["#", "Image", "Name", "Category", "visit", "Action"].map((head) => (
                 <th
                   key={head}
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -64,23 +83,28 @@ const Dashboard = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data.map((user, i) => (
+            {data.map((prod, i) => (
               <tr key={i}>
                 <td className="px-6 py-4 whitespace-nowrap">{i + 1}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <Image src={user.image} alt={user.name} width={500} height={500} className="w-28 h-28 rounded-lg" />
+                  <Image src={prod.image} alt={prod.name} width={500} height={500} className="w-28 h-28 rounded-lg" />
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{user.category}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{prod.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{prod.category}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <Link href={`/design-details/${prod._id}`} className="text-blue-600 hover:underline">
+                    View
+                  </Link>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button
-                    onClick={() => handleEdit?.(user)}
+                    onClick={() => handleEdit?.(prod)}
                     className="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 transition"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete?.(user)}
+                    onClick={() => handleDelete?.(prod)}
                     className="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 transition"
                   >
                     Delete

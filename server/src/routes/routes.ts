@@ -1,12 +1,11 @@
 import { Router } from "express";
 import {
-  addProduct,
-  createCard,
-  deleteCard,
-  getAllCards,
-  getCardById,
-  updateCard,
-} from "../controllers/cardController";
+  createProject,
+  getAllProjects,
+  getProjectById,
+  deleteProject,
+  updateProject,
+} from "../controllers/projectsController";
 import { sendOtp } from "../controllers/sendEmailController";
 import { verifyOtp } from "../controllers/verifyOtp";
 import { getAdminUser } from "../controllers/userController";
@@ -20,18 +19,15 @@ router.get("/", (req, res) => {
   res.send("API is running");
 });
 
-router.get("/all", getAllCards);
-router.get("/single/:id", getCardById);
-router.post("/", createCard);
-router.put("/:id", updateCard);
-router.delete("/:id", deleteCard);
+router.get("/all", getAllProjects);
+router.get("/single/:id", getProjectById);
+router.post("/create", upload.array("images", 5), createProject);
+router.put("/:id", updateProject);
+router.delete("/delete/:id", deleteProject);
 
 // auth related routes
 router.post("/send-otp", sendOtp);
 router.post("/verify-otp", verifyOtp);
 router.get("/me", getAdminUser);
-
-router.post("/create", upload.array("images", 5), addProduct);
-
 
 export default router;
