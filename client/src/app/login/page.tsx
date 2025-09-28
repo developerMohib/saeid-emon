@@ -2,6 +2,7 @@
 
 import { useUser } from "@/context/UserContext";
 import { sendOtpRequest, verifyOtpRequest } from "@/utils/otpsender";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
 import React, { useState } from "react";
@@ -14,7 +15,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const router = useRouter()
-  
+
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -24,8 +25,12 @@ const SignIn = () => {
       const res = await sendOtpRequest(email);
       setMessage(res.data.message);
       setStep("otp");
-    } catch (error: any) {
-      setMessage(error.response?.data?.message || "Error sending OTP");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setMessage(error.response?.data?.message || "Error sending OTP");
+      } else {
+        setMessage("Error sending OTP");
+      }
     } finally {
       setLoading(false);
     }
@@ -45,11 +50,15 @@ const SignIn = () => {
         router.push("/dashboard");
       }
 
-    } catch (error: any) {
-      setMessage(error.response?.data?.message || "Invalid OTP");
-    } finally {
-      setLoading(false);
+    } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      setMessage(error.response?.data?.message || "Error sending OTP");
+    } else {
+      setMessage("Error sending OTP");
     }
+  } finally {
+    setLoading(false);
+  }
   };
 
   return (

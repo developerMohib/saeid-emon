@@ -8,13 +8,15 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 import instance from "@/hooks/instance";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import axios from "axios";
+import { ICard } from "@/types/workCardTypes";
 
 const Dashboard = () => {
   useAuthUser();
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { user, logout } = useUser();
   const { data, isPending, refetch, error, isError } = useProducts();
-console.log('data user', user)
+  console.log('data user', user)
   if (isPending || loading) return <Loading />;
   if (isError || error) return <p>Error: {(error as Error).message}</p>;
   console.log('user', user)
@@ -22,26 +24,33 @@ console.log('data user', user)
     return <p className="text-center py-4">No design found.</p>;
   }
 
-const handleDelete = async (prod) => {
-  const isConfirmed = window.confirm("Are you sure you want to delete this product?");
-  if (!isConfirmed) return;
-setLoading(true);
+  const handleDelete = async (prod :ICard) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this product?");
+    if (!isConfirmed) return;
+    setLoading(true);
 
-  try {
-    const res = await instance.delete(`/products/delete/${prod._id}`);
-    if(res.data.success){
-      toast.success(res.data.message);
-      refetch(); // refresh data
+    try {
+      const res = await instance.delete(`/products/delete/${prod._id}`);
+      if (res.data.success) {
+        toast.success(res.data.message);
+        refetch(); // refresh data
+        setLoading(false);
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+
+        toast.error("Failed to delete product");
+      } else {
+
+        toast.error("Failed to delete product");
+      }
+    } finally {
       setLoading(false);
     }
-  } catch (err: any) {
-    toast.error("Failed to delete product");
-    console.error(err);
-  }
-};
+  };
 
 
-  const handleEdit = async (prod) => {
+  const handleEdit = async (prod :ICard) => {
     console.log(' prp', prod)
     refetch()
   }

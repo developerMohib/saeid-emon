@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { verifyOtpRequest } from "@/utils/otpsender";
+import axios from "axios";
 
 type Props = {
     email: string;
@@ -21,8 +22,12 @@ const OtpForm = ({ email }: Props) => {
 
             // ✅ On success, redirect to dashboard or home
             router.push("/dashboard");
-        } catch (error: any) {
-            setMessage(error?.response?.data?.message || "Invalid OTP");
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                setMessage(error.response?.data?.message || "Error sending OTP");
+            } else {
+                setMessage("Error sending OTP");
+            }
         }
     };
 

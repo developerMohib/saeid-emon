@@ -1,5 +1,6 @@
 "use client"
 import instance from "@/hooks/instance";
+import axios from "axios";
 import Image from "next/image";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -45,11 +46,14 @@ const CreateProjectPage: React.FC = () => {
                 setImages([]);
                 setLoading(false);
             }
-
-
-        } catch (err: any) {
-            console.error(err);
-            toast.error(err.response?.data?.message || "Something went wrong");
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                toast.error(err.response?.data?.message || "Something went wrong");
+            } else {
+                toast.error("Something went wrong");
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
