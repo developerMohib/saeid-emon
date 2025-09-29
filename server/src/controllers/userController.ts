@@ -1,7 +1,57 @@
 import { Request, Response } from "express";
 import { User } from "../models/userModel";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import { otpsender } from "../utils/otpsender";
+dotenv.config();
 
-export const getAdminUser = async (req: Request, res: Response) => {
+export const beAdmin = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Email and password required" });
+    }
+
+    const admin = await User.findOne({ email });
+    console.log("admin", admin);
+
+    // If admin not found → Delete all users and create this admin
+    if (!admin) {
+      return res.status(201).json({
+         success:false, message: "Not Found Admin" 
+
+      });
+    }
+
+    // Check password for existing admin
+    const isMatch = await bcrypt.compare(password, admin.password);
+    console.log("isMatch", isMatch);
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid credentials" });
+    }
+
+    // Send OTP
+    const otp = await otpsender(email);
+    console.log("otp", otp);
+
+    return res.json({
+      success: true,
+      message: "OTP sent to email",
+      user: { email: admin.email, name: admin.name },
+    });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ success: false, message: "Server error" });
+  }
+}
+export const getAdminDetails = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
 

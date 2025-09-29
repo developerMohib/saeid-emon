@@ -8,7 +8,7 @@ export const useAuthUser = () => {
   const { setUser } = useUser();
 
   const { isPending, isError, error, data, refetch } = useQuery({
-    queryKey: ["admin-user"],
+    queryKey: ["admindata"],
     queryFn: async () => {
       const res = await instance.get("/auth/me");
       if (!res?.data?.data) throw new Error("No user data found");

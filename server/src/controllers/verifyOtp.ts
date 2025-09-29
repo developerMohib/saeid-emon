@@ -1,21 +1,21 @@
 import { Request, Response } from "express";
-import { otpStore } from "./sendEmailController";
-import { User } from "../models/userModel";
+import { Admin } from "../models/adminModel";
 import jwt from "jsonwebtoken";
+import { otpStore } from "../utils/otpsender";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key";
 
-export const verifyOtp = async (req: Request, res: Response) => {
+export const verifyAdminOtp = async (req: Request, res: Response) => {
   try {
     const { email, otp } = req.body;
-
+    console.log("Verifying OTP for:", email, otp);
     if (!email || !otp) {
       return res.status(400).json({ message: "Email and OTP are required" });
     }
-
     const record = otpStore[email];
-    if (!record) return res.status(400).json({ message: "No OTP requested" });
+    console.log("Stored OTP record:", record);
 
+    if (!record) return res.status(400).json({ message: "No OTP requested" });
     if (Date.now() > record.expiresAt) {
       return res.status(400).json({ message: "OTP expired" });
     }
@@ -23,56 +23,30 @@ export const verifyOtp = async (req: Request, res: Response) => {
     if (record.otp !== otp) {
       return res.status(400).json({ message: "Invalid OTP" });
     }
-    delete otpStore[email]; // optional: remove after success
 
-    // Try to find the user
-    let user = await User.findOne({ email });
+    delete otpStore[email]; // done ✅
 
-    // If user does not exist, create with default data
-    if (!user) {
-      user = new User({
-        name: "Saeid Emon",
-        email: email,
-        role: "admin",
-        bio: "",
-        currentPosition: "",
-        experience: "",
-        location: "",
-        avatar: "https://i.pravatar.cc/150?img=12",
-        description: "",
-        social: {
-          fb: "",
-          twitter: "",
-          linkedin: "",
-          instagram: "",
-        },
-      });
-
-      await user.save();
+    // ☑ Get admin from DB
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(400).json({ message: "Admin not found" });
     }
 
-    // Create token/session here
-
-    // Create JWT payload
-    const payload = { id: user._id, email: user.email, role: user.role };
-
-    // Sign token
+    // ☑ JWT payload
+    const payload = { id: admin._id, email: admin.email };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" });
-    // Set HTTP-only cookie
-    console.log('generate token',token)
-    return res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      })
-      .json({
-        message: "Login success",
-        user,
-      });
+    console.log("Generated JWT Token: ", token);
+
+    return res.status(200).json({
+      success: true,
+      message: "OTP verified, login success",
+      user: {
+        id: admin._id,
+        email: admin.email,
+      },
+    });
   } catch (error) {
-    console.error("Error in verifyOtp:", error);
+    console.error("Error in verifyAdminOtp:", error);
     return res.status(500).json({ message: "Server error" });
   }
 };

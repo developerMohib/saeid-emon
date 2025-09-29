@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import coverbanner from "../../../public/images/banner.png";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import Loading from "@/app/loading";
 import { PenLine } from "lucide-react";
@@ -62,7 +61,7 @@ const Banner = () => {
     return (
         <div className="relative w-full h-56 pt-0 -mt-3.5">
             <Image
-                src={newdata?.banner || coverbanner}
+                src={newdata?.banner}
                 alt="Banner"
                 fill
                 className="object-cover md:object-contain"

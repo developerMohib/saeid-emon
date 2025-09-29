@@ -1,77 +1,86 @@
 "use client";
 
 import { useUser } from "@/context/UserContext";
-import { sendOtpRequest, verifyOtpRequest } from "@/utils/otpsender";
-import axios from "axios";
+import instance from "@/hooks/instance";
 import { useRouter } from "next/navigation";
-
+import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+
 const SignIn = () => {
   const { setUser } = useUser();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"email" | "otp">("email");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const router = useRouter()
+  const router = useRouter();
 
-  const handleSendOtp = async (e: React.FormEvent) => {
+  // ✅ STEP 1: Login with email & password
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
     try {
-      const res = await sendOtpRequest(email);
-      setMessage(res.data.message);
-      setStep("otp");
+      const res = await instance.post("/auth/admin/me", { email, password });
+      
+      if (res.data.success) {
+        toast.success("Login successful! OTP sent to email");
+        setMessage("OTP sent to your email");
+        setStep("otp"); // show OTP form now
+      } else {
+        setMessage(res.data.message || "Login failed");
+      }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        setMessage(error.response?.data?.message || "Error sending OTP");
+        setMessage(error.response?.data?.message || "Login error");
       } else {
-        setMessage("Error sending OTP");
+        setMessage("Login error");
       }
     } finally {
       setLoading(false);
     }
   };
 
+  // STEP 2: Verify OTP
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
     try {
-      const res = await verifyOtpRequest(email, otp);
-      setMessage(res.data.message);
-      if (res.data.user) {
-        toast.success('login success')
+      const res = await instance.post("/auth/verify-otp", { email, otp });
+
+      if (res.data.success && res.data.user) {
+        toast.success("OTP Verified! Logged in successfully");
         setUser(res.data.user);
         router.push("/dashboard");
+      } else {
+        setMessage(res.data.message || "Invalid OTP");
       }
-
     } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      setMessage(error.response?.data?.message || "Error sending OTP");
-    } else {
-      setMessage("Error sending OTP");
+      if (axios.isAxiosError(error)) {
+        setMessage(error.response?.data?.message || "Error verifying OTP");
+      } else {
+        setMessage("Error verifying OTP");
+      }
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
-  }
   };
 
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-[350px] bg-seWhite rounded-2xl p-6 shadow-md text-center">
-        {/* Logo */}
         <div className="w-20 h-20 bg-seRed/80 rounded-full mx-auto mb-6 flex justify-center items-center">
           <span className="text-4xl text-seWhite">&#9679;&#9679;&#9679;</span>
         </div>
 
-        {/* STEP 1: Enter Email */}
+        {/* ✅ STEP 1: Email + Password */}
         {step === "email" && (
-          <form onSubmit={handleSendOtp}>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4 text-left">
               <label className="block text-sm font-medium text-seSlack">
                 Email Address
@@ -85,20 +94,33 @@ const SignIn = () => {
                 required
               />
             </div>
+            <div className="mb-4 text-left">
+              <label className="block text-sm font-medium text-seSlack">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full mt-1 px-3 py-2 border border-seGray/50 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seSlack/50"
+                required
+              />
+            </div>
 
             <button
               disabled={loading}
               type="submit"
               className="w-full py-2 bg-seRed/80 text-seWhite rounded-full font-semibold hover:bg-seBlue/80 cursor-pointer transition"
             >
-              {loading ? "Sending OTP..." : "Send OTP"}
+              {loading ? "Signing in..." : "Sign In"}
             </button>
 
             {message && <p className="mt-3 text-sm">{message}</p>}
           </form>
         )}
 
-        {/* STEP 2: Verify OTP */}
+        {/* ✅ STEP 2: OTP Input */}
         {step === "otp" && (
           <form onSubmit={handleVerifyOtp}>
             <div className="mb-4 text-left">

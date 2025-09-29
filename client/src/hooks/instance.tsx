@@ -1,7 +1,7 @@
 import axios from 'axios';
-// https://saeid-emon.vercel.app
+// http://localhost:4000
 const instance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000',
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://saeid-emon.vercel.app',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
