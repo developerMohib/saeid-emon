@@ -8,7 +8,7 @@ import {
 } from "../controllers/projectsController";
 import { sendOtp } from "../controllers/sendEmailController";
 import { verifyOtp } from "../controllers/verifyOtp";
-import { getAdminUser } from "../controllers/userController";
+import { getAdminUser, updateAvatar, updateBanner } from "../controllers/userController";
 // import { verifyToken } from "../utils/accesstoken";
 import { upload } from "../utils/multer";
 import { contactwithUser } from "../controllers/contactController";
@@ -21,7 +21,8 @@ router.get("/single/:id", getProjectById);
 router.post("/create", upload.array("images", 5), createProject);
 router.put("/:id", updateProject);
 router.delete("/delete/:id", deleteProject);
-
+router.put("/user/banner", upload.single("banner"), updateBanner);
+router.put("/user/avatar", upload.single("avatar"), updateAvatar);
 // auth related routes
 router.post("/send-otp", sendOtp);
 router.post("/verify-otp", verifyOtp);

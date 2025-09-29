@@ -5,8 +5,9 @@ import { CloudinaryStorage } from "multer-storage-cloudinary";
 const storage = new CloudinaryStorage({
   cloudinary,
   params: async (req, file) => {
+    
     const nameWithoutExt = file.originalname.replace(/\.[^.]+$/, "");
-    const sanitizedName = nameWithoutExt.replace(/\s+/g, "-"); // or .replace(/\s+/g, "") to remove spaces completely
+    const sanitizedName = nameWithoutExt.replace(/\s+/g, "-"); // Replace spaces with hyphens
     return {
       folder: "projects",
       format: "png",
@@ -19,4 +20,4 @@ const storage = new CloudinaryStorage({
 export const upload = multer({
   storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 },
-}); // 5MB limit
+}); // 10 MB limit

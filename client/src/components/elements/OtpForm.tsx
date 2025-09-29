@@ -20,7 +20,7 @@ const OtpForm = ({ email }: Props) => {
             const res = await verifyOtpRequest(email, otp);
             setMessage(res.data.message);
 
-            // ✅ On success, redirect to dashboard or home
+            // On success, redirect to dashboard or home
             router.push("/dashboard");
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
