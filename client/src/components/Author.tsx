@@ -14,11 +14,12 @@ import Loading from "@/app/loading";
 import { useState } from "react";
 import instance from "@/hooks/instance";
 import toast from "react-hot-toast";
+import useRequireAuth from "@/hooks/useRequireAuth";
 
 const Author = () => {
     const { isPending, isError, error, data, refetch } = useAuthUser();
-    const user = true; // your logic
 
+    const checked = useRequireAuth("token");
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState<string | null>(null);
@@ -63,7 +64,7 @@ const Author = () => {
             if (err instanceof Error) {
                 toast.error(err.message);
             }
-            
+
         } finally {
             setLoading(false);
         }
@@ -83,7 +84,7 @@ const Author = () => {
                         priority
                     />
 
-                    {user && (
+                    {checked && (
                         <button
                             onClick={() => setShowModal(true)}
                             className="absolute bottom-0 right-0 bg-seRed p-2 rounded-full shadow cursor-pointer text-white hover:bg-red-700 transition"
@@ -126,7 +127,7 @@ const Author = () => {
                 </Link>
 
                 {/* Edit Profile Info button */}
-                {user && (
+                {checked && (
                     <div className="mt-3">
                         <button className="flex items-center justify-center gap-2 w-full bg-seBlue/90 text-seWhite hover:text-seSlack py-2 rounded-lg hover:bg-seRed/80 transition-colors cursor-pointer">
                             <FilePen />

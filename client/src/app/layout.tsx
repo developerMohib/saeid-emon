@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Roboto_Mono } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/elements/Footer";
-import Navbar from "@/components/elements/Navbar";
+import Footer from "@/components/Footer";
 import ReactQueryProvider from "../provider/ReactQueryProvider";
 import { Toaster } from "react-hot-toast";
+import Navbar from "@/components/Navbar";
 
 const roboto = Roboto_Mono({
   variable: "--font-roboto-mono",

@@ -13,9 +13,6 @@ import { ICard } from "@/types/workCardTypes";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import { MapPinCheck, School } from "lucide-react";
 
-const optionalAvatar =
-  "https://res.cloudinary.com/dnfjdkspi/image/upload/v1759129164/projects/4821b1302963013.5d29ed92444b7-1759129160723.png";
-
 const Dashboard = () => {
   const { isPending: userPending, data: user } = useAuthUser();
   const [loading, setLoading] = useState(false);

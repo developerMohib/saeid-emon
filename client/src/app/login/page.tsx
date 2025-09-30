@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +24,7 @@ const SignIn = () => {
 
     try {
       const res = await instance.post("/auth/login", { email, password });
-      
+
       if (res.data.success) {
         toast.success("OTP sent to email");
         setMessage("OTP sent to your email");
@@ -145,6 +146,9 @@ const SignIn = () => {
             {message && <p className="mt-3 text-sm">{message}</p>}
           </form>
         )}
+        <Link href={"/forget-password"} className="text-sm mt-5 text-seGray/80 hover:underline">
+          <span>Forget Password</span>
+        </Link>
       </div>
     </div>
   );

@@ -23,8 +23,6 @@ app.use(
       "http://localhost:3000",
       "http://localhost:4000",
       "https://saeid-hasan-emon.vercel.app",
-      "https://saeid-hasan-emon-git-master-mohib-the-maziests-projects.vercel.app",
-      "https://saeid-hasan-emon-celr40ub3-mohib-the-maziests-projects.vercel.app"
     ],
     credentials: true,
   }),

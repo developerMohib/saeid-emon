@@ -27,15 +27,14 @@ const Works = () => {
                             height={900}
                         />
                     </div>
-
                     {/* Hidden Details - Visible on Hover */}
                     <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-seBlack/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span className="block text-seGray text-sm">{card.category}</span>
-                        <div className="flex justify-between items-center text-seWhite">
+                        <div className="flex justify-between items-center gap-4 text-seWhite">
                             <Link href={`/design-details/${card._id}`}><span className="block font-semibold text-xl hover:underline">{card.title}</span></Link>
                             <Link href={`/design-details/${card._id}`}>
-                                <button className="rounded-full text-xs font-bold px-3 py-2 bg-seGray/40 backdrop-blur-md hover:bg-seWhite/40 transition-colors cupsor-pointer">
-                                    View Details
+                                <button className="rounded-full text-xs cursor-pointer font-bold px-3 py-2 bg-seGray/40 backdrop-blur-md hover:bg-seWhite/40 transition-colors cupsor-pointer">
+                                    ViewDetails
                                 </button>
                             </Link>
                         </div>

@@ -6,20 +6,20 @@ import Loading from "@/app/loading";
 import { PenLine } from "lucide-react";
 import instance from "@/hooks/instance";
 import toast from "react-hot-toast";
+import useRequireAuth from "@/hooks/useRequireAuth";
 
 const Banner = () => {
     const { isPending, isError, error, data, refetch } = useAuthUser();
+
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState<string | null>(null);
     const [bannerFile, setBannerFile] = useState<File | null>(null);
-
-    const user = true; // your logic
+    const checked = useRequireAuth("token");
 
     if (isPending) return <Loading />;
-    if (isError) return <p>Error: {error?.message}</p>;
-
     const newdata = data[0];
+    if (isError) return <p>Error: {error?.message}</p>;
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -54,7 +54,7 @@ const Banner = () => {
                 toast.error(err.message);
             }
             setLoading(false);
-        }finally{
+        } finally {
             setLoading(false);
         }
     };
@@ -70,7 +70,7 @@ const Banner = () => {
                 priority
             />
 
-            {user && (
+            {checked && (
                 <button
                     onClick={() => setShowModal(true)}
                     className="absolute top-3 right-3 bg-seRed p-2 rounded-full shadow cursor-pointer text-white hover:bg-red-700 transition"

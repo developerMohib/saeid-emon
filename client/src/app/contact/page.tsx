@@ -1,5 +1,5 @@
 
-import Contact from '@/components/elements/Contact';
+import Contact from '@/components/Contact';
 import React from 'react';
 
 const page = () => {
