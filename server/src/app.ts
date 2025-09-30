@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import express, { Application, Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -8,10 +10,23 @@ const app: Application = express();
 // ─── Middleware
 app.use(express.json());
 // Middleware
+// app.use(
+//   cors({
+//     // origin: process.env.FRONTEND_URL || "http://localhost:3000",
+//     origin: process.env.FRONTEND_URL || "http://localhost:3000",
+//     credentials: true, // Allow cookies to be sent
+//   }),
+// );
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
-    credentials: true, // Allow cookies to be sent
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:4000",
+      "https://saeid-hasan-emon.vercel.app",
+      "https://saeid-hasan-emon-git-master-mohib-the-maziests-projects.vercel.app",
+      "https://saeid-hasan-emon-celr40ub3-mohib-the-maziests-projects.vercel.app"
+    ],
+    credentials: true,
   }),
 );
 app.use(express.json());
@@ -22,10 +37,10 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // ─── API Route
-app.use('/api',router)
-app.use("/api/cards", router)
-app.use("/products", router)
-app.use("/auth", router)
+app.use("/api", router);
+app.use("/api/cards", router);
+app.use("/products", router);
+app.use("/auth", router);
 
 // ─── Health Check Route
 app.get("/health", (_req: Request, res: Response) => {
@@ -49,9 +64,9 @@ app.use((_req: Request, res: Response) => {
 });
 
 // ─── Centralized Error Handler
-app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+app.use((err: unknown, _req: Request, res: Response, next: NextFunction) => {
   console.error("Error:", err);
-  
+
   // Handle known errors
   if (err instanceof Error) {
     return res.status(500).json({
