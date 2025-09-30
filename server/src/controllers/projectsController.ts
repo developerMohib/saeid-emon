@@ -24,7 +24,8 @@ export const getAllProjects = async (req: Request, res: Response) => {
 // GET single card by ID
 export const getProjectById = async (req: Request, res: Response) => {
   try {
-    const card = await Card.findById(req.params.id);
+    const card = await Product.findById(req.params.id);
+    
     if (!card)
       return res.status(404).json({ error: "Card not found from server" });
     res.json(card);

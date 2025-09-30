@@ -1,33 +1,35 @@
 "use client";
-import useProducts from "@/hooks/useProducts";
+
+import { useState } from "react";
 import Link from "next/link";
-import Loading from "../loading";
 import Image from "next/image";
-import { useUser } from "@/context/UserContext";
+import axios from "axios";
+import toast from "react-hot-toast";
+import useProducts from "@/hooks/useProducts";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import instance from "@/hooks/instance";
-import toast from "react-hot-toast";
-import { useState } from "react";
+import Loading from "../loading";
 import { ICard } from "@/types/workCardTypes";
-import axios from "axios";
-const optionalAvatar = "https://res.cloudinary.com/dnfjdkspi/image/upload/v1759129164/projects/4821b1302963013.5d29ed92444b7-1759129160723.png";
-const Dashboard = () => {
-  useAuthUser();
-  const [loading, setLoading] = useState(false);
-  const { user, logout } = useUser();
-  const { data, isPending, refetch, error, isError } = useProducts();
+import useRequireAuth from "@/hooks/useRequireAuth";
+import { MapPinCheck, School } from "lucide-react";
 
-  if (isPending || loading) return <Loading />;
-  if (isError || error) return <p>Error: {(error as Error).message}</p>;
-  if (!data || data.length === 0) {
-    return <p className="text-center py-4">No design found.</p>;
-  }
+const optionalAvatar =
+  "https://res.cloudinary.com/dnfjdkspi/image/upload/v1759129164/projects/4821b1302963013.5d29ed92444b7-1759129160723.png";
+
+const Dashboard = () => {
+  const { isPending: userPending, data: user } = useAuthUser();
+  const [loading, setLoading] = useState(false);
+  const { data :product, isPending, refetch, error, isError } = useProducts();
+  const checked = useRequireAuth("token");
+  if (!checked) return <Loading />;
 
   const handleDelete = async (prod: ICard) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete this product?");
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
     if (!isConfirmed) return;
-    setLoading(true);
 
+    setLoading(true);
     try {
       const res = await instance.delete(`/products/delete/${prod._id}`);
       if (res.data.success) {
@@ -45,56 +47,63 @@ const Dashboard = () => {
     }
   };
 
-  const handleEdit = async (prod: ICard) => {
+  const handleEdit = (prod: ICard) => {
     console.log("Edit product:", prod);
   };
 
+  if (isPending || loading || userPending) return <Loading />;
+  if (isError || error) return <p>Error: {(error as Error).message}</p>;
+  if (!product || product.length === 0) return <p className="text-center py-4">No design found.</p>;
+  if (!checked) return null;
+  const { avatar, name, proffession, location } = user[0];
+  
   return (
     <div className="grid grid-cols-4 gap-4 container mx-auto py-6">
       {/* LEFT SIDEBAR */}
       <div className="col-span-1">
-        {user && (
-          <div className="rounded-xl shadow-lg overflow-hidden bg-white dark:bg-gray-800">
-            <div className="relative h-32 bg-gradient-to-r from-indigo-600 to-blue-700">
-              <Image
-                src={user?.avatar || optionalAvatar}
-                alt={user.name || "Seaid Emon"}
-                width={96}
-                height={96}
-                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white dark:border-gray-800"
-              />
-            </div>
 
-            <div className="pt-16 pb-6 px-6 text-center">
-              <h1 className="text-2xl font-bold text-gray-800 dark:text-white">{user.name}</h1>
-              <p className="text-indigo-600 dark:text-indigo-400 font-semibold">{user.role}</p>
-              <p className="text-gray-600 dark:text-gray-300 mt-2">{user.bio}</p>
-            </div>
-
-            <div className="px-6 mb-4">
-              <Link href="/create-project">
-                <button className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                  Create Project
-                </button>
-              </Link>
-            </div>
-
-            <div className="bg-gray-50 dark:bg-gray-700 px-6 py-4">
-              <button
-                onClick={logout}
-                className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
-              >
-                Logout
-              </button>
-            </div>
+        <div className="rounded-xl shadow-lg overflow-hidden bg-seWhite ">
+          <div className="relative h-32 bg-seBlue/80">
+            <Image
+              src={avatar}
+              alt={name}
+              width={96}
+              height={96}
+              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-seWhite "
+            />
           </div>
-        )}
+
+          <div className="pt-16 pb-6 px-6 text-start">
+            <h1 className="text-2xl font-bold text-seSlack ml-1.5">
+              {name}
+            </h1>
+            <p className="text-seSlack flex items-center text-xs font-light"> <span> <School  className="mr-2 w-5"/> </span> {proffession}</p>
+            <p className="text-seSlack flex items-center text-xs font-light"> <span className="mr-2 w-5" > <MapPinCheck className="mr-2 w-5"/> </span> {location}</p>
+          </div>
+
+          <div className="px-6 mb-4">
+            <Link href="/create-project">
+              <button className="w-full bg-seBlue text-seWhite py-2 rounded-lg hover:bg-indigo-700 transition-colors cursor-pointer">
+                Create Project
+              </button>
+            </Link>
+          </div>
+
+          <div className="bg-gray-50 dark:bg-gray-700 px-6 py-4">
+            <button
+              className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+
       </div>
 
       {/* RIGHT CONTENT */}
       <div className="col-span-3">
-        <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead>
+        <table className="w-full divide-y divide-gray-200 ">
+          <thead className="">
             <tr className="bg-gray-100 dark:bg-gray-800">
               {["#", "Image", "Name", "Category", "Visit", "Action"].map((head) => (
                 <th
@@ -107,8 +116,8 @@ const Dashboard = () => {
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-            {data.map((prod, i) => (
+          <tbody className="divide-y divide-gray-200">
+            {product?.map((prod, i) => (
               <tr key={prod._id}>
                 <td className="px-6 py-4">{i + 1}</td>
                 <td className="px-6 py-4">

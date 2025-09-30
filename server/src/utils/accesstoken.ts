@@ -16,17 +16,15 @@ export const verifyToken = (
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    console.log("JWT_SECRET:", process.env.JWT_SECRET);
 
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET as string,
     ) as DecodedUser;
-    (req).user = { id: decoded.id };
-    console.log("decoded", decoded);
+    req.user = { id: decoded.id };
 
     next();
   } catch (err) {
-    return res.status(403).json({ message: "Invalid token", err });
+    return res.status(403).json({  message: "Token expired or invalid", err });
   }
 };

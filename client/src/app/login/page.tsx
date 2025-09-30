@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@/context/UserContext";
 import instance from "@/hooks/instance";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -8,7 +7,6 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 const SignIn = () => {
-  const { setUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
@@ -24,10 +22,10 @@ const SignIn = () => {
     setMessage("");
 
     try {
-      const res = await instance.post("/auth/admin/me", { email, password });
+      const res = await instance.post("/auth/login", { email, password });
       
       if (res.data.success) {
-        toast.success("Login successful! OTP sent to email");
+        toast.success("OTP sent to email");
         setMessage("OTP sent to your email");
         setStep("otp"); // show OTP form now
       } else {
@@ -55,7 +53,6 @@ const SignIn = () => {
 
       if (res.data.success && res.data.user) {
         toast.success("OTP Verified! Logged in successfully");
-        setUser(res.data.user);
         router.push("/dashboard");
       } else {
         setMessage(res.data.message || "Invalid OTP");

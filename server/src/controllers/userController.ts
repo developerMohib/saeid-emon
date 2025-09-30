@@ -2,33 +2,30 @@ import { Request, Response } from "express";
 import { User } from "../models/userModel";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+// import jwt from "jsonwebtoken";
 import { otpsender } from "../utils/otpsender";
 dotenv.config();
 
-export const beAdmin = async (req: Request, res: Response) => {
+export const loginAdmin = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-
     if (!email || !password) {
       return res
         .status(400)
         .json({ success: false, message: "Email and password required" });
     }
-
     const admin = await User.findOne({ email });
-    console.log("admin", admin);
-
     // If admin not found → Delete all users and create this admin
     if (!admin) {
       return res.status(201).json({
-         success:false, message: "Not Found Admin" 
-
+        success: false,
+        message: "Not Found Admin",
       });
     }
 
     // Check password for existing admin
     const isMatch = await bcrypt.compare(password, admin.password);
-    console.log("isMatch", isMatch);
+   
     if (!isMatch) {
       return res
         .status(400)
@@ -36,8 +33,7 @@ export const beAdmin = async (req: Request, res: Response) => {
     }
 
     // Send OTP
-    const otp = await otpsender(email);
-    console.log("otp", otp);
+    await otpsender(email);
 
     return res.json({
       success: true,
@@ -45,12 +41,9 @@ export const beAdmin = async (req: Request, res: Response) => {
       user: { email: admin.email, name: admin.name },
     });
   } catch (err) {
-    console.error(err);
-    return res
-      .status(500)
-      .json({ success: false, message: "Server error" });
+    return res.status(500).json({ success: false, message: "Server error",err });
   }
-}
+};
 export const getAdminDetails = async (req: Request, res: Response) => {
   try {
     const users = await User.find();

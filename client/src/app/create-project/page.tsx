@@ -1,9 +1,11 @@
 "use client"
 import instance from "@/hooks/instance";
+import useRequireAuth from "@/hooks/useRequireAuth";
 import axios from "axios";
 import Image from "next/image";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import Loading from "../loading";
 
 const CreateProjectPage: React.FC = () => {
     const [title, setTitle] = useState("");
@@ -11,6 +13,8 @@ const CreateProjectPage: React.FC = () => {
     const [category, setCategory] = useState("");
     const [images, setImages] = useState<File[]>([]);
     const [loading, setLoading] = useState(false);
+    const checked = useRequireAuth("token");
+    if (!checked) return <Loading />;
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {

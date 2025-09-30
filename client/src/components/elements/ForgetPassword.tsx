@@ -7,7 +7,7 @@ const ForgetPassword = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Send reset link to:", email);
+    // console.log("Send reset link to:", email);
 
     // 👉 Later: call your backend API to send reset email
     // await fetch("/api/forgot-password", {

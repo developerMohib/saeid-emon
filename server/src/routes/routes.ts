@@ -6,10 +6,10 @@ import {
   deleteProject,
   updateProject,
 } from "../controllers/projectsController";
-import { verifyAdminOtp } from "../controllers/verifyOtp";
+import { verifyAdminOtp } from "../controllers/verifyOtpController";
 import {
-  beAdmin,
   getAdminDetails,
+  loginAdmin,
   updateAvatar,
   updateBanner,
 } from "../controllers/userController";
@@ -31,6 +31,6 @@ router.put("/user/avatar", upload.single("avatar"), updateAvatar);
 // auth related routes
 router.post("/verify-otp", verifyAdminOtp);
 router.get("/me", getAdminDetails);
-router.post("/admin/me", beAdmin);
+router.post("/login", loginAdmin);
 
 export default router;

@@ -50,7 +50,9 @@ const Banner = () => {
             setBannerFile(null);
             setLoading(false);
         } catch (err) {
-            console.error(err);
+            if (err instanceof Error) {
+                toast.error(err.message);
+            }
             setLoading(false);
         }finally{
             setLoading(false);

@@ -60,8 +60,10 @@ const Author = () => {
 
         } catch (err) {
             setLoading(false);
-            console.error(err);
-            toast.error("Failed to upload avatar");
+            if (err instanceof Error) {
+                toast.error(err.message);
+            }
+            
         } finally {
             setLoading(false);
         }

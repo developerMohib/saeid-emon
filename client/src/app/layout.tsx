@@ -4,7 +4,6 @@ import "./globals.css";
 import Footer from "@/components/elements/Footer";
 import Navbar from "@/components/elements/Navbar";
 import ReactQueryProvider from "../provider/ReactQueryProvider";
-import { UserProvider } from "@/context/UserContext";
 import { Toaster } from "react-hot-toast";
 
 const roboto = Roboto_Mono({
@@ -37,7 +36,6 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${geistMono.variable} antialiased`}
       >
-        <UserProvider>
           <ReactQueryProvider>
             <Navbar />
             <main className="container mx-auto p-0 m-0">
@@ -46,7 +44,6 @@ export default function RootLayout({
             <Toaster />
             <Footer />
           </ReactQueryProvider>
-        </UserProvider>
       </body>
     </html>
   );

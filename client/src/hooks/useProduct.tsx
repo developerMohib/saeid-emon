@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import instance from "./instance";
 import { ICard } from "@/types/workCardTypes";
 
+// Hook to fetch a single product by ID
+
 const useProduct = (id: string | undefined) => {
   return useQuery<ICard>({
     queryKey: ["singleproduct", id],
