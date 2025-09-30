@@ -17,6 +17,13 @@ const Aboutme = () => {
 
   return (
     <div className='my-10 md:px-0 px-5'>
+      <div className=''>
+        <h1 className='my-2 uppercase text-seGray text-xs font-semibold'>About Me</h1>
+        <p className='text-sm text-seBlack leading-6 tracking-wide'>{newdata.experience}</p>
+      </div>
+      <div className='my-10'>
+        <Link href={'/resume'} className='flex text-seGray items-center hover:text-seBlack text-sm' >View Full Resume <span> <ChevronRight className='w-4 h-4' /> </span> </Link>
+      </div>
       <div className="w-full">
         <h1 className='text-xs uppercase font-semibold text-seGray'>On The Web</h1>
         <ul className="w-full">
@@ -28,7 +35,7 @@ const Aboutme = () => {
                 rel="noopener noreferrer"
                 className="w-full flex justify-between items-center px-4 py-3 rounded-md hover:bg-seGray/20 transition border border-seGray/20"
               >
-                <span className="flex gap-2 text-xs font-semibold">
+                <span className="flex gap-2 text-xs font-light capitalize tracking-widest">
                   {key}
                 </span>
 
@@ -37,14 +44,6 @@ const Aboutme = () => {
             </li>
           ))}
         </ul>
-      </div>
-
-      <div className='my-5'>
-        <Link href={'/resume'} className='flex text-seGray items-center hover:text-seBlack text-sm' >View Full Resume <span> <ChevronRight className='w-4 h-4' /> </span> </Link>
-      </div>
-      <div className='mt-5'>
-        <h1 className='my-2 uppercase text-seGray text-xs font-semibold'>About Me</h1>
-        <p className='text-sm text-seBlack leading-6'>{newdata.experience}</p>
       </div>
     </div>
   );

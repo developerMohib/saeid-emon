@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { otpStore } from "../utils/otpsender";
-import { Admin } from "../models/adminModel";
+import { User } from "../models/userModel";
 
 
 export const verifyAdminOtp = async (req: Request, res: Response) => {
   try {
     const { email, otp } = req.body;
+    console.log('Verifying OTP for email:', email, 'with OTP:', otp);
     if (!email || !otp) {
       return res.status(400).json({ message: "Email and OTP are required" });
     }
@@ -20,7 +21,7 @@ export const verifyAdminOtp = async (req: Request, res: Response) => {
     }
     delete otpStore[email]; // done ✅
     // ☑ Get admin from DB
-    const admin = await Admin.findOne({ email });
+    const admin = await User.findOne({ email });
     if (!admin) {
       return res.status(400).json({ message: "Admin not found" });
     }

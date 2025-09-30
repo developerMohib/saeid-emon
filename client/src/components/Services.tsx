@@ -3,6 +3,12 @@ import Link from 'next/link';
 import React from 'react';
 const image = 'https://cdn.dribbble.com/userupload/43200390/file/original-ade45dbb987e40dd76cad00f5cc7be23.png'
 import Marquee from "react-fast-marquee";
+import { LuCrown } from "react-icons/lu";
+import {  FaPencilRuler, FaTshirt } from 'react-icons/fa';
+import { BsFillPersonVcardFill } from "react-icons/bs";
+import { BsCalendarEvent } from 'react-icons/bs';
+import { RiShoppingBag3Fill } from 'react-icons/ri';
+import { faqData } from '@/data/workCard';
 const categories = [
     { name: "Web Design", img: { image }, link: "/" },
     { name: "Development", img: { image }, link: "/" },
@@ -10,9 +16,42 @@ const categories = [
     { name: "UI/UX", img: { image }, link: "/" },
     { name: "SEO", img: { image }, link: "/" },
 ];
+const services = [
+    {
+        icon: <LuCrown className="text-white text-4xl" />,
+        title: "Brand Identity",
+        desc: "Logos, Color Systems, Typography",
+    },
+    {
+        icon: <BsFillPersonVcardFill className="text-white text-4xl" />,
+        title: "Business Cards & Stationery",
+        desc: "Professional print-ready layouts",
+    },
+    {
+        icon: <FaTshirt className="text-white text-4xl" />,
+        title: "Jersey & Teamwear Design",
+        desc: "Modern sports apparel & team branding",
+    },
+    {
+        icon: <BsCalendarEvent className="text-white text-4xl" />,
+        title: "Social Media Graphics",
+        desc: "Banners, posts, covers, ad creatives",
+    },
+    {
+        icon: <RiShoppingBag3Fill className="text-white text-4xl" />,
+        title: "Merchandise Design",
+        desc: "Apparel, packaging, promotional items",
+    },
+    {
+        icon: <FaPencilRuler className="text-white text-4xl" />,
+        title: "Custom Illustrations",
+        desc: "Bespoke digital artwork & visuals",
+    },
+];
 const Services = () => {
     return (
         <div className="py-10">
+            
             <Marquee pauseOnHover={true} speed={50} gradient={false}>
                 {categories.map((item, index) => (
                     <Link
@@ -38,55 +77,45 @@ const Services = () => {
                 ))}
             </Marquee>
 
-            <div>
-                {/* What I Offer */}
-                <section>
-                    <h2 className="text-xl font-semibold mb-3">What I Offer</h2>
-                    <ul className="list-none space-y-2">
-                        {/* {data?.description.whatIOffer.map((item, i) => (
-                            <li key={i} className="flex items-start">
-                                <span className="text-green-600 mr-2">✔</span>
-                                <span>{item}</span>
-                            </li>
-                        ))} */}
-                    </ul>
-                </section>
-
-                {/* Why Choose Me */}
-                <section>
-                    <h2 className="text-xl font-semibold mb-3">Why Choose Me?</h2>
-                    <ul className="list-none space-y-2">
-                        {/* {data?.description.whyChooseMe.map((item, i) => (
-                            <li key={i}>
-                                <span>{item}</span>
-                            </li>
-                        ))} */}
-                    </ul>
-                </section>
-
-                {/* What You Provide */}
-                <section>
-                    <h2 className="text-xl font-semibold mb-3">What You Provide</h2>
-                    <ul className="list-disc pl-5 space-y-2">
-                        {/* {data?.description.whatYouProvide.map((item, i) => (
-                            <li key={i}>{item}</li>
-                        ))} */}
-                    </ul>
-                </section>
-
-                {/* Extras */}
-                <section>
-                    <h2 className="text-xl font-semibold mb-3">Extras (Available Upon Request)</h2>
-                    <ul className="list-disc pl-5 space-y-2">
-                        {/* {data?.description.extras.map((item, i) => (
-                            <li key={i}>{item}</li>
-                        ))} */}
-                    </ul>
-                </section>
-
-                {/* Closing */}
-                <p className="italic">data?.description.closing</p>
+            <div className="px-6 py-12">
+                <h2 className="text-3xl font-bold mb-10"></h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {services.map((service, index) => (
+                        <div key={index} className="shadow-lg rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300">
+                            <div className="flex items-start gap-4">
+                                <div className="bg-red-800 p-4 rounded-xl flex items-center justify-center">
+                                    {service.icon}
+                                </div>
+                                <div>
+                                    <h3 className="text-3xl font-semibold mb-2">{service.title}</h3>
+                                    <p className="text-xl opacity-90">{service.desc}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
+
+            <section className="mt-10">
+                <div className="container flex flex-col justify-center px-4 py-8 mx-auto md:p-8">
+                    <h2 className="text-2xl font-semibold sm:text-4xl my-10">
+                        Frequently Asked Questions
+                    </h2>
+
+                    <div className="space-y-4">
+                        {faqData.map((faq, index) => (
+                            <details key={index} className="w-full bg-seBlack/10 rounded-lg">
+                                <summary className="px-4 py-6 text-seBlack/70 cursor-pointer">
+                                    {faq.question}
+                                </summary>
+                                <p className="py-6 ml-4 -mt-4 text-seBlack/70">
+                                    {faq.answer}
+                                </p>
+                            </details>
+                        ))}
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };

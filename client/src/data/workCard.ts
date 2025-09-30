@@ -186,3 +186,40 @@ export const cardsData = [
     },
   },
 ];
+export const faqData = [
+    {
+        question: "What I Offer?",
+        answer: [
+            "Custom magazine designs for print or digital formats",
+            "Engaging cover designs that make an impact",
+            "Professional page layouts with well-structured content and stunning visuals",
+            "Typography and color schemes that align with your brand identity",
+            "Design tailored to various industries – fashion, business, lifestyle, tech, and more",
+        ],
+    },
+    {
+        question: "Why Choose Me?",
+        answer: [
+            "Creative Expertise: Years of experience in graphic design, ensuring unique and high-quality results",
+            "Detail-Oriented: Your magazine will look polished, organized, and professional",
+            "Unlimited Revisions: I’ll work with you until you’re 100% satisfied",
+            "Timely Delivery: Deadlines are my priority, and you’ll always receive on-time results",
+        ],
+    },
+    {
+        question: "What You Provide?",
+        answer: [
+            "Your magazine's content (text, images, articles, ads, etc.)",
+            "Your brand guidelines (if any) or your preferences for style and colors",
+            "Specific instructions (page count, themes, etc.)",
+        ],
+    },
+    {
+        question: "Extras",
+        answer: [
+            "Stock images for your magazine",
+            "Interactive PDF design for digital magazines",
+            "Printing assistance and consultation",
+        ],
+    },
+];

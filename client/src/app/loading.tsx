@@ -1,13 +1,13 @@
 
 export default function Loading() {
     return (
-        <div className="flex items-center justify-center h-1/2 bg-white">
-            <div className="flex flex-col items-center gap-4">
-                <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin" />
-                <p className="text-gray-600 font-medium text-sm tracking-wide">
-                    Loading, please wait...
-                </p>
+        <div className="flex flex-row gap-4">
+            <div
+                className="w-12 h-12 rounded-full animate-spin border-y border-solid border-cyan-500 border-t-transparent shadow-md"
+            >
+                
             </div>
         </div>
+
     );
 }

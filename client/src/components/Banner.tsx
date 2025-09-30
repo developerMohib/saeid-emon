@@ -10,7 +10,6 @@ import useRequireAuth from "@/hooks/useRequireAuth";
 
 const Banner = () => {
     const { isPending, isError, error, data, refetch } = useAuthUser();
-
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState<string | null>(null);
@@ -18,8 +17,8 @@ const Banner = () => {
     const checked = useRequireAuth("token");
 
     if (isPending) return <Loading />;
-    const newdata = data[0];
     if (isError) return <p>Error: {error?.message}</p>;
+    const newdata = data?.[0] || {};
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -81,8 +80,8 @@ const Banner = () => {
 
             {/* Modal */}
             {showModal && (
-                <div className="fixed inset-0 bg-seSlack bg-opacity-20 flex justify-center items-center z-50">
-                    <div className="bg-white p-5 rounded-lg w-96 space-y-4">
+                <div className="fixed inset-0 bg-seSlack flex justify-center items-center z-50">
+                    <div className="bg-seWhite p-5 rounded-lg w-96 space-y-4">
                         <h2 className="text-lg font-semibold">Change Banner <span className="text-xs font-light text-seGray/60" >Max 2MB</span> </h2>
 
                         <input
@@ -105,13 +104,13 @@ const Banner = () => {
                         <div className="flex justify-end space-x-3">
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="bg-gray-300 px-4 py-2 rounded cursor-pointer"
+                                className="bg-seGray/60 px-4 py-2 rounded cursor-pointer"
                             >
                                 Cancel
                             </button>
                             <button disabled={loading || !bannerFile}
                                 onClick={handleSubmit}
-                                className={`bg-seRed text-white px-4 py-2 rounded cursor-pointer ${loading || !bannerFile ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-700'}`}
+                                className={`bg-seRed text-seWhite px-4 py-2 rounded cursor-pointer ${loading || !bannerFile ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-700'}`}
                             >
                                 {loading ? 'Uploading...' : 'Submit'}
                             </button>

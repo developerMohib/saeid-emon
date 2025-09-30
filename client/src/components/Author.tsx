@@ -3,10 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {
     CircleAlert,
-    FilePen,
     Mail,
     MapPinCheck,
-    ShoppingBag,
     PenLine,
 } from "lucide-react";
 import { useAuthUser } from "@/hooks/useAuthUser";
@@ -18,7 +16,6 @@ import useRequireAuth from "@/hooks/useRequireAuth";
 
 const Author = () => {
     const { isPending, isError, error, data, refetch } = useAuthUser();
-
     const checked = useRequireAuth("token");
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -103,16 +100,12 @@ const Author = () => {
 
                 <ul className="space-y-2">
                     <li className="flex items-center gap-2">
-                        <CircleAlert className="w-4 h-4 text-seRed" />
-                        <span className="text-seSlack">{newdata?.proffession}</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                        <ShoppingBag className="w-4 h-4 text-seBlue" />
-                        <span className="text-seSlack">{newdata?.description}</span>
+                        <CircleAlert className="w-4 h-4 text-seBlack" />
+                        <span className="text-seSlack tracking-wide">{newdata?.proffession}</span>
                     </li>
                     <li className="flex items-center gap-2">
                         <MapPinCheck className="w-4 h-4 text-seBlack" />
-                        <span className="text-seSlack">{newdata?.location}</span>
+                        <span className="text-seSlack tracking-wide">{newdata?.location}</span>
                     </li>
                 </ul>
             </header>
@@ -125,22 +118,12 @@ const Author = () => {
                         Hire Me
                     </button>
                 </Link>
-
-                {/* Edit Profile Info button */}
-                {checked && (
-                    <div className="mt-3">
-                        <button className="flex items-center justify-center gap-2 w-full bg-seBlue/90 text-seWhite hover:text-seSlack py-2 rounded-lg hover:bg-seRed/80 transition-colors cursor-pointer">
-                            <FilePen />
-                            Edit Profile Info
-                        </button>
-                    </div>
-                )}
             </footer>
 
             {/* Modal for Upload */}
             {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-                    <div className="bg-white p-5 rounded-lg w-96 space-y-4">
+                <div className="fixed inset-0 bg-seBlack flex justify-center items-center z-50">
+                    <div className="bg-seWhite p-5 rounded-lg w-96 space-y-4">
                         <h2 className="text-lg font-semibold">Change Profile Picture <span className="text-xs font-light text-seGray/60" >Max 2MB</span></h2>
 
                         <input
@@ -163,13 +146,13 @@ const Author = () => {
                         <div className="flex justify-end space-x-3">
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="bg-gray-300 px-4 py-2 rounded"
+                                className="bg-seGray px-4 py-2 rounded cursor-pointer"
                             >
                                 Cancel
                             </button>
                             <button disabled={loading}
                                 onClick={handleSubmit}
-                                className={`bg-seRed text-white px-4 py-2 rounded cursor-pointer ${loading || !avatarFile ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-700'}`}
+                                className={`bg-seRed text-seWhite px-4 py-2 rounded cursor-pointer ${loading || !avatarFile ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-700'}`}
                             >
                                 {loading ? 'Uploading...' : 'Save'}
                             </button>

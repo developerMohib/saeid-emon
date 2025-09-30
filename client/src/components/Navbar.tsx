@@ -2,13 +2,21 @@
 import React from 'react';
 import ThemeChanger from './ThemeChanger';
 import Link from 'next/link';
+import useRequireAuth from '@/hooks/useRequireAuth';
 
 const Navbar = () => {
+    const checked = useRequireAuth("token");
+
     // Navigation links data
     const navLinks = [
         { href: "/", label: "Home" },
-        { href: "/contact", label: "Hire me" },
-        { href: "/login", label: "Login" },
+        // Only show Dashboard if checked === true
+        ...(checked
+            ? [{ href: "/dashboard", label: "Dashboard" }]
+            : [
+                { href: "/contact", label: "Hire me" },
+                { href: "/login", label: "Login" }
+            ]),
     ];
     return (
         <header className="backdrop-blur-sm sticky top-0 z-50 w-full">
