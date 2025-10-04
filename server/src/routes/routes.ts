@@ -17,12 +17,14 @@ import {
 // import { verifyToken } from "../utils/accesstoken";
 import { upload } from "../utils/multer";
 import { contactwithUser } from "../controllers/contactController";
+import { resumes } from "../controllers/resumeController";
 
 const router = Router();
 
 router.post("/contact", contactwithUser);
 router.get("/all", getAllProjects);
 router.get("/single/:id", getProjectById);
+router.get("/resume", resumes);
 router.post("/create", upload.array("images", 5), createProject);
 router.put("/update/:id", updateProject); // not completed yet
 router.delete("/delete/:id", deleteProject);
