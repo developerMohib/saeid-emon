@@ -57,7 +57,19 @@ export const getAdminDetails = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server error", err });
   }
 };
-
+export const logoutAdmin = async (req: Request, res: Response) => {
+  try {
+    
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    return res.json({ success: true, message: "Logged out successfully" });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: "Server error", err });
+  }
+}
 export const updateBanner = async (req: Request, res: Response) => {
   try {
     const filePath = req.file?.path;

@@ -11,6 +11,7 @@ export default function useRequireAuth(cookieName: string = "token") {
 
   useEffect(() => {
     const token = Cookies.get(cookieName);
+    console.log('token from cookies:', token);
     if (!token) {
       router.push("/");
     } else {

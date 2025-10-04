@@ -12,12 +12,13 @@ import Loading from "../loading";
 import { ICard } from "@/types/workCardTypes";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import { MapPinCheck, School } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 const Dashboard = () => {
   const { isPending: userPending, data: user } = useAuthUser();
   const [loading, setLoading] = useState(false);
-  const { data :product, isPending, refetch, error, isError } = useProducts();
+  const { data: product, isPending, refetch, error, isError } = useProducts();
   const checked = useRequireAuth("token");
+  const router = useRouter();
   if (!checked) return <Loading />;
 
   const handleDelete = async (prod: ICard) => {
@@ -47,13 +48,28 @@ const Dashboard = () => {
   const handleEdit = (prod: ICard) => {
     console.log("Edit product:", prod);
   };
+  const handleLogout = async () => {
+    try {
+      const res = await instance.post(`/auth/logout`, {},
+        { withCredentials: true } 
+      );
+      if (res.data.success) {
+        toast.success(res.data.message);
+        router.push("/login");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
+
 
   if (isPending || loading || userPending) return <Loading />;
   if (isError || error) return <p>Error: {(error as Error).message}</p>;
   if (!product || product.length === 0) return <p className="text-center py-4">No design found.</p>;
   if (!checked) return null;
   const { avatar, name, proffession, location } = user[0];
-  
+
   return (
     <div className="grid grid-cols-4 gap-4 container mx-auto py-6">
       {/* LEFT SIDEBAR */}
@@ -74,8 +90,8 @@ const Dashboard = () => {
             <h1 className="text-2xl font-bold text-seSlack ml-1.5">
               {name}
             </h1>
-            <p className="text-seSlack flex items-center text-xs font-light"> <span> <School  className="mr-2 w-5"/> </span> {proffession}</p>
-            <p className="text-seSlack flex items-center text-xs font-light"> <span className="mr-2 w-5" > <MapPinCheck className="mr-2 w-5"/> </span> {location}</p>
+            <p className="text-seSlack flex items-center text-xs font-light"> <span> <School className="mr-2 w-5" /> </span> {proffession}</p>
+            <p className="text-seSlack flex items-center text-xs font-light"> <span className="mr-2 w-5" > <MapPinCheck className="mr-2 w-5" /> </span> {location}</p>
           </div>
 
           <div className="px-6 mb-4">
@@ -86,15 +102,14 @@ const Dashboard = () => {
             </Link>
           </div>
 
-          <div className="bg-gray-50 dark:bg-gray-700 px-6 py-4">
-            <button
-              className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
+          <div className="bg-gray-50 px-6 py-4">
+            <button onClick={handleLogout}
+              className="w-full bg-red-600 cursor-pointer text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
             >
               Logout
             </button>
           </div>
         </div>
-
       </div>
 
       {/* RIGHT CONTENT */}

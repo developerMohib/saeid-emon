@@ -94,7 +94,7 @@ const SignIn = () => {
                 required
               />
             </div>
-            <div className="mb-4 text-left">
+            <div className="mb-4 text-left relative">
               <label className="block text-sm font-medium text-seSlack">
                 Password
               </label>
@@ -105,13 +105,15 @@ const SignIn = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full mt-1 px-3 py-2 border border-seGray/50 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seSlack/50"
                 required
-              /> <button
+              />
+
+              {password && (<button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-9 text-seSlack/70 hover:text-seSlack"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
+              </button>)}
             </div>
 
             <button
@@ -121,6 +123,7 @@ const SignIn = () => {
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>
+
 
             {message && <p className="mt-3 text-sm">{message}</p>}
           </form>
