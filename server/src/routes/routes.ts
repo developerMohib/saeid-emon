@@ -17,7 +17,6 @@ import {
 // import { verifyToken } from "../utils/accesstoken";
 import { upload } from "../utils/multer";
 import { contactwithUser } from "../controllers/contactController";
-import { verifyToken } from "../utils/accesstoken";
 
 const router = Router();
 
@@ -25,7 +24,7 @@ router.post("/contact", contactwithUser);
 router.get("/all", getAllProjects);
 router.get("/single/:id", getProjectById);
 router.post("/create", upload.array("images", 5), createProject);
-router.put("/:id", updateProject); // not completed yet
+router.put("/update/:id", updateProject); // not completed yet
 router.delete("/delete/:id", deleteProject);
 router.put("/user/banner", upload.single("banner"), updateBanner);
 router.put("/user/avatar", upload.single("avatar"), updateAvatar);
@@ -34,6 +33,6 @@ router.put("/user/avatar", upload.single("avatar"), updateAvatar);
 router.post("/verify-otp", verifyAdminOtp);
 router.get("/me", getAdminDetails);
 router.post("/login", loginAdmin);
-router.post("/logout",verifyToken, logoutAdmin);
+router.post("/logout", logoutAdmin);
 
 export default router;

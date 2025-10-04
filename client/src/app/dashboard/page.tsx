@@ -13,13 +13,54 @@ import { ICard } from "@/types/workCardTypes";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import { MapPinCheck, School } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Dialog } from "@headlessui/react";
+
 const Dashboard = () => {
   const { isPending: userPending, data: user } = useAuthUser();
   const [loading, setLoading] = useState(false);
   const { data: product, isPending, refetch, error, isError } = useProducts();
   const checked = useRequireAuth("token");
   const router = useRouter();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editProduct, setEditProduct] = useState<ICard | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editCategory, setEditCategory] = useState("");
+
   if (!checked) return <Loading />;
+
+  const openEditModal = (prod: ICard) => {
+    setEditProduct(prod);
+    setEditTitle(prod.title ?? "");
+    setEditCategory(prod.category ?? "");
+    setIsModalOpen(true);
+  };
+
+  const handleEditSubmit = async () => {
+    if (!editProduct) return;
+
+    setLoading(true);
+    try {
+      const res = await instance.put(`/products/update/${editProduct._id}`, {
+        title: editTitle,
+        category: editCategory,
+      });
+console.log(res.data);
+      if (res.data.success) {
+        toast.success("Product updated successfully!");
+        refetch();
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error?.response?.data.message || "Failed to update product");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async (prod: ICard) => {
     const isConfirmed = window.confirm(
@@ -45,17 +86,12 @@ const Dashboard = () => {
     }
   };
 
-  const handleEdit = (prod: ICard) => {
-    console.log("Edit product:", prod);
-  };
   const handleLogout = async () => {
     try {
-      const res = await instance.post(`/auth/logout`, {},
-        { withCredentials: true } 
-      );
+      const res = await instance.post(`/auth/logout`, {}, { withCredentials: true });
       if (res.data.success) {
         toast.success(res.data.message);
-        router.push("/login");
+        router.push("/auth/login");
         window.location.reload();
       }
     } catch (error) {
@@ -63,114 +99,158 @@ const Dashboard = () => {
     }
   };
 
-
   if (isPending || loading || userPending) return <Loading />;
   if (isError || error) return <p>Error: {(error as Error).message}</p>;
   if (!product || product.length === 0) return <p className="text-center py-4">No design found.</p>;
-  if (!checked) return null;
+
   const { avatar, name, proffession, location } = user[0];
 
   return (
-    <div className="grid grid-cols-4 gap-4 container mx-auto py-6">
-      {/* LEFT SIDEBAR */}
-      <div className="col-span-1">
+    <>
+      <div className="grid grid-cols-4 gap-4 container mx-auto py-6">
+        {/* LEFT SIDEBAR */}
+        <div className="col-span-1">
+          {/* Sidebar content */}
+          <div className="rounded-xl shadow-lg overflow-hidden bg-seWhite">
+            <div className="relative h-32 bg-seBlue/70">
+              <Image
+                src={avatar}
+                alt={name}
+                width={96}
+                height={96}
+                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-seWhite"
+              />
+            </div>
 
-        <div className="rounded-xl shadow-lg overflow-hidden bg-seWhite ">
-          <div className="relative h-32 bg-seBlue/80">
-            <Image
-              src={avatar}
-              alt={name}
-              width={96}
-              height={96}
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-seWhite "
-            />
-          </div>
+            <div className="pt-16 pb-6 px-6 text-start">
+              <h1 className="text-2xl font-bold text-seSlack ml-1.5">{name}</h1>
+              <p className="text-seSlack flex items-center text-xs font-light">
+                <School className="mr-2 w-5" /> {proffession}
+              </p>
+              <p className="text-seSlack flex items-center text-xs font-light">
+                <MapPinCheck className="mr-2 w-5" /> {location}
+              </p>
+            </div>
 
-          <div className="pt-16 pb-6 px-6 text-start">
-            <h1 className="text-2xl font-bold text-seSlack ml-1.5">
-              {name}
-            </h1>
-            <p className="text-seSlack flex items-center text-xs font-light"> <span> <School className="mr-2 w-5" /> </span> {proffession}</p>
-            <p className="text-seSlack flex items-center text-xs font-light"> <span className="mr-2 w-5" > <MapPinCheck className="mr-2 w-5" /> </span> {location}</p>
-          </div>
+            <div className="px-6 mb-4">
+              <Link href="/create-project">
+                <button className="w-full bg-seRed text-white py-2 rounded-lg hover:bg-indigo-600 transition-colors cursor-pointer">
+                  Create Project
+                </button>
+              </Link>
+            </div>
 
-          <div className="px-6 mb-4">
-            <Link href="/create-project">
-              <button className="w-full bg-seBlue text-seWhite py-2 rounded-lg hover:bg-indigo-700 transition-colors cursor-pointer">
-                Create Project
+            <div className="bg-gray-50 px-6 py-4">
+              <button
+                onClick={handleLogout}
+                className="w-full bg-red-600 cursor-pointer text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Logout
               </button>
-            </Link>
+            </div>
           </div>
+        </div>
 
-          <div className="bg-gray-50 px-6 py-4">
-            <button onClick={handleLogout}
-              className="w-full bg-red-600 cursor-pointer text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Logout
-            </button>
-          </div>
+        {/* RIGHT CONTENT */}
+        <div className="col-span-3">
+          <table className="w-full divide-y divide-gray-200">
+            <thead className="">
+              <tr className="bg-gray-100 dark:bg-gray-800">
+                {["#", "Image", "Name", "Category", "Visit", "Action"].map((head) => (
+                  <th
+                    key={head}
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider"
+                  >
+                    {head}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+
+            <tbody className="divide-y divide-gray-200">
+              {product?.map((prod, i) => (
+                <tr key={prod._id}>
+                  <td className="px-6 py-4">{i + 1}</td>
+                  <td className="px-6 py-4">
+                    <Image
+                      src={prod.images[0]}
+                      alt={prod.title}
+                      width={100}
+                      height={100}
+                      className="w-24 h-24 object-cover rounded-lg"
+                    />
+                  </td>
+                  <td className="px-6 py-4">{prod.title}</td>
+                  <td className="px-6 py-4">{prod.category}</td>
+                  <td className="px-6 py-4">
+                    <Link
+                      href={`/design-details/${prod._id}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      View
+                    </Link>
+                  </td>
+                  <td className="px-6 py-4 flex items-center">
+                    <button
+                      onClick={() => openEditModal(prod)}
+                      className="px-4 cursor-pointer py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(prod)}
+                      className="ml-2 cursor-pointer px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* RIGHT CONTENT */}
-      <div className="col-span-3">
-        <table className="w-full divide-y divide-gray-200 ">
-          <thead className="">
-            <tr className="bg-gray-100 dark:bg-gray-800">
-              {["#", "Image", "Name", "Category", "Visit", "Action"].map((head) => (
-                <th
-                  key={head}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider"
-                >
-                  {head}
-                </th>
-              ))}
-            </tr>
-          </thead>
+      {/* EDIT MODAL */}
+      <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} className="relative z-50">
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <Dialog.Panel className="mx-auto max-w-md rounded bg-seWhite p-6">
+            <Dialog.Title className="text-lg font-bold mb-4">Edit Product</Dialog.Title>
 
-          <tbody className="divide-y divide-gray-200">
-            {product?.map((prod, i) => (
-              <tr key={prod._id}>
-                <td className="px-6 py-4">{i + 1}</td>
-                <td className="px-6 py-4">
-                  <Image
-                    src={prod.images[0]}
-                    alt={prod.title}
-                    width={100}
-                    height={100}
-                    className="w-24 h-24 object-cover rounded-lg"
-                  />
-                </td>
-                <td className="px-6 py-4">{prod.title}</td>
-                <td className="px-6 py-4">{prod.category}</td>
-                <td className="px-6 py-4">
-                  <Link
-                    href={`/design-details/${prod._id}`}
-                    className="text-blue-600 hover:underline"
-                  >
-                    View
-                  </Link>
-                </td>
-                <td className="px-6 py-4 flex items-center">
-                  <button
-                    onClick={() => handleEdit(prod)}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(prod)}
-                    className="ml-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+            <input
+              type="text"
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              placeholder="Title"
+              className="w-full border p-2 mb-3 rounded"
+            />
+            <input
+              type="text"
+              value={editCategory}
+              onChange={(e) => setEditCategory(e.target.value)}
+              placeholder="Category"
+              className="w-full border p-2 mb-3 rounded"
+            />
+
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 cursor-pointer bg-gray-300 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleEditSubmit}
+                className="px-4 py-2 cursor-pointer bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                Save
+              </button>
+            </div>
+          </Dialog.Panel>
+        </div>
+      </Dialog>
+    </>
   );
 };
 

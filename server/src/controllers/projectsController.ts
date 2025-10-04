@@ -25,7 +25,7 @@ export const getAllProjects = async (req: Request, res: Response) => {
 export const getProjectById = async (req: Request, res: Response) => {
   try {
     const card = await Product.findById(req.params.id);
-    
+
     if (!card)
       return res.status(404).json({ error: "Card not found from server" });
     res.json(card);
@@ -72,13 +72,15 @@ export const createProject = async (req: Request, res: Response) => {
 // UPDATE card
 export const updateProject = async (req: Request, res: Response) => {
   try {
-    const updated = await Card.findOneAndUpdate(
-      { id: req.params.id },
-      req.body,
-      { new: true },
+     const { title, category } = req.body;
+    const updated = await Product.findOneAndUpdate(
+      { _id: req.params.id },
+      { title, category },
+      { new: true, upsert: true }
     );
+
     if (!updated) return res.status(404).json({ error: "Card not found" });
-    res.json(updated);
+    res.json({ message: "Card updated successfully", success: true ,data: updated});
   } catch (err: unknown) {
     if (err instanceof Error) {
       // TS now knows err has `message`

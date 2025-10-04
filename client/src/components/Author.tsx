@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
     CircleAlert,
-    Mail,
     MapPinCheck,
     PenLine,
 } from "lucide-react";
@@ -114,7 +113,6 @@ const Author = () => {
             <footer>
                 <Link href="/contact">
                     <button className="flex items-center justify-center gap-2 w-full bg-seGray/20 text-seRed hover:text-seWhite py-2 rounded-lg hover:bg-seRed transition-colors cursor-pointer">
-                        <Mail />
                         Hire Me
                     </button>
                 </Link>

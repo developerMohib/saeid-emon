@@ -7,7 +7,6 @@ import Image from 'next/image';
 
 const Navbar = () => {
     const checked = useRequireAuth("token");
-    console.log("Auth check in Navbar:", checked);
     // Navigation links data
     const navLinks = [
         { href: "/", label: "Home" },
@@ -16,7 +15,7 @@ const Navbar = () => {
             ? [{ href: "/dashboard", label: "Dashboard" }]
             : [
                 { href: "/contact", label: "Hire me" },
-                { href: "/login", label: "Login" }
+                { href: "/auth/login", label: "Login" }
             ]),
     ];
     return (
@@ -24,7 +23,9 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between gap-6">
                     <div>
-                       <Image className='w-16 h-auto' src="/emons-logo.png" alt="Logo" width={120} height={40} />
+                        <Link href="/">
+                            <Image className='w-16 h-auto' src="/emons-logo.png" alt="Logo" width={120} height={40} />
+                        </Link>
                     </div>
                     <div className='flex items-center gap-6'>
                         <nav className="flex items-center gap-6">

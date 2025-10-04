@@ -7,7 +7,6 @@ import { User } from "../models/userModel";
 export const verifyAdminOtp = async (req: Request, res: Response) => {
   try {
     const { email, otp } = req.body;
-    console.log('Verifying OTP for email:', email, 'with OTP:', otp);
     if (!email || !otp) {
       return res.status(400).json({ message: "Email and OTP are required" });
     }

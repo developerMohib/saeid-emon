@@ -1,12 +1,11 @@
 "use client";
-
-import instance from "@/hooks/instance";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import instance from "@/hooks/instance";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");

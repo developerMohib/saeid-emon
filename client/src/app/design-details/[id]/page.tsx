@@ -35,7 +35,7 @@ const ProductDetails = () => {
                 {/* CTA Button */}
                 <Link href={"/contact"} >
                     <button className="mt-4 px-6 py-2 bg-seGray/10 hover:bg-seGray/20 rounded-full border border-seGray/30 shadow-sm text-seBlack transition-colors cursor-pointer">
-                        Message Me Now 🚀
+                        GET A CUSTOM QOUTE
                     </button>
                 </Link>
             </div>
