@@ -1,33 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-
-// "use client";
-// import { useState, useEffect } from "react";
-// import Cookies from "js-cookie";
-
-// export default function useCheckAuth(cookieName: string = "token") {
-//   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-//   useEffect(() => {
-//     const token = Cookies.get(cookieName);
-//     console.log(token);
-    
-//     setIsAuthenticated(!!token);
-
-//     // cookie পরিবর্তন detect করার জন্য কাস্টম event ব্যবহার করা হবে
-//     const handleAuthChange = () => {
-//       const updatedToken = Cookies.get(cookieName);
-//       setIsAuthenticated(!!updatedToken);
-//     };
-
-//     window.addEventListener("authChange", handleAuthChange);
-
-//     return () => window.removeEventListener("authChange", handleAuthChange);
-//   }, [cookieName]);
-
-//   return isAuthenticated;
-// }
-
 "use client";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
@@ -58,11 +30,9 @@ export default function useCheckAuth(cookieName: string = "token") {
         // ⛔ Token expired
         Cookies.remove(cookieName);
         setIsAuthenticated(false);
-
-        console.warn("🔴 Token expired — redirecting to home...");
         
         // ✅ Redirect to home page
-        router.replace("/"); // or "/auth/login" if you want login page
+        router.replace("/"); 
       } else {
         setIsAuthenticated(true);
       }

@@ -15,7 +15,6 @@ const ResetPasswordPage = () => {
     const token = searchParams.get("token");
     const [confirm, setConfirm] = useState("");
     const [email, setEmail] = useState("");
-    console.log('email token',email,token)
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

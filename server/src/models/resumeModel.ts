@@ -1,9 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 
 interface IResume extends Document {
-  name: string;
-  profession: string;
-  location: string;
   about: string;
   workExperience: {
     company: string;
@@ -35,9 +32,6 @@ interface IResume extends Document {
 }
 
 const resumeSchema = new Schema<IResume>({
-  name: { type: String, required: true },
-  profession: { type: String, required: true },
-  location: { type: String, required: true },
   about: { type: String, required: true },
   workExperience: [
     {

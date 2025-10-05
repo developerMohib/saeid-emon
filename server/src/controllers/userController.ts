@@ -24,9 +24,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
     }
 
     // Check password for existing admin
-    console.log(" 22 login admin pass", admin.password);
     const isMatch = await bcrypt.compare(password, admin.password);
-    console.log(" 33 login ismath", isMatch);
     if (!isMatch) {
       return res
         .status(400)

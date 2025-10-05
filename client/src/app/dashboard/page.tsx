@@ -46,7 +46,6 @@ const Dashboard = () => {
         title: editTitle,
         category: editCategory,
       });
-console.log(res.data);
       if (res.data.success) {
         toast.success("Product updated successfully!");
         refetch();

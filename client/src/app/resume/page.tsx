@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React from "react";
@@ -7,10 +8,13 @@ import Link from "next/link";
 import { IResume } from "@/types/resumeTypes";
 import useCheckAuth from "@/hooks/useCheckAuth";
 import Loader from "@/components/Loader";
+import { useAuthUser } from "@/hooks/useAuthUser";
 
 const ResumePage = () => {
+  const { data: author, refetch } = useAuthUser();
   const { isPending, isError, error, data } = useResume();
   const isAuthenticated = useCheckAuth();
+  const authorData = author[0];
 
   if (isPending) return <Loader />;
   if (isError) return <div>Error: {error?.message}</div>;
@@ -35,13 +39,13 @@ const ResumePage = () => {
             {/* Header */}
             <header className="text-start py-6">
               <h1 className="text-2xl sm:text-3xl font-bold text-seBlack/90">
-                {resume.name}
+                {authorData.name}
               </h1>
               <h2 className="text-lg sm:text-xl text-seBlack/90">
-                {resume.profession}
+                {authorData.proffession}
               </h2>
               <p className="text-seBlack/60 text-sm sm:text-base">
-                {resume.location}
+                {authorData.location}
               </p>
             </header>
 
