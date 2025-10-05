@@ -24,8 +24,9 @@ export const loginAdmin = async (req: Request, res: Response) => {
     }
 
     // Check password for existing admin
+    console.log(" 22 login admin pass", admin.password);
     const isMatch = await bcrypt.compare(password, admin.password);
-   
+    console.log(" 33 login ismath", isMatch);
     if (!isMatch) {
       return res
         .status(400)
@@ -41,7 +42,9 @@ export const loginAdmin = async (req: Request, res: Response) => {
       user: { email: admin.email, name: admin.name },
     });
   } catch (err) {
-    return res.status(500).json({ success: false, message: "Server error",err });
+    return res
+      .status(500)
+      .json({ success: false, message: "Server error", err });
   }
 };
 export const getAdminDetails = async (req: Request, res: Response) => {
@@ -59,7 +62,6 @@ export const getAdminDetails = async (req: Request, res: Response) => {
 };
 export const logoutAdmin = async (req: Request, res: Response) => {
   try {
-    
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -67,9 +69,11 @@ export const logoutAdmin = async (req: Request, res: Response) => {
     });
     return res.json({ success: true, message: "Logged out successfully" });
   } catch (err) {
-    return res.status(500).json({ success: false, message: "Server error", err });
+    return res
+      .status(500)
+      .json({ success: false, message: "Server error", err });
   }
-}
+};
 export const updateBanner = async (req: Request, res: Response) => {
   try {
     const filePath = req.file?.path;

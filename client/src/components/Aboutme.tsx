@@ -1,15 +1,15 @@
 "use client"
-import Loading from '@/app/loading';
 import { useAuthUser } from '@/hooks/useAuthUser';
 import { ChevronRight, SquareArrowOutUpRight } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import Loader from './Loader';
 
 const Aboutme = () => {
 
   const { isPending, isError, error, data } = useAuthUser();
 
-  if (isPending) return <Loading />;
+  if (isPending) return <Loader />;
   if (isError) return <p>Error: {error?.message}</p>;
 
   const socials = data[0]?.social;

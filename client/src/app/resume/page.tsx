@@ -1,17 +1,18 @@
 "use client";
 
 import React from "react";
-import useRequireAuth from "@/hooks/useRequireAuth";
 import useResume from "@/hooks/useResume";
 import { PenLine } from "lucide-react";
 import Link from "next/link";
 import { IResume } from "@/types/resumeTypes";
+import useCheckAuth from "@/hooks/useCheckAuth";
+import Loader from "@/components/Loader";
 
 const ResumePage = () => {
   const { isPending, isError, error, data } = useResume();
-//   const checked = useRequireAuth("token");
+  const isAuthenticated = useCheckAuth();
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending) return <Loader />;
   if (isError) return <div>Error: {error?.message}</div>;
 
   // Ensure data exists and take the first resume
@@ -44,11 +45,11 @@ const ResumePage = () => {
               </p>
             </header>
 
-            {/* {checked && (
+            {isAuthenticated && (
               <button className="absolute top-3 right-3 bg-seRed p-2 rounded-full shadow cursor-pointer text-white hover:bg-red-700 transition">
                 <PenLine size={16} />
               </button>
-            )} */}
+            )}
 
             {/* About */}
             <div className="md:pt-6 pt-3 divide-y divide-seWhite/20">

@@ -28,13 +28,14 @@ export const verifyAdminOtp = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { id: admin._id, email: admin.email, role: "admin" },
       process.env.JWT_SECRET as string,
-      { expiresIn: "24h" },
+      { expiresIn: "1d" },
     );
 
     res.cookie("token", token, {
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 15 * 60 * 1000,
+      // maxAge: 15 * 60 * 1000,
+      maxAge: parseInt(process.env.JWT_EXPIRES_IN as string, 10) * 60 * 1000,
       sameSite: "strict",
     });
 

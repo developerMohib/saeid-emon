@@ -1,10 +1,26 @@
 import { Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { Secret, SignOptions } from "jsonwebtoken";
 import { AuthRequest } from "../types/express";
+
 
 interface DecodedUser {
   id: string;
 }
+
+export interface TJwtPayload {
+    userEmail: string;
+}
+
+
+export const createToken = (
+    jwtPayload: TJwtPayload,
+    secret: Secret,
+    expiresIn: string | number
+) => {
+    const options: SignOptions = { expiresIn: expiresIn as SignOptions['expiresIn'] };
+
+    return jwt.sign(jwtPayload, secret, options);
+};
 
 export const verifyToken = (
   req: AuthRequest,

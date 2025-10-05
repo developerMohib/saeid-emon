@@ -29,7 +29,7 @@ const SignIn = () => {
       if (res.data.success) {
         toast.success("OTP sent to email");
         setMessage("OTP sent to your email");
-        setStep("otp"); // show OTP form now
+        setStep("otp");
       } else {
         setMessage(res.data.message || "Login failed");
       }
@@ -56,6 +56,7 @@ const SignIn = () => {
       if (res.data.success && res.data.user) {
         toast.success("OTP Verified! Logged in successfully");
         router.push("/dashboard");
+        window.dispatchEvent(new Event("authChange"));
       } else {
         setMessage(res.data.message || "Invalid OTP");
       }
@@ -165,3 +166,4 @@ const SignIn = () => {
 };
 
 export default SignIn;
+

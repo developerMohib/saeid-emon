@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import Loading from "@/app/loading";
 import { PenLine } from "lucide-react";
 import instance from "@/hooks/instance";
 import toast from "react-hot-toast";
-import useRequireAuth from "@/hooks/useRequireAuth";
+import useCheckAuth from "@/hooks/useCheckAuth";
+import Loader from "./Loader";
 
 const Banner = () => {
     const { isPending, isError, error, data, refetch } = useAuthUser();
@@ -14,9 +14,9 @@ const Banner = () => {
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState<string | null>(null);
     const [bannerFile, setBannerFile] = useState<File | null>(null);
-    const checked = useRequireAuth("token");
+   const isAuthenticated = useCheckAuth();
 
-    if (isPending) return <Loading />;
+    if (isPending) return <Loader />;
     if (isError) return <p>Error: {error?.message}</p>;
     const newdata = data?.[0] || {};
 
@@ -69,7 +69,7 @@ const Banner = () => {
                 priority
             />
 
-            {checked && (
+            {isAuthenticated && (
                 <button
                     onClick={() => setShowModal(true)}
                     className="absolute top-3 right-3 bg-seRed p-2 rounded-full shadow cursor-pointer text-white hover:bg-red-700 transition"

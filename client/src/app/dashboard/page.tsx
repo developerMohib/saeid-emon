@@ -8,12 +8,13 @@ import toast from "react-hot-toast";
 import useProducts from "@/hooks/useProducts";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import instance from "@/hooks/instance";
-import Loading from "../loading";
+
 import { ICard } from "@/types/workCardTypes";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import { MapPinCheck, School } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dialog } from "@headlessui/react";
+import Loader from "@/components/Loader";
 
 const Dashboard = () => {
   const { isPending: userPending, data: user } = useAuthUser();
@@ -27,7 +28,7 @@ const Dashboard = () => {
   const [editTitle, setEditTitle] = useState("");
   const [editCategory, setEditCategory] = useState("");
 
-  if (!checked) return <Loading />;
+  if (!checked) return <Loader />;
 
   const openEditModal = (prod: ICard) => {
     setEditProduct(prod);
@@ -91,15 +92,16 @@ console.log(res.data);
       const res = await instance.post(`/auth/logout`, {}, { withCredentials: true });
       if (res.data.success) {
         toast.success(res.data.message);
-        router.push("/auth/login");
-        window.location.reload();
+        router.push("/");
+        // window.location.reload();
+        window.dispatchEvent(new Event("authChange"));
       }
     } catch (error) {
       console.error("Logout failed", error);
     }
   };
 
-  if (isPending || loading || userPending) return <Loading />;
+  if (isPending || loading || userPending) return <Loader />;
   if (isError || error) return <p>Error: {(error as Error).message}</p>;
   if (!product || product.length === 0) return <p className="text-center py-4">No design found.</p>;
 

@@ -1,5 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
+import { config } from "../config";
+import { UserModel } from "./userInterface";
 
 
 export interface IUser extends Document {
@@ -43,17 +45,59 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-UserSchema.pre<IUser>("save", async function (next) {
-  if (!this.isModified("password")) return next();
 
-  try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+// UserSchema.pre<IUser>("save", async function (next) {
+//   if (!this.isModified("password")) return next();
+
+//   try {
+//     const salt = await bcrypt.genSalt(10);
+//     this.password = await bcrypt.hash(this.password, salt);
+//     next();
+//   } catch (err) {
+//     next(err as Error);
+//   }
+// });
+
+// Existing ID
+
+UserSchema.statics.isUserExistsByEmail = async function (email: string) {
+    return await User.findOne({ email }).select('+password');
+};
+
+UserSchema.pre('save', async function (next) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const user = this; // doc
+    // hashing password and save into DB
+    user.password = await bcrypt.hash(
+        user.password,
+        Number(config.salt),
+    );
     next();
-  } catch (err) {
-    next(err as Error);
-  }
 });
 
+// set '' after saving password
+UserSchema.post('save', function (doc, next) {
+    doc.password = '';
+    next();
+});
 
-export const User = model<IUser>("User", UserSchema);
+// Password Matched
+UserSchema.statics.isPasswordMatched = async function (
+    plainTextPassword,
+    hashedPassword,
+) {
+    return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
+
+// Chenged password then tokn expired
+UserSchema.statics.isJWTIssuedBeforePasswordChanged = function (
+    passwordChangedTimestamp: Date,
+    jwtIssuedTimestamp: number,
+) {
+    const passwordChangedTime =
+        new Date(passwordChangedTimestamp).getTime() / 1000;
+    return passwordChangedTime > jwtIssuedTimestamp;
+};
+
+
+export const User = model<IUser, UserModel>("User", UserSchema);

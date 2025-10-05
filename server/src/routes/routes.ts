@@ -18,6 +18,7 @@ import {
 import { upload } from "../utils/multer";
 import { contactwithUser } from "../controllers/contactController";
 import { resumes } from "../controllers/resumeController";
+import { forgetPassword, resetPassword } from "../controllers/authController";
 
 const router = Router();
 
@@ -36,5 +37,9 @@ router.post("/verify-otp", verifyAdminOtp);
 router.get("/me", getAdminDetails);
 router.post("/login", loginAdmin);
 router.post("/logout", logoutAdmin);
+
+
+router.post("/forget-password", forgetPassword);
+router.post("/reset-password", resetPassword);
 
 export default router;

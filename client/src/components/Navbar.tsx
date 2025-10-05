@@ -2,20 +2,19 @@
 import React from 'react';
 import ThemeChanger from './ThemeChanger';
 import Link from 'next/link';
-import useRequireAuth from '@/hooks/useRequireAuth';
 import Image from 'next/image';
+import useCheckAuth from '@/hooks/useCheckAuth';
 
 const Navbar = () => {
-    const checked = useRequireAuth("token");
+    const isAuthenticated = useCheckAuth();
     // Navigation links data
     const navLinks = [
         { href: "/", label: "Home" },
-        // Only show Dashboard if checked === true
-        ...(checked
+        // Only show Dashboard if authenticated === true
+        ...(isAuthenticated
             ? [{ href: "/dashboard", label: "Dashboard" }]
             : [
                 { href: "/contact", label: "Hire me" },
-                { href: "/auth/login", label: "Login" }
             ]),
     ];
     return (

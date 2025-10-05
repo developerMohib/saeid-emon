@@ -1,14 +1,14 @@
-import Loading from '@/app/loading';
 import useProducts from '@/hooks/useProducts';
 import { Plus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import Loader from './Loader';
 
 const Works = () => {
     const { data: cardsData, error, isPending, isError } = useProducts();
     const user = false;
-    if (isPending) return <Loading />
+    if (isPending) return <Loader />
     if (error || isError) return 'An error has occurred: ' + error?.message
     return (
         <div className="p-1 md:grid grid-cols-2 gap-6 justify-items-center">
