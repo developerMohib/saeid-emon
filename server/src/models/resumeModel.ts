@@ -7,6 +7,9 @@ interface IResume extends Document {
   about: string;
   workExperience: {
     company: string;
+    role: string;
+    period: string;
+    link: string;
     position: string;
     website: string;
     description: string;
@@ -15,7 +18,10 @@ interface IResume extends Document {
   }[];
   education: {
     school: string;
+    link: string;
     degree: string;
+    institution: string;
+    period: string;
     website: string;
     description: string;
     duration: string;
@@ -37,6 +43,9 @@ const resumeSchema = new Schema<IResume>({
     {
       company: String,
       position: String,
+      role: String,
+      period: String,
+      link: String,
       website: String,
       description: String,
       duration: String,
@@ -47,6 +56,9 @@ const resumeSchema = new Schema<IResume>({
     {
       school: String,
       degree: String,
+      institution: String,
+      link: String,
+      period: String,
       website: String,
       description: String,
       duration: String,

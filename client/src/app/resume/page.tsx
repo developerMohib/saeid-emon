@@ -5,6 +5,7 @@ import useRequireAuth from "@/hooks/useRequireAuth";
 import useResume from "@/hooks/useResume";
 import { PenLine } from "lucide-react";
 import Link from "next/link";
+import { IResume } from "@/types/resumeTypes";
 
 const ResumePage = () => {
   const { isPending, isError, error, data } = useResume();
@@ -14,7 +15,7 @@ const ResumePage = () => {
   if (isError) return <div>Error: {error?.message}</div>;
 
   // Ensure data exists and take the first resume
-  const resume = data && data.length > 0 ? data[0] : null;
+  const resume: IResume | null = data && data.length > 0 ? data[0] : null;
   if (!resume) return <div>No resume found.</div>;
 
   return (
@@ -22,13 +23,13 @@ const ResumePage = () => {
       <div className="max-w-6xl mx-auto pb-5 md:pb-20 px-4 sm:px-6 lg:px-10">
         {/* Top buttons */}
         <div className="py-6 sm:py-10 gap-4 text-right">
-          <button className="text-seBlack px-4 py-2 rounded-full border border-seGray/30 shadow-sm hover:bg-seGray/10 transition-colors cursor-pointer w-full sm:w-auto">
+          <button onClick={() => window.print()} className="text-seBlack px-4 py-2 rounded-full border border-seGray/30 shadow-sm hover:bg-seGray/10 transition-colors cursor-pointer w-full sm:w-auto">
             Print Resume
           </button>
         </div>
 
         {/* Resume card */}
-        <div className="py-10 sm:py-16 px-4 sm:px-8 md:px-14 lg:px-24 rounded-lg shadow-lg bg-seWhite">
+        <div className="py-10 sm:py-16 px-4 sm:px-8 md:px-14 lg:px-24 rounded-lg shadow-lg bg-seWhite print-section">
           <div className="divide-y divide-seGray/20 relative">
             {/* Header */}
             <header className="text-start py-6">
