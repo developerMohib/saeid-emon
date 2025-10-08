@@ -55,8 +55,8 @@ const SignIn = () => {
 
       if (res.data.success && res.data.user) {
         toast.success("OTP Verified! Logged in successfully");
-        router.push("/dashboard");
         window.dispatchEvent(new Event("authChange"));
+        router.push("/dashboard");
       } else {
         setMessage(res.data.message || "Invalid OTP");
       }

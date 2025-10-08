@@ -52,7 +52,7 @@ export default function useCheckAuth(cookieName: string = "token") {
 
     // login/logout detect করার জন্য custom event
     const handleAuthChange = () => checkAuth();
-    window.addEventListener("authChange", handleAuthChange);
+    window.addEventListener("authChange", handleAuthChange);   
 
     return () => {
       clearInterval(interval);
