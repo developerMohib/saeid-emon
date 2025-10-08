@@ -2,20 +2,24 @@ import { Request, Response } from "express";
 import { User } from "../models/userModel";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
-// import jwt from "jsonwebtoken";
 import { otpsender } from "../utils/otpsender";
+
 dotenv.config();
 
+// ─── Login Admin ───────────────────────────────────────
 export const loginAdmin = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Email and password required" });
+      return res.status(400).json({
+        success: false,
+        message: "Email and password required",
+      });
     }
+
     const admin = await User.findOne({ email });
-    // If admin not found → Delete all users and create this admin
+
     if (!admin) {
       return res.status(201).json({
         success: false,
@@ -23,12 +27,13 @@ export const loginAdmin = async (req: Request, res: Response) => {
       });
     }
 
-    // Check password for existing admin
+    // Check password
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid credentials" });
+      return res.status(400).json({
+        success: false,
+        message: "Invalid credentials",
+      });
     }
 
     // Send OTP
@@ -40,13 +45,15 @@ export const loginAdmin = async (req: Request, res: Response) => {
       user: { email: admin.email, name: admin.name },
     });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: "Server error", err });
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      err,
+    });
   }
 };
 
-
+// ─── Get Admin Details ────────────────────────────────
 export const getAdminDetails = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
@@ -60,6 +67,8 @@ export const getAdminDetails = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server error", err });
   }
 };
+
+// ─── Logout Admin ─────────────────────────────────────
 export const logoutAdmin = async (req: Request, res: Response) => {
   try {
     res.clearCookie("token", {
@@ -67,16 +76,18 @@ export const logoutAdmin = async (req: Request, res: Response) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });
+
     return res.json({ success: true, message: "Logged out successfully" });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: "Server error", err });
+    return res.status(500).json({ success: false, message: "Server error", err });
   }
 };
+
+// ─── Update Banner ────────────────────────────────────
 export const updateBanner = async (req: Request, res: Response) => {
   try {
     const filePath = req.file?.path;
+
     if (!filePath) {
       return res.status(400).json({ message: "No file uploaded" });
     }
@@ -84,7 +95,7 @@ export const updateBanner = async (req: Request, res: Response) => {
     const user = await User.findOneAndUpdate(
       {}, // no condition, pick first user
       { banner: filePath },
-      { new: true },
+      { new: true }
     );
 
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -95,6 +106,7 @@ export const updateBanner = async (req: Request, res: Response) => {
   }
 };
 
+// ─── Update Avatar ────────────────────────────────────
 export const updateAvatar = async (req: Request, res: Response) => {
   try {
     const filePath = req.file?.path;
@@ -106,7 +118,7 @@ export const updateAvatar = async (req: Request, res: Response) => {
     const user = await User.findOneAndUpdate(
       {},
       { avatar: filePath },
-      { new: true },
+      { new: true }
     );
 
     if (!user) {

@@ -2,18 +2,17 @@ import { Request, Response } from "express";
 import Card from "../models/detailsCard";
 import { Product } from "../models/product";
 
-// GET all cards
+// ─── GET all cards ──────────────────────────────────────
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
     const cards = await Product.find();
     res.json({
       success: true,
-      message: "All Data Retrived Successfully",
+      message: "All Data Retrieved Successfully",
       data: cards,
     });
   } catch (err: unknown) {
     if (err instanceof Error) {
-      // TS now knows err has `message`
       res.status(500).json({ error: err.message });
     } else {
       res.status(500).json({ error: "Unknown error occurred" });
@@ -21,17 +20,18 @@ export const getAllProjects = async (req: Request, res: Response) => {
   }
 };
 
-// GET single card by ID
+// ─── GET single card by ID ─────────────────────────────
 export const getProjectById = async (req: Request, res: Response) => {
   try {
     const card = await Product.findById(req.params.id);
 
-    if (!card)
+    if (!card) {
       return res.status(404).json({ error: "Card not found from server" });
+    }
+
     res.json(card);
   } catch (err: unknown) {
     if (err instanceof Error) {
-      // TS now knows err has `message`
       res.status(500).json({ error: err.message });
     } else {
       res.status(500).json({ error: "Unknown error occurred" });
@@ -39,7 +39,7 @@ export const getProjectById = async (req: Request, res: Response) => {
   }
 };
 
-// CREATE new project
+// ─── CREATE new project ────────────────────────────────
 export const createProject = async (req: Request, res: Response) => {
   try {
     const { title, intro, category } = req.body;
@@ -48,9 +48,9 @@ export const createProject = async (req: Request, res: Response) => {
     if (!files || files.length === 0) {
       return res.status(400).json({ message: "Images are required" });
     }
+
     const uploadedImages = files.map((file) => file.path);
 
-    // Save to DB with Cloudinary URL
     const newProduct = await Product.create({
       title,
       intro,
@@ -69,21 +69,28 @@ export const createProject = async (req: Request, res: Response) => {
   }
 };
 
-// UPDATE card
+// ─── UPDATE card ───────────────────────────────────────
 export const updateProject = async (req: Request, res: Response) => {
   try {
-     const { title, category } = req.body;
+    const { title, category } = req.body;
+
     const updated = await Product.findOneAndUpdate(
       { _id: req.params.id },
       { title, category },
       { new: true, upsert: true }
     );
 
-    if (!updated) return res.status(404).json({ error: "Card not found" });
-    res.json({ message: "Card updated successfully", success: true ,data: updated});
+    if (!updated) {
+      return res.status(404).json({ error: "Card not found" });
+    }
+
+    res.json({
+      message: "Card updated successfully",
+      success: true,
+      data: updated,
+    });
   } catch (err: unknown) {
     if (err instanceof Error) {
-      // TS now knows err has `message`
       res.status(500).json({ error: err.message });
     } else {
       res.status(500).json({ error: "Unknown error occurred" });
@@ -91,16 +98,22 @@ export const updateProject = async (req: Request, res: Response) => {
   }
 };
 
-// DELETE card
+// ─── DELETE card ───────────────────────────────────────
 export const deleteProject = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const deleted = await Card.findOneAndDelete({ _id: new Object(id) });
-    if (!deleted) return res.status(404).json({ error: "Card not found" });
-    res.json({ message: "Card deleted successfully", success: true });
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Card not found" });
+    }
+
+    res.json({
+      message: "Card deleted successfully",
+      success: true,
+    });
   } catch (err: unknown) {
     if (err instanceof Error) {
-      // TS now knows err has `message`
       res.status(500).json({ error: err.message });
     } else {
       res.status(500).json({ error: "Unknown error occurred" });

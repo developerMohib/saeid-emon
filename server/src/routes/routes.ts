@@ -1,4 +1,6 @@
 import { Router } from "express";
+
+// ─── Controllers ──────────────────────────────────────────────
 import {
   createProject,
   getAllProjects,
@@ -6,7 +8,7 @@ import {
   deleteProject,
   updateProject,
 } from "../controllers/projectsController";
-import { verifyAdminOtp } from "../controllers/verifyOtpController";
+
 import {
   getAdminDetails,
   loginAdmin,
@@ -14,37 +16,53 @@ import {
   updateAvatar,
   updateBanner,
 } from "../controllers/userController";
-// import { verifyToken } from "../utils/accesstoken";
-import { upload } from "../utils/multer";
+
+import { verifyAdminOtp } from "../controllers/verifyOtpController";
 import { contactwithUser } from "../controllers/contactController";
 import { resumes } from "../controllers/resumeController";
 import { forgetPassword, resetPassword } from "../controllers/authController";
-import { createBranding, deleteBranding, getBrands, updateBranding } from "../controllers/brandingController";
+import {
+  createBranding,
+  deleteBranding,
+  getBrands,
+  updateBranding,
+} from "../controllers/brandingController";
 
+// ─── Utils ────────────────────────────────────────────────────
+import { upload } from "../utils/multer";
+// import { verifyToken } from "../utils/accesstoken";
+
+// ─── Router Instance ─────────────────────────────────────────
 const router = Router();
 
+// ─── Contact & Resume ─────────────────────────────────────────
 router.post("/contact", contactwithUser);
+router.get("/resume", resumes);
+
+// ─── Project Routes ───────────────────────────────────────────
 router.get("/all", getAllProjects);
 router.get("/single/:id", getProjectById);
-router.get("/resume", resumes);
 router.post("/create", upload.array("images", 5), createProject);
-router.put("/update/:id", updateProject); // not completed yet
+router.put("/update/:id", updateProject);
 router.delete("/delete/:id", deleteProject);
+
+// ─── User Routes ──────────────────────────────────────────────
 router.put("/user/banner", upload.single("banner"), updateBanner);
 router.put("/user/avatar", upload.single("avatar"), updateAvatar);
 
+// ─── Branding Routes ─────────────────────────────────────────
+router.post("/brand", createBranding);
+router.get("/brand", getBrands);
+router.put("/brand/:id", updateBranding);
+router.delete("/brand/:id", deleteBranding);
 
-router.post("/brand", createBranding);     // Create
-router.get("/brand", getBrands);       // Read all
-router.put("/brand/:id", updateBranding);   // Update
-router.delete("/brand/:id", deleteBranding); // Delete
-// auth related routes
-router.post("/verify-otp", verifyAdminOtp);
-router.get("/me", getAdminDetails);
+// ─── Auth Routes ─────────────────────────────────────────────
 router.post("/login", loginAdmin);
+router.post("/verify-otp", verifyAdminOtp);
 router.post("/logout", logoutAdmin);
+router.get("/me", getAdminDetails);
 
-
+// ─── Password Recovery Routes ────────────────────────────────
 router.post("/forget-password", forgetPassword);
 router.post("/reset-password", resetPassword);
 

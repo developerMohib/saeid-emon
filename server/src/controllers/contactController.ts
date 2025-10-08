@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+
 dotenv.config();
 
+// ─── Contact with User ─────────────────────────────────────
 export const contactwithUser = async (req: Request, res: Response) => {
   try {
     const { name, email, message } = req.body;
+
+    // Setup transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -14,7 +18,7 @@ export const contactwithUser = async (req: Request, res: Response) => {
       },
     });
 
-    // 1. Send message to ADMIN
+    // ─── 1. Send message to ADMIN ─────────────────────────
     await transporter.sendMail({
       from: email,
       to: process.env.EMAIL_USER,
@@ -22,7 +26,7 @@ export const contactwithUser = async (req: Request, res: Response) => {
       text: `Email: ${email}\n\nMessage:\n${message}`,
     });
 
-    // 2. Auto-reply to USER
+    // ─── 2. Auto-reply to USER ───────────────────────────
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
@@ -30,7 +34,9 @@ export const contactwithUser = async (req: Request, res: Response) => {
       text: `Hi ${name},\n\nThanks for reaching out! We've received your message and will get back to you shortly.\n\nBest regards,\nYour Company`,
     });
 
+    // ─── Response ─────────────────────────────────────────
     res.status(200).json({ message: "Message sent successfully!" });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to send message" });

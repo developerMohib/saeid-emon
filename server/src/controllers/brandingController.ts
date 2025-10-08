@@ -2,13 +2,8 @@ import { Request, Response } from "express";
 import { Types } from "mongoose";
 import { Branding, IBranding } from "../models/brandingModel";
 
-
-
-// ✅ Create new Branding
-export const createBranding = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+// ─── Create new Branding ───────────────────────────────
+export const createBranding = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, img, link } = req.body;
     const branding = new Branding({ name, img, link });
@@ -27,11 +22,8 @@ export const createBranding = async (
   }
 };
 
-// ✅ Get all Brands
-export const getBrands = async (
-  _req: Request,
-  res: Response
-): Promise<void> => {
+// ─── Get All Brands ───────────────────────────────────
+export const getBrands = async (_req: Request, res: Response): Promise<void> => {
   try {
     const brands: IBranding[] = await Branding.find();
     res.json({ success: true, brands });
@@ -44,22 +36,18 @@ export const getBrands = async (
   }
 };
 
-// ✅ Update Branding
-export const updateBranding = async (
-  req: Request<{ id: string }>,
-  res: Response
-): Promise<void> => {
+// ─── Update Branding ──────────────────────────────────
+export const updateBranding = async (req: Request<{ id: string }>, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
 
+    // Validate ObjectId
     if (!Types.ObjectId.isValid(id)) {
       res.status(400).json({ success: false, message: "Invalid Branding ID" });
       return;
     }
 
-    const updated = await Branding.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const updated = await Branding.findByIdAndUpdate(id, req.body, { new: true });
 
     if (!updated) {
       res.status(404).json({ success: false, message: "Branding not found" });
@@ -76,14 +64,12 @@ export const updateBranding = async (
   }
 };
 
-// ✅ Delete Branding
-export const deleteBranding = async (
-  req: Request<{ id: string }>,
-  res: Response
-): Promise<void> => {
+// ─── Delete Branding ──────────────────────────────────
+export const deleteBranding = async (req: Request<{ id: string }>, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
 
+    // Validate ObjectId
     if (!Types.ObjectId.isValid(id)) {
       res.status(400).json({ success: false, message: "Invalid Branding ID" });
       return;

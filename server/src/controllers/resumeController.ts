@@ -9,7 +9,9 @@ export const resumes = async (req: Request, res: Response) => {
     if (err instanceof Error) {
       res.status(500).json({ success: false, message: err.message });
     } else {
-      res.status(500).json({ success: false, message: "Unknown error occurred" });
+      res
+        .status(500)
+        .json({ success: false, message: "Unknown error occurred" });
     }
   }
 };

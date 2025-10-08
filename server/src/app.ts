@@ -5,11 +5,17 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cors from "cors";
 import router from "./routes/routes";
+
 const app: Application = express();
 
-// ─── Middleware
-app.use(express.json());
+// ─── Middleware Order ────────────────────────────────
 
+// Cookie & Body Parsers should come first
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// CORS (must come before routes)
 app.use(
   cors({
     origin: [
@@ -20,29 +26,25 @@ app.use(
       "https://saeid-emon.vercel.app",
     ],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
-  }),
+  })
 );
+
+// Express body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// ─── API Route
+// ─── Routes ──────────────────────────────────────────
 app.use("/api", router);
 app.use("/api/cards", router);
 app.use("/products", router);
 app.use("/auth", router);
 
-// ─── Health Check Route
+// ─── Health Check ────────────────────────────────────
 app.get("/health", (_req: Request, res: Response) => {
   res.status(200).json({ status: "ok", message: "Server is healthy 🚀" });
 });
 
-// ─── Example Route
+// ─── Root Route ──────────────────────────────────────
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
@@ -50,7 +52,7 @@ app.get("/", (_req: Request, res: Response) => {
   });
 });
 
-// ─── Not Found Handler
+// ─── 404 Handler ─────────────────────────────────────
 app.use((_req: Request, res: Response) => {
   res.status(404).json({
     success: false,
@@ -58,11 +60,10 @@ app.use((_req: Request, res: Response) => {
   });
 });
 
-// ─── Centralized Error Handler
-app.use((err: unknown, _req: Request, res: Response, next: NextFunction) => {
+// ─── Global Error Handler ────────────────────────────
+app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.error("Error:", err);
 
-  // Handle known errors
   if (err instanceof Error) {
     return res.status(500).json({
       success: false,
@@ -70,7 +71,6 @@ app.use((err: unknown, _req: Request, res: Response, next: NextFunction) => {
     });
   }
 
-  // Handle unknown errors (edge cases)
   res.status(500).json({
     success: false,
     message: "An unexpected error occurred",
