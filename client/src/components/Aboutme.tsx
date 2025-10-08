@@ -19,11 +19,26 @@ const Aboutme = () => {
     <div className='my-10 md:px-0 px-5'>
       <div className=''>
         <h1 className='my-2 uppercase text-seGray text-xs font-semibold'>About Me</h1>
-        <p className='text-sm text-seBlack leading-6 tracking-wide'>{newdata.experience}</p>
+        <p className='text-sm text-seBlack/80 leading-6 tracking-wide'>{newdata.experience}</p>
       </div>
-      <div className='my-10'>
+      <div className='my-5'>
         <Link href={'/resume'} className='flex text-seGray items-center hover:text-seBlack text-sm' >View Full Resume <span> <ChevronRight className='w-4 h-4' /> </span> </Link>
       </div>
+
+      <div className="my-5 space-y-2">
+        <p>
+          <Link href="tel:+15878218048" className="text-seBlack/80 hover:underline">
+            Call Me: +1 587-821-8048
+          </Link>
+        </p>
+        <p>
+          <Link href="mailto:contact@saeidemon.com" className="text-seBlack/80 hover:underline">
+            Email: contact@saeidemon.com
+          </Link>
+        </p>
+      </div>
+
+
       <div className="w-full">
         <h1 className='text-xs uppercase font-semibold text-seGray'>On The Web</h1>
         <ul className="w-full">

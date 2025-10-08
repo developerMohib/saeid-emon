@@ -1,22 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
-const image = 'https://cdn.dribbble.com/userupload/43200390/file/original-ade45dbb987e40dd76cad00f5cc7be23.png'
+import React, {  useState } from 'react';
 import Marquee from "react-fast-marquee";
 import { LuCrown } from "react-icons/lu";
-import {  FaPencilRuler, FaTshirt } from 'react-icons/fa';
+import { FaPencilRuler, FaTshirt } from 'react-icons/fa';
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { BsCalendarEvent } from 'react-icons/bs';
 import { RiShoppingBag3Fill } from 'react-icons/ri';
 import { faqData } from '@/data/workCard';
 import { ChevronDown } from 'lucide-react';
-const categories = [
-    { name: "Web Design", img: { image }, link: "/" },
-    { name: "Development", img: { image }, link: "/" },
-    { name: "Branding", img: { image }, link: "/" },
-    { name: "UI/UX", img: { image }, link: "/" },
-    { name: "SEO", img: { image }, link: "/" },
-];
+import Loader from './Loader';
+import useGetBrand from '@/hooks/useBrandingApi';
+
 const services = [
     {
         icon: <LuCrown className="text-white text-4xl" />,
@@ -51,20 +46,23 @@ const services = [
 ];
 const Services = () => {
 
- const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const toggleFAQ = (index: number) => {
+        setOpenIndex(openIndex === index ? null : index);
+    };
 
 
+const { data: brands, isPending } = useGetBrand();
+
+if(isPending){
+    return <Loader />
+}
 
     return (
         <div className="py-10">
-            
+
             <Marquee pauseOnHover={true} speed={50} gradient={false}>
-                {categories.map((item, index) => (
+                {brands?.map((item, index) => (
                     <Link
                         key={index}
                         href={item.link}
@@ -73,7 +71,7 @@ const Services = () => {
                         <div className="flex flex-col items-center">
                             <div className="w-72 h-72 overflow-hidden rounded-xl">
                                 <Image
-                                    src={image}
+                                    src={item.img}
                                     alt={item.name}
                                     width={200}
                                     height={200}
@@ -92,7 +90,7 @@ const Services = () => {
                 <h2 className="text-3xl font-bold mb-10"></h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {services?.map((service, index) => (
-                        <div key={index} className="shadow-lg rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300">
+                        <div key={index} className="shadow-lg rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300 border border-seGray/20">
                             <div className="flex items-start gap-4">
                                 <div className="bg-red-800 p-4 rounded-xl flex items-center justify-center">
                                     {service.icon}
@@ -113,49 +111,32 @@ const Services = () => {
                         Frequently Asked Questions
                     </h2>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                         {faqData.map((faq, index) => (
-                            <details key={index} className="w-full bg-seBlack/10 rounded-lg">
-                                <summary className="px-4 py-6 text-seBlack/70 cursor-pointer">
-                                    {faq.question}
-                                </summary>
-                                <p className="py-6 ml-4 -mt-4 text-seBlack/70">
-                                    {faq.answer}
-                                </p>
-                            </details>
+                            <div
+                                key={index}
+                                className={`border border-seGray/20 rounded-2xl p-4 transition-all duration-300 ${openIndex === index ? "bg-seWhite/5 shadow-md" : "bg-seWhite"
+                                    }`}
+                            >
+                                <button
+                                    className="flex justify-between items-center w-full text-left font-medium text-lg cursor-pointer"
+                                    onClick={() => toggleFAQ(index)}
+                                >
+                                    <span>{faq.question}</span>
+                                    <ChevronDown
+                                        className={`h-5 w-5 transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""
+                                            }`}
+                                    />
+                                </button>
+
+                                {openIndex === index && (
+                                    <div className="mt-3 text-seBlack/70 text-sm leading-relaxed">
+                                        {faq.answer}
+                                    </div>
+                                )}
+                            </div>
                         ))}
                     </div>
-
-
-
-<div className="space-y-3">
-        {faqData.map((faq, index) => (
-          <div
-            key={index}
-            className={`border border-blue-400 rounded-2xl p-4 transition-all duration-300 ${
-              openIndex === index ? "bg-blue-50 shadow-md" : "bg-white"
-            }`}
-          >
-            <button
-              className="flex justify-between items-center w-full text-left font-medium text-lg"
-              onClick={() => toggleFAQ(index)}
-            >
-              <span>{faq.question}</span>
-               <ChevronDown
-    className={`h-5 w-5 transition-transform duration-300 ${
-      openIndex === index ? "rotate-180" : ""
-    }`}
-  />
-            </button>
-
-            {openIndex === index && (
-              <div className="mt-3 text-gray-700 text-sm leading-relaxed">
-                {faq.answer}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
 
 
 

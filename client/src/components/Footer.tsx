@@ -37,7 +37,7 @@ const Footer: FC = () => {
   ];
 
   return (
-    <footer className="flex flex-col items-center md:space-y-10 justify-center pb-10">
+    <footer className="flex flex-col items-center md:space-y-10 justify-center py-10">
       {/* ✅ Map social links */}
       <div className="flex space-x-4">
         {socialLinks?.map(({ name, href, icon }) => (
