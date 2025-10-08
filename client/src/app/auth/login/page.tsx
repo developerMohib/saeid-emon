@@ -83,7 +83,7 @@ const SignIn = () => {
           <form onSubmit={handleSubmit}>
             <div className="mb-4 text-left">
               <label className="block text-sm font-medium text-seSlack">
-                Email Address
+                Your Email
               </label>
               <input
                 type="email"

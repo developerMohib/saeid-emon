@@ -45,6 +45,8 @@ export const loginAdmin = async (req: Request, res: Response) => {
       .json({ success: false, message: "Server error", err });
   }
 };
+
+
 export const getAdminDetails = async (req: Request, res: Response) => {
   try {
     const users = await User.find();

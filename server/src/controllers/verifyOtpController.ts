@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import { otpStore } from "../utils/otpsender";
 import { User } from "../models/userModel";
 
-
 export const verifyAdminOtp = async (req: Request, res: Response) => {
   try {
     const { email, otp } = req.body;
@@ -30,14 +29,21 @@ export const verifyAdminOtp = async (req: Request, res: Response) => {
       process.env.JWT_SECRET as string,
       { expiresIn: "1d" },
     );
-
+const isProduction = process.env.NODE_ENV === "production";
     res.cookie("token", token, {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      // maxAge: 15 * 60 * 1000,
-      maxAge: parseInt(process.env.JWT_EXPIRES_IN as string, 10) * 60 * 1000,
-      sameSite: "strict",
+      httpOnly: true,
+      secure: isProduction, // production e MUST true
+     sameSite: isProduction ? "none" : "lax", // cross-site cookie allow
+      maxAge: 24 * 24 * 60 * 60 * 1000, // 1 days
     });
+    // res.cookie("token", token, {
+    //   httpOnly: false,
+    //   secure: process.env.NODE_ENV === "production",
+    //   // sameSite: "strict",
+    //   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    //   // maxAge: parseInt(process.env.JWT_EXPIRES_IN as string, 10) * 60 * 1000,
+    //   maxAge: 24 * 60 * 60 * 1000, // 1 day
+    // });
 
     return res.status(200).json({
       success: true,
@@ -48,6 +54,6 @@ export const verifyAdminOtp = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({ message: "Server error" , error});
+    return res.status(500).json({ message: "Server error", error });
   }
 };

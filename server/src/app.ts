@@ -19,6 +19,8 @@ app.use(
       "https://saeid-hasan-emon.vercel.app",
     ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
   }),
 );
 app.use(express.json());
