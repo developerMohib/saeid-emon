@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import Marquee from "react-fast-marquee";
 import { LuCrown } from "react-icons/lu";
 import { FaPencilRuler, FaTshirt } from 'react-icons/fa';
@@ -52,11 +52,11 @@ const Services = () => {
     };
 
 
-const { data: brands, isPending } = useGetBrand();
+    const { data: brands, isPending } = useGetBrand();
 
-if(isPending){
-    return <Loader />
-}
+    if (isPending) {
+        return <Loader />
+    }
 
     return (
         <div className="py-10">
@@ -96,8 +96,8 @@ if(isPending){
                                     {service.icon}
                                 </div>
                                 <div>
-                                    <h3 className="text-3xl font-semibold mb-2">{service.title}</h3>
-                                    <p className="text-xl opacity-90">{service.desc}</p>
+                                    <h3 className="text-2xl font-semibold mb-2 text-seBlack/80">{service.title} </h3>
+                                    <p className="text-base opacity-90 text-seBlack/80">{service.desc}</p>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +107,7 @@ if(isPending){
 
             <section className="">
                 <div className="container flex flex-col justify-center px-4 py-8 mx-auto md:p-8">
-                    <h2 className="text-2xl font-semibold sm:text-4xl my-10">
+                    <h2 className="text-2xl font-semibold sm:text-4xl my-10 text-seBlack/80">
                         Frequently Asked Questions
                     </h2>
 
@@ -122,7 +122,7 @@ if(isPending){
                                     className="flex justify-between items-center w-full text-left font-medium text-lg cursor-pointer"
                                     onClick={() => toggleFAQ(index)}
                                 >
-                                    <span>{faq.question}</span>
+                                    <span className='text-seBlack/80'>{faq.question}</span>
                                     <ChevronDown
                                         className={`h-5 w-5 transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""
                                             }`}

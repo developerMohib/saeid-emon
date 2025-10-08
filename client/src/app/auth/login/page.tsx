@@ -100,7 +100,7 @@ const SignIn = () => {
               </label>
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="********"
+                placeholder="***"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full mt-1 px-3 py-2 border border-seGray/50 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seSlack/50"
