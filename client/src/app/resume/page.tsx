@@ -14,7 +14,8 @@ const ResumePage = () => {
   const { data: author, refetch } = useAuthUser();
   const { isPending, isError, error, data } = useResume();
   const isAuthenticated = useCheckAuth();
-  const authorData = author[0];
+ const authorData = Array.isArray(author) && author.length > 0 ? author[0] : null;
+  if (!authorData) return <div>No author data found.</div>;
 
   if (isPending) return <Loader />;
   if (isError) return <div>Error: {error?.message}</div>;

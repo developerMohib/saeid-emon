@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 const image = 'https://cdn.dribbble.com/userupload/43200390/file/original-ade45dbb987e40dd76cad00f5cc7be23.png'
 import Marquee from "react-fast-marquee";
 import { LuCrown } from "react-icons/lu";
@@ -9,6 +9,7 @@ import { BsFillPersonVcardFill } from "react-icons/bs";
 import { BsCalendarEvent } from 'react-icons/bs';
 import { RiShoppingBag3Fill } from 'react-icons/ri';
 import { faqData } from '@/data/workCard';
+import { ChevronDown } from 'lucide-react';
 const categories = [
     { name: "Web Design", img: { image }, link: "/" },
     { name: "Development", img: { image }, link: "/" },
@@ -49,6 +50,16 @@ const services = [
     },
 ];
 const Services = () => {
+
+ const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+
+
+
     return (
         <div className="py-10">
             
@@ -77,10 +88,10 @@ const Services = () => {
                 ))}
             </Marquee>
 
-            <div className="px-6 py-12">
+            <div className="px-6 pt-10">
                 <h2 className="text-3xl font-bold mb-10"></h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {services.map((service, index) => (
+                    {services?.map((service, index) => (
                         <div key={index} className="shadow-lg rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300">
                             <div className="flex items-start gap-4">
                                 <div className="bg-red-800 p-4 rounded-xl flex items-center justify-center">
@@ -96,7 +107,7 @@ const Services = () => {
                 </div>
             </div>
 
-            <section className="mt-10">
+            <section className="">
                 <div className="container flex flex-col justify-center px-4 py-8 mx-auto md:p-8">
                     <h2 className="text-2xl font-semibold sm:text-4xl my-10">
                         Frequently Asked Questions
@@ -114,6 +125,41 @@ const Services = () => {
                             </details>
                         ))}
                     </div>
+
+
+
+<div className="space-y-3">
+        {faqData.map((faq, index) => (
+          <div
+            key={index}
+            className={`border border-blue-400 rounded-2xl p-4 transition-all duration-300 ${
+              openIndex === index ? "bg-blue-50 shadow-md" : "bg-white"
+            }`}
+          >
+            <button
+              className="flex justify-between items-center w-full text-left font-medium text-lg"
+              onClick={() => toggleFAQ(index)}
+            >
+              <span>{faq.question}</span>
+               <ChevronDown
+    className={`h-5 w-5 transition-transform duration-300 ${
+      openIndex === index ? "rotate-180" : ""
+    }`}
+  />
+            </button>
+
+            {openIndex === index && (
+              <div className="mt-3 text-gray-700 text-sm leading-relaxed">
+                {faq.answer}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+
+
+
                 </div>
             </section>
         </div>
