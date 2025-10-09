@@ -13,11 +13,11 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 const ResumePage = () => {
   const { data: author, refetch } = useAuthUser();
   const { isPending, isError, error, data } = useResume();
-  const isAuthenticated = useCheckAuth();
- const authorData = Array.isArray(author) && author.length > 0 ? author[0] : null;
+  const { isAuthenticated, loading } = useCheckAuth();
+  const authorData = Array.isArray(author) && author.length > 0 ? author[0] : null;
   if (!authorData) return <div>No author data found.</div>;
 
-  if (isPending) return <Loader />;
+  if (isPending || loading) return <Loader />;
   if (isError) return <div>Error: {error?.message}</div>;
 
   // Ensure data exists and take the first resume

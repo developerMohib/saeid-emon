@@ -4,9 +4,11 @@ import ThemeChanger from './ThemeChanger';
 import Link from 'next/link';
 import Image from 'next/image';
 import useCheckAuth from '@/hooks/useCheckAuth';
+import Loader from './Loader';
 
 const Navbar = () => {
-    const isAuthenticated = useCheckAuth();
+    const {isAuthenticated,loading} = useCheckAuth();
+    if (loading) return <Loader />
     // Navigation links data
     const navLinks = [
         { href: "/", label: "Home" },

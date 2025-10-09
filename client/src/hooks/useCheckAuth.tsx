@@ -2,64 +2,64 @@
 
 "use client";
 import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import instance from "./instance";
 
-interface DecodedToken {
-  exp: number;
-}
+
 
 export default function useCheckAuth(cookieName: string = "token") {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const currentPath = usePathname();
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const checkAuth = () => {
-    const token = Cookies.get(cookieName);
-
-    if (!token) {
-      setIsAuthenticated(false);
-      return;
-    }
-
+  const checkAuth = async () => {
     try {
-      const decoded = jwtDecode<DecodedToken>(token);
-      const currentTime = Date.now() / 1000;
-
-      if (decoded.exp < currentTime) {
-        // ⛔ Token expired
-        Cookies.remove(cookieName);
-        setIsAuthenticated(false);
-        
-        // ✅ Redirect to home page
-        router.replace("/"); 
-      } else {
+      const res = await instance.get('/auth/check');
+      if (res?.data?.authenticated) {
         setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+
+       
+        const protectedRoutes  = [
+        '/dashboard',
+        '/dashboard/',
+        '/create-project',
+        '/create-project/'
+      ];
+        const isProtectedRoute = protectedRoutes.some(route => 
+        currentPath.startsWith(route)
+      );
+
+      // ✅ ONLY redirect from protected routes, allow all other pages
+      if (isProtectedRoute) {
+        router.replace("/");
+      }
       }
     } catch (error) {
-      console.error("Invalid token:", error);
-      Cookies.remove(cookieName);
+      console.error("Auth check failed:", error);
       setIsAuthenticated(false);
       router.replace("/");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     checkAuth();
 
-    // প্রতি 5 সেকেন্ড পর চেক করা (token মেয়াদ শেষ হয়েছে কিনা)
-    const interval = setInterval(checkAuth, 5 * 1000);
-
-    // login/logout detect করার জন্য custom event
+    // Custom event listener for auth changes
     const handleAuthChange = () => checkAuth();
-    window.addEventListener("authChange", handleAuthChange);   
+    window.addEventListener("authChange", handleAuthChange);
 
     return () => {
-      clearInterval(interval);
       window.removeEventListener("authChange", handleAuthChange);
     };
-  }, [cookieName]);
+  }, []);
 
-  return isAuthenticated;
+  return { isAuthenticated, loading, checkAuth };
+
+
 }
 

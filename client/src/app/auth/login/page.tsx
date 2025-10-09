@@ -17,6 +17,12 @@ const SignIn = () => {
   const [message, setMessage] = useState("");
   const router = useRouter();
 
+
+  const handleDemoAdmin = () => {
+    setEmail("mohibsub0@gmail.com");
+    setPassword("123456789");
+  };
+
   // ✅ STEP 1: Login with email & password
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,13 +122,27 @@ const SignIn = () => {
               </button>)}
             </div>
 
-            <button
-              disabled={loading}
-              type="submit"
-              className="w-full py-2 bg-seRed/80 text-seWhite rounded-full font-semibold hover:bg-seBlue/80 cursor-pointer transition"
-            >
-              {loading ? "Signing in..." : "Sign In"}
-            </button>
+{/* ei div with button and submit er nicer div tule felte hobe */}
+            <div className=""> 
+              <button
+                type="button"
+                onClick={handleDemoAdmin}
+                className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg w-full my-2"
+              >
+                Demo Admin
+              </button>
+
+
+
+              <button
+                disabled={loading}
+                type="submit"
+                className="w-full py-2 bg-seRed/80 text-seWhite rounded-full font-semibold hover:bg-seBlue/80 cursor-pointer transition"
+              >
+                {loading ? "Signing in..." : "Sign In"}
+              </button>
+
+            </div>
 
 
             {message && <p className="mt-3 text-sm">{message}</p>}

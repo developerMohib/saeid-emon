@@ -13,6 +13,7 @@ import {
   getAdminDetails,
   loginAdmin,
   logoutAdmin,
+  tokenCheck,
   updateAvatar,
   updateBanner,
 } from "../controllers/userController";
@@ -59,6 +60,7 @@ router.delete("/brand/:id", deleteBranding);
 // ─── Auth Routes ─────────────────────────────────────────────
 router.post("/login", loginAdmin);
 router.post("/verify-otp", verifyAdminOtp);
+router.get('/check',tokenCheck)
 router.post("/logout", logoutAdmin);
 router.get("/me", getAdminDetails);
 

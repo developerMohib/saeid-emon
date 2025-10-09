@@ -3,6 +3,7 @@ import { User } from "../models/userModel";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { otpsender } from "../utils/otpsender";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 
@@ -53,6 +54,25 @@ export const loginAdmin = async (req: Request, res: Response) => {
   }
 };
 
+//
+export const tokenCheck = async (req: Request, res: Response) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.json({ authenticated: false });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    res.json({
+      authenticated: true,
+      user: decoded,
+    });
+  } catch (error) {
+    res.json({ authenticated: false, error });
+  }
+};
+
 // ─── Get Admin Details ────────────────────────────────
 export const getAdminDetails = async (req: Request, res: Response) => {
   try {
@@ -74,12 +94,14 @@ export const logoutAdmin = async (req: Request, res: Response) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     return res.json({ success: true, message: "Logged out successfully" });
   } catch (err) {
-    return res.status(500).json({ success: false, message: "Server error", err });
+    return res
+      .status(500)
+      .json({ success: false, message: "Server error", err });
   }
 };
 
@@ -95,7 +117,7 @@ export const updateBanner = async (req: Request, res: Response) => {
     const user = await User.findOneAndUpdate(
       {}, // no condition, pick first user
       { banner: filePath },
-      { new: true }
+      { new: true },
     );
 
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -118,7 +140,7 @@ export const updateAvatar = async (req: Request, res: Response) => {
     const user = await User.findOneAndUpdate(
       {},
       { avatar: filePath },
-      { new: true }
+      { new: true },
     );
 
     if (!user) {

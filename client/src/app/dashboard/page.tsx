@@ -10,7 +10,6 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 import instance from "@/hooks/instance";
 
 import { ICard } from "@/types/workCardTypes";
-import useRequireAuth from "@/hooks/useRequireAuth";
 import { MapPinCheck, School } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dialog } from "@headlessui/react";
@@ -20,15 +19,12 @@ const Dashboard = () => {
   const { isPending: userPending, data: user } = useAuthUser();
   const [loading, setLoading] = useState(false);
   const { data: product, isPending, refetch, error, isError } = useProducts();
-  const checked = useRequireAuth("token");
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editProduct, setEditProduct] = useState<ICard | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editCategory, setEditCategory] = useState("");
-
-  if (!checked) return <Loader />;
 
   const openEditModal = (prod: ICard) => {
     setEditProduct(prod);
@@ -92,7 +88,6 @@ const Dashboard = () => {
       if (res.data.success) {
         toast.success(res.data.message);
         router.push("/");
-        // window.location.reload();
         window.dispatchEvent(new Event("authChange"));
       }
     } catch (error) {

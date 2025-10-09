@@ -16,7 +16,6 @@ const useGetBrand = () => {
         queryKey: ["brand"],
         queryFn: async () => {
             const res = await instance.get(`/api/brand`);
-            console.log('res.data', res.data)
             return res?.data?.brands;
         },
     });

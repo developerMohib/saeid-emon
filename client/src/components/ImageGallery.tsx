@@ -21,7 +21,7 @@ export default function ImageGallery({ src, alt }: Props) {
         width={0}
         height={0}
         sizes="100vw"
-        style={{ width: "50%", height: "auto" }}
+        style={{ width: "95%", height: "auto" }}
         priority
         className="rounded-lg shadow-md mb-6 cursor-pointer"
         onClick={() => setIsOpen(true)}

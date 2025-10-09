@@ -58,9 +58,9 @@ export const verifyAdminOtp = async (req: Request, res: Response) => {
       user: {
         id: admin._id,
         email: admin.email,
+        name: admin.name,
       },
     });
-
   } catch (error) {
     // ─── Error Handler ─────────────────────────────────
     return res.status(500).json({ message: "Server error", error });

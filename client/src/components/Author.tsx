@@ -15,13 +15,12 @@ import Loader from "./Loader";
 
 const Author = () => {
     const { isPending, isError, error, data, refetch } = useAuthUser();
-    const isAuthenticated = useCheckAuth();
+    const { isAuthenticated, loading: isLoading } = useCheckAuth();
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState<string | null>(null);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
-
-    if (isPending) return <Loader />;
+    if (isPending || isLoading) return <Loader />;
     if (isError) return <p>Error: {error?.message}</p>;
 
     const newdata = data[0];

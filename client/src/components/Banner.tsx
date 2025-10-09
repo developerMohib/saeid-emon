@@ -14,9 +14,9 @@ const Banner = () => {
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState<string | null>(null);
     const [bannerFile, setBannerFile] = useState<File | null>(null);
-   const isAuthenticated = useCheckAuth();
+    const { isAuthenticated, loading: isLoading } = useCheckAuth();
 
-    if (isPending) return <Loader />;
+    if (isPending || isLoading) return <Loader />;
     if (isError) return <p>Error: {error?.message}</p>;
     const newdata = data?.[0] || {};
 
