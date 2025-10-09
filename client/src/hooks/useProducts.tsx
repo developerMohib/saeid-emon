@@ -8,7 +8,7 @@ const useProducts = () => {
     const { isPending, isError, error, data, refetch } = useQuery<ICard[]>({
         queryKey: ["product"],
         queryFn: async () => {
-            const res = await instance.get("/api/cards/all");
+            const res = await instance.get("/products/all");
             return res?.data?.data;
         },
     });

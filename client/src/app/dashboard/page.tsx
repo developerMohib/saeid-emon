@@ -14,6 +14,7 @@ import { MapPinCheck, School } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dialog } from "@headlessui/react";
 import Loader from "@/components/Loader";
+import Swal from "sweetalert2";
 
 const Dashboard = () => {
   const { isPending: userPending, data: user } = useAuthUser();
@@ -58,29 +59,82 @@ const Dashboard = () => {
     }
   };
 
-  const handleDelete = async (prod: ICard) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this product?"
-    );
-    if (!isConfirmed) return;
+//   const handleDelete = async (prod: ICard) => { 
+//     Swal.fire({
+//   title: "Are you sure?",
+//   text: "Are you sure you want to delete this product?",
+//   icon: "warning",
+//   showCancelButton: true,
+//   confirmButtonColor: "#3085d6",
+//   cancelButtonColor: "#d33",
+//   confirmButtonText: "Yes, delete it!"
+// }).then((result) => {
+//   if (result.isConfirmed) {
+//     Swal.fire({
+//       title: "Deleted!",
+//       text: "Your file has been deleted.",
+//       icon: "success"
+//     });
+//   }
+// });
+//     setLoading(true);
+//     try {
+//       const res = await instance.delete(`/products/delete/${prod._id}`);
+//       if (res.data.success) {
+//         toast.success(res.data.message);
+//         refetch();
+//       }
+//     } catch (error) {
+//       if (axios.isAxiosError(error)) {
+//         toast.error(error?.response?.data.message || "Failed to delete product");
+//       } else {
+//         toast.error("Something went wrong");
+//       }
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
 
-    setLoading(true);
-    try {
-      const res = await instance.delete(`/products/delete/${prod._id}`);
-      if (res.data.success) {
-        toast.success(res.data.message);
-        refetch();
+
+const handleDelete = async (prod: ICard) => {
+  console.log('prod',prod)
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Are you sure you want to delete this product?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      setLoading(true);
+      try {
+        const res = await instance.delete(`/products/delete/${prod._id}`);
+        if (res.data.success) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your product has been deleted.",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+          refetch();
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          toast.error(error?.response?.data?.message || "Failed to delete product");
+        } else {
+          toast.error("Something went wrong");
+        }
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(error?.response?.data.message || "Failed to delete product");
-      } else {
-        toast.error("Something went wrong");
-      }
-    } finally {
-      setLoading(false);
     }
-  };
+  });
+};
+
+
 
   const handleLogout = async () => {
     try {
@@ -163,11 +217,11 @@ const Dashboard = () => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="my-2">
               {product?.map((prod, i) => (
-                <tr key={prod._id}>
-                  <td className="px-6 py-4">{i + 1}</td>
-                  <td className="px-6 py-4">
+                <tr  key={prod._id}>
+                  <td className="px-6">{i + 1}</td>
+                  <td className="px-6">
                     <Image
                       src={prod.images[0]}
                       alt={prod.title}
@@ -176,9 +230,9 @@ const Dashboard = () => {
                       className="w-24 h-24 object-cover rounded-lg"
                     />
                   </td>
-                  <td className="px-6 py-4">{prod.title}</td>
-                  <td className="px-6 py-4">{prod.category}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-6">{prod.title}</td>
+                  <td className="px-6">{prod.category}</td>
+                  <td className="px-6">
                     <Link
                       href={`/design-details/${prod._id}`}
                       className="text-blue-600 hover:underline"

@@ -75,7 +75,7 @@ const Author = () => {
                         alt="User Avatar"
                         width={96}
                         height={96}
-                        className="rounded-full h-24 w-24 border-2 border-seGray/50 object-cover"
+                        className="rounded-full h-24 w-24 border border-seGray/50 object-cover"
                         priority
                     />
 

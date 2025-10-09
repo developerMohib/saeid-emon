@@ -20,6 +20,7 @@ const Aboutme = () => {
       <div className=''>
         <h1 className='my-2 uppercase text-seGray text-xs font-semibold'>About Me</h1>
         <p className='text-sm text-seBlack/80 leading-6 tracking-wide'>{newdata.experience}</p>
+        <p className='text-sm text-seBlack/80 leading-6 tracking-wide'>{newdata.bio}</p>
       </div>
 
       <div className='my-5 hidden'>

@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import Card from "../models/detailsCard";
 import { Product } from "../models/product";
 
 // ─── GET all cards ──────────────────────────────────────
@@ -102,7 +101,8 @@ export const updateProject = async (req: Request, res: Response) => {
 export const deleteProject = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const deleted = await Card.findOneAndDelete({ _id: new Object(id) });
+    console.log('id',id)
+    const deleted = await Product.findOneAndDelete({ _id: new Object(id) });
 
     if (!deleted) {
       return res.status(404).json({ error: "Card not found" });

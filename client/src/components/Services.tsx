@@ -90,7 +90,7 @@ const Services = () => {
                 <h2 className="text-3xl font-bold mb-10"></h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {services?.map((service, index) => (
-                        <div key={index} className="shadow-lg rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300 border border-seGray/20">
+                        <div key={index} className="shadow-lg rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300">
                             <div className="flex items-start gap-4">
                                 <div className="bg-red-800 p-4 rounded-xl flex items-center justify-center">
                                     {service.icon}
@@ -115,7 +115,7 @@ const Services = () => {
                         {faqData.map((faq, index) => (
                             <div
                                 key={index}
-                                className={`border border-seGray/20 rounded-2xl p-4 transition-all duration-300 ${openIndex === index ? "bg-seWhite/5 shadow-md" : "bg-seWhite"
+                                className={`border border-seGray/10 rounded-2xl p-4 transition-all duration-300 ${openIndex === index ? "bg-seWhite/5 shadow-md" : "bg-seWhite"
                                     }`}
                             >
                                 <button

@@ -11,7 +11,7 @@ const Works = () => {
     if (isPending) return <Loader />
     if (error || isError) return 'An error has occurred: ' + error?.message
     return (
-        <div className="p-1 md:grid grid-cols-2 gap-6 justify-items-center">
+        <div className="p-1 md:grid grid-cols-3 gap-6 justify-items-center">
             {cardsData?.map((card) => (
                 <div
                     key={card._id}
@@ -19,8 +19,8 @@ const Works = () => {
                 >
                     {/* Image Section */}
                     <div className="relative flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                        <Image
-                            className="relative"
+                        <Image 
+                            className="relative w-80"
                             src={card.images[0]}
                             alt={card.title}
                             width={900}
