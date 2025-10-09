@@ -7,7 +7,7 @@ import instance from "./instance";
 
 
 
-export default function useCheckAuth(cookieName: string = "token") {
+export default function useCheckAuth() {
   const [loading, setLoading] = useState(true);
   const currentPath = usePathname();
   const router = useRouter();

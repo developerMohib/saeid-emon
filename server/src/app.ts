@@ -24,6 +24,7 @@ app.use(
       "https://www.saeidemon.com",
       "https://saeid-hasan-emon.vercel.app",
       "https://saeid-emon.vercel.app",
+      "https://client-mohib-the-maziests-projects.vercel.app",
     ],
     credentials: true,
   })
