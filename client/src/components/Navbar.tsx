@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
@@ -35,7 +36,7 @@ const Navbar = () => {
                 alt="Saeid Hasan Emon Logo"
                 width={120}
                 height={40}
-                className="w-16 h-auto p-1 bg-black dark:bg-none rounded-md  "
+                className="w-16 h-auto p-1  "
                 priority
               />
             </Link>
@@ -44,7 +45,7 @@ const Navbar = () => {
           {/* Navigation Links & Theme Changer */}
           <div className="flex items-center gap-6">
             <nav aria-label="Primary Navigation" className="flex items-center gap-6">
-              {navLinks.map((link) => (
+              {navLinks.map((link: any) => (
                 <Link
                   key={link.label}
                   href={link.href}

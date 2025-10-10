@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
@@ -70,11 +70,15 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/favicon.png",
   },
-  themeColor: "#0ea5e9", // Tailwind's sky-500 color
+  // themeColor: "#0ea5e9",
   category: "Portfolio",
   alternates: {
     canonical: "https://www.saeidemon.com",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0ea5e9",
 };
 
 export default function RootLayout({
