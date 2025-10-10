@@ -59,42 +59,6 @@ const Dashboard = () => {
     }
   };
 
-//   const handleDelete = async (prod: ICard) => { 
-//     Swal.fire({
-//   title: "Are you sure?",
-//   text: "Are you sure you want to delete this product?",
-//   icon: "warning",
-//   showCancelButton: true,
-//   confirmButtonColor: "#3085d6",
-//   cancelButtonColor: "#d33",
-//   confirmButtonText: "Yes, delete it!"
-// }).then((result) => {
-//   if (result.isConfirmed) {
-//     Swal.fire({
-//       title: "Deleted!",
-//       text: "Your file has been deleted.",
-//       icon: "success"
-//     });
-//   }
-// });
-//     setLoading(true);
-//     try {
-//       const res = await instance.delete(`/products/delete/${prod._id}`);
-//       if (res.data.success) {
-//         toast.success(res.data.message);
-//         refetch();
-//       }
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         toast.error(error?.response?.data.message || "Failed to delete product");
-//       } else {
-//         toast.error("Something went wrong");
-//       }
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
 
 const handleDelete = async (prod: ICard) => {
   console.log('prod',prod)
