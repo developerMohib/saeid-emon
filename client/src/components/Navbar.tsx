@@ -10,6 +10,7 @@ import Loader from "./Loader";
 const Navbar = () => {
   const { isAuthenticated, loading } = useCheckAuth();
 
+
   if (loading) return <Loader />;
 
   // Navigation links data
@@ -25,16 +26,16 @@ const Navbar = () => {
     <header className="backdrop-blur-sm sticky top-0 z-50 w-full py-1.5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-6">
-          
+
           {/* Logo */}
           <div>
             <Link href="/" aria-label="Home">
               <Image
-                src="/logofine.png"
+                src="/emons-logo.png"
                 alt="Saeid Hasan Emon Logo"
                 width={120}
                 height={40}
-                className="w-16 h-auto bg-black dark:bg-none p-1 rounded-lg "
+                className="w-16 h-auto p-1 bg-black dark:bg-none rounded-md  "
                 priority
               />
             </Link>
