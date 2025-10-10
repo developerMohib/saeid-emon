@@ -2,7 +2,9 @@
 
 :root {
   --background: #f5f5f5;
+  /* --background: #121212; */
   --foreground: #121212;
+  /* --foreground: #f5f5f5; */
   --font-roboto: "Roboto", sans-serif; /* Roboto as default */
 
   --color-seblack: #0a0a0a;
@@ -30,6 +32,7 @@
   :root:not([data-theme="light"]) {
     --background: #121212;
     --foreground: #f5f5f5;
+
 
     /*------------- Custom colors making for dark theme -------------*/
     --color-seblack: #fdfdfd;

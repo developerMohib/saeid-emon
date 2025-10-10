@@ -87,9 +87,9 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${geistMono.variable} antialiased`}
       >
-        <ReactQueryProvider>
-          <Navbar />
-          <main className="container mx-auto p-0 m-0">
+        <main className="container mx-auto p-0 m-0">
+          <ReactQueryProvider>
+            <Navbar />
             {children}
             <script
               type="application/ld+json"
@@ -108,10 +108,10 @@ export default function RootLayout({
                 }),
               }}
             />
-          </main>
-          <Toaster />
-          <Footer />
-        </ReactQueryProvider>
+            <Toaster />
+            <Footer />
+          </ReactQueryProvider>
+        </main>
       </body>
     </html>
   );

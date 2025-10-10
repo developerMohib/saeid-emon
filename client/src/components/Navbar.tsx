@@ -30,11 +30,11 @@ const Navbar = () => {
           <div>
             <Link href="/" aria-label="Home">
               <Image
-                src="/emons-logo.png"
+                src="/logofine.png"
                 alt="Saeid Hasan Emon Logo"
                 width={120}
                 height={40}
-                className="w-16 h-auto"
+                className="w-16 h-auto bg-black dark:bg-none p-1 rounded-lg "
                 priority
               />
             </Link>

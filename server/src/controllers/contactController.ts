@@ -30,8 +30,8 @@ export const contactwithUser = async (req: Request, res: Response) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Thanks for contacting us!",
-      text: `Hi ${name},\n\nThanks for reaching out! We've received your message and will get back to you shortly.\n\nBest regards,\nYour Company`,
+      subject: "Thanks for contacting me!",
+      text: `Hi ${name},\n\nThanks for reaching out! We've received your message and will get back to you shortly.\n\nBest regards,\nSaeid Emon`,
     });
 
     // ─── Response ─────────────────────────────────────────
