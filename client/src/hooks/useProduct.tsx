@@ -10,7 +10,7 @@ const useProduct = (id: string | undefined) => {
     queryKey: ["singleproduct", id],
     queryFn: async () => {
       const res = await instance.get(`/api/cards/single/${id}`);
-      return res.data;
+      return res.data || null;
     },
     enabled: !!id,
   });

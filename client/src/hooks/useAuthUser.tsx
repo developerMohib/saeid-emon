@@ -8,8 +8,7 @@ export const useAuthUser = () => {
     queryKey: ["admindata"],
     queryFn: async () => {
       const res = await instance.get("/auth/me");      
-      if (!res?.data?.data) throw new Error("No user data found");
-      return res?.data?.data;
+      return res?.data?.data || null;
     },
   });
 

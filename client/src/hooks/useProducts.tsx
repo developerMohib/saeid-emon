@@ -9,7 +9,7 @@ const useProducts = () => {
         queryKey: ["product"],
         queryFn: async () => {
             const res = await instance.get("/products/all");
-            return res?.data?.data;
+            return res?.data?.data || null;
         },
     });
 

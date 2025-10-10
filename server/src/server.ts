@@ -12,8 +12,16 @@ async function main() {
     });
   } catch (err) {
     console.log(err);
-    process.exit(1);
   }
 }
+
+// Handle uncaught exceptions and unhandled rejections
+process.on("uncaughtException", (err) => {
+  console.error("❌ Uncaught Exception:", err);
+});
+
+process.on("unhandledRejection", (reason) => {
+  console.error("❌ Unhandled Rejection:", reason);
+});
 
 main();

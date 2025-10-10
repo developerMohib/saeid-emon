@@ -1,12 +1,25 @@
-"use client"
+"use client";
+
 import { useAuthUser } from '@/hooks/useAuthUser';
 import { ChevronRight, SquareArrowOutUpRight } from 'lucide-react';
 import Link from 'next/link';
+import type { Metadata } from "next";
 import React from 'react';
 import Loader from './Loader';
 
-const Aboutme = () => {
+export const metadata: Metadata = {
+  title: "About | Saeid Hasan Emon - Graphics Designer",
+  description:
+    "Learn more about Saeid Hasan Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
+  openGraph: {
+    title: "About | Saeid Hasan Emon",
+    description:
+      "Meet Saeid Hasan Emon, a creative professional graphics designer with years of experience in brand identity design.",
+    url: "https://www.saeidemon.com",
+  },
+};
 
+const Aboutme = () => {
   const { isPending, isError, error, data } = useAuthUser();
 
   if (isPending) return <Loader />;
@@ -16,54 +29,70 @@ const Aboutme = () => {
   const newdata = data[0];
 
   return (
-    <div className='my-10 md:px-0 px-5'>
-      <div className=''>
-        <h1 className='my-2 uppercase text-seGray text-xs font-semibold'>About Me</h1>
-        <p className='text-sm text-seBlack/80 leading-6 tracking-wide'>{newdata.experience}</p>
-        <p className='text-sm text-seBlack/80 leading-6 tracking-wide'>{newdata.bio}</p>
+    <section className="my-10 md:px-0 px-5">
+      {/* About Me Section */}
+      <header className="mb-6">
+        <h1 className="text-sm font-semibold uppercase text-seGray mb-2">About Me</h1>
+        <p className="text-sm text-seBlack/80 leading-6 tracking-wide mb-2">{newdata.experience}</p>
+        <p className="text-sm text-seBlack/80 leading-6 tracking-wide">{newdata.bio}</p>
+      </header>
+
+      {/* Resume Link (hidden currently) */}
+      <div className="my-5 hidden">
+        <Link
+          href="/resume"
+          className="flex items-center text-sm text-seGray hover:text-seBlack"
+        >
+          View Full Resume
+          <ChevronRight className="w-4 h-4 ml-1" />
+        </Link>
       </div>
 
-      <div className='my-5 hidden'>
-        <Link href={'/resume'} className='flex text-seGray items-center hover:text-seBlack text-sm' >View Full Resume <span> <ChevronRight className='w-4 h-4' /> </span> </Link>
-      </div>
+      {/* Contact Section */}
+      <section className="my-10">
+        <h2 className="text-sm font-semibold uppercase text-seGray mb-2">Contact Me</h2>
+        <ul className="space-y-1">
+          <li>
+            <Link
+              href="tel:+15878218048"
+              className="text-sm text-seBlack/80 hover:underline"
+            >
+              Call Me: +1 587-821-8048
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="mailto:contact@saeidemon.com"
+              className="text-sm text-seBlack/80 hover:underline"
+            >
+              Email: contact@saeidemon.com
+            </Link>
+          </li>
+        </ul>
+      </section>
 
-      <div className="my-5 mt-10">
-         <h1 className='my-2 uppercase text-seGray text-xs font-semibold'>Contact Me</h1>
-        <p>
-          <Link href="tel:+15878218048" className="text-seBlack/80 hover:underline text-sm">
-            Call Me: +1 587-821-8048
-          </Link>
-        </p>
-        <p>
-          <Link href="mailto:contact@saeidemon.com" className="text-seBlack/80 hover:underline text-sm">
-            Email: contact@saeidemon.com
-          </Link>
-        </p>
-      </div>
-
-
-      <div className="w-full">
-        <h1 className='text-xs uppercase font-semibold text-seGray'>On The Web</h1>
-        <ul className="w-full">
+      {/* Socials Section */}
+      <section>
+        <h2 className="text-xs font-semibold uppercase text-seGray mb-2">On The Web</h2>
+        <ul className="space-y-2">
           {Object.entries(socials).map(([key, url], index) => (
-            <li className="my-2" key={index}>
+            <li key={index}>
               <Link
                 href={url as string}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex justify-between items-center px-4 py-3 rounded-md hover:bg-seGray/20 transition border border-seGray/20"
+                className="flex justify-between items-center w-full px-4 py-3 rounded-md border border-seGray/20 hover:bg-seGray/20 transition"
               >
-                <span className="flex gap-2 text-xs font-light capitalize tracking-widest">
+                <span className="text-xs font-light tracking-widest capitalize flex gap-2">
                   {key}
                 </span>
-
-                <SquareArrowOutUpRight className="text-seGray/80 w-4 h-4" />
+                <SquareArrowOutUpRight className="w-4 h-4 text-seGray/80" />
               </Link>
             </li>
           ))}
         </ul>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
 

@@ -37,9 +37,9 @@ const Footer: FC = () => {
   ];
 
   return (
-    <footer className="flex flex-col items-center md:space-y-10 justify-center py-10">
-      {/* ✅ Map social links */}
-      <div className="flex space-x-4">
+    <footer className="flex flex-col items-center md:space-y-10 justify-center p-10">
+      {/* ✅ Social Links */}
+      <nav aria-label="Social Media Links" className="flex space-x-4">
         {socialLinks?.map(({ name, href, icon }) => (
           <Link
             key={name}
@@ -48,17 +48,23 @@ const Footer: FC = () => {
             aria-label={name}
             className="w-10 h-10 rounded-full bg-seGray/20 flex items-center justify-center hover:bg-amber-500 transition-colors hover:-translate-y-0.5 duration-700"
           >
-            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <svg
+              className="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
               {icon}
             </svg>
           </Link>
         ))}
-      </div>
+      </nav>
 
       {/* ✅ Copyright */}
-      <p className="text-center text-sm text-seBlack font-medium">
+      <p className="text-center text-sm text-seBlack font-medium md:mt-0 mt-3.5">
         &copy; {currentYear} All rights reserved by{" "}
-        <span className="font-semibold">Saeid Emon</span>. Powered by{" "}
+        <span className="font-semibold">Saeid Emon</span>. <br className="md:hidden block" />
+        Powered by{" "}
         <Link
           href="https://mohibullah-mohim.vercel.app"
           target="_blank"

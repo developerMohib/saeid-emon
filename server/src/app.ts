@@ -10,12 +10,12 @@ const app: Application = express();
 
 // ─── Middleware Order ────────────────────────────────
 
-// Cookie & Body Parsers should come first
+// 1️⃣ Cookie & Body Parsers
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// CORS (must come before routes)
+// 2️⃣ CORS (must come before routes)
 app.use(
   cors({
     origin: [
@@ -30,7 +30,7 @@ app.use(
   })
 );
 
-// Express body parsers
+// 3️⃣ Express built-in parsers (redundant but safe)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -62,20 +62,24 @@ app.use((_req: Request, res: Response) => {
 });
 
 // ─── Global Error Handler ────────────────────────────
-app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
-  console.error("Error:", err);
+app.use(
+  (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+    console.error("❌ Error:", err);
 
-  if (err instanceof Error) {
-    return res.status(500).json({
+    // Catch all Error objects
+    if (err instanceof Error) {
+      return res.status(500).json({
+        success: false,
+        message: err.message || "Internal Server Error",
+      });
+    }
+
+    // Fallback for unknown errors
+    res.status(500).json({
       success: false,
-      message: err.message || "Internal Server Error",
+      message: "An unexpected error occurred",
     });
   }
-
-  res.status(500).json({
-    success: false,
-    message: "An unexpected error occurred",
-  });
-});
+);
 
 export default app;
