@@ -61,16 +61,16 @@ const Footer: FC = () => {
       </nav>
 
       {/* ✅ Copyright */}
-      <p className="text-center text-sm text-seBlack font-medium md:mt-0 mt-3.5">
+      <p className="text-center text-sm text-seBlack/70 font-medium md:mt-0 mt-3.5 capitalize">
         &copy; {currentYear} All rights reserved by{" "}
         <span className="font-semibold">Saeid Emon</span>. <br className="md:hidden block" />
         Powered by{" "}
         <Link
-          href="https://mohibullah-mohim.vercel.app"
+          href="https://mohibullahmohim.com"
           target="_blank"
-          className="text-green-400 hover:text-seRed hover:underline"
+          className="text-seBlack hover:text-seRed hover:no-underline underline"
         >
-          Mohib
+          mohibullah mohim
         </Link>
       </p>
     </footer>

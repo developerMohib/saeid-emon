@@ -24,7 +24,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="backdrop-blur-sm sticky top-0 z-50 w-full py-1.5">
+    <header className="backdrop-blur-sm sticky top-0 z-50 w-full py-1.5 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-6">
 
@@ -33,7 +33,7 @@ const Navbar = () => {
             <Link href="/" aria-label="Home">
               <Image
                 src="/emons-logo.png"
-                alt="Saeid Hasan Emon Logo"
+                alt="Saeid Emon Logo"
                 width={120}
                 height={40}
                 className="w-16 h-auto p-1  "
@@ -49,7 +49,7 @@ const Navbar = () => {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-medium text-seBlack hover:text-seRed transition-colors"
+                  className="text-sm font-medium text-white hover:text-seRed transition-colors"
                 >
                   {link.label}
                 </Link>
