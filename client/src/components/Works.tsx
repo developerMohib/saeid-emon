@@ -52,7 +52,8 @@ const Works = () => {
                     {/* Overlay Details */}
                     <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-seBlack/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span className="text-seWhite text-sm">{card.category}</span>
-                        <div className="grid grid-rows-2 justify-between items-center gap-4 text-seWhite">
+                        <div>
+                            <div className="grid grid-rows-2 justify-between items-center gap-4 text-seWhite">
                             <div className="grid-cols-1">
                                 <Link href={`/design-details/${card._id}`}>
                                     <h3 className="text-xl font-semibold hover:underline">{card.title}</h3>
@@ -65,6 +66,7 @@ const Works = () => {
                                     </button>
                                 </Link>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </article>

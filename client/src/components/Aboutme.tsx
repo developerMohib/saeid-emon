@@ -34,7 +34,7 @@ const Aboutme = () => {
       <header className="mb-6">
         <h1 className="text-sm font-semibold uppercase text-seGray mb-2">About Me</h1>
         <p className="text-sm text-seBlack/80 leading-6 tracking-wide mb-2">{newdata.experience}</p>
-        <p className="text-sm text-seBlack/80 leading-6 tracking-wide">{newdata.bio}</p>
+        <p className="text-sm text-seBlack/80 leading-6">{newdata.bio}</p>
       </header>
 
       {/* Resume Link (hidden currently) */}

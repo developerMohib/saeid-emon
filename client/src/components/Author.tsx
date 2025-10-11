@@ -92,10 +92,9 @@ const Author = () => {
         }
     };
 
-
-
     const handleLogout = async () => {
         try {
+            setLoading(true);
             const res = await instance.post(`/auth/logout`, {}, { withCredentials: true });
             if (res.data.success) {
                 toast.success(res.data.message);
@@ -104,9 +103,11 @@ const Author = () => {
             }
         } catch (error) {
             console.error("Logout failed", error);
+        } finally {
+            setLoading(false);
         }
     };
-
+    if (loading) return <Loader />
     return (
         <section aria-labelledby="author-heading" className="relative">
             {/* Profile Image */}
@@ -117,7 +118,7 @@ const Author = () => {
                         alt="User Avatar"
                         width={96}
                         height={96}
-                        className="rounded-full h-24 w-24 border-2 border-white object-cover"
+                        className="rounded-full h-24 w-24 border-2 border-seGray object-cover"
                         priority
                     />
 
@@ -207,8 +208,8 @@ const Author = () => {
                                 disabled={loading}
                                 onClick={handleSubmit}
                                 className={`bg-seRed text-seWhite px-4 py-2 rounded cursor-pointer ${loading || !avatarFile
-                                        ? "opacity-50 cursor-not-allowed"
-                                        : "hover:bg-red-700"
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-red-700"
                                     }`}
                             >
                                 {loading ? "Uploading..." : "Save"}
