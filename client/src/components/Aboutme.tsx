@@ -8,13 +8,13 @@ import React from 'react';
 import Loader from './Loader';
 
 export const metadata: Metadata = {
-  title: "About | Saeid Hasan Emon - Graphics Designer",
+  title: "About | Saeid Emon - Graphics Designer",
   description:
-    "Learn more about Saeid Hasan Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
+    "Learn more about Saeid Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
   openGraph: {
-    title: "About | Saeid Hasan Emon",
+    title: "About | Saeid Emon",
     description:
-      "Meet Saeid Hasan Emon, a creative professional graphics designer with years of experience in brand identity design.",
+      "Meet Saeid Emon, a creative professional graphics designer with years of experience in brand identity design.",
     url: "https://www.saeidemon.com",
   },
 };
@@ -34,7 +34,7 @@ const Aboutme = () => {
       <header className="mb-6">
         <h1 className="text-sm font-semibold uppercase text-seGray mb-2">About Me</h1>
         <p className="text-sm text-seBlack/80 leading-6 tracking-wide mb-2">{newdata.experience}</p>
-        <p className="text-sm text-seBlack/80 leading-6 tracking-wide">{newdata.bio}</p>
+        <p className="text-sm text-seBlack/80 leading-6">{newdata.bio}</p>
       </header>
 
       {/* Resume Link (hidden currently) */}

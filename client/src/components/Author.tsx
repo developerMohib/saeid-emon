@@ -13,19 +13,19 @@ import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 
 export const metadata: Metadata = {
-    title: "About | Saeid Hasan Emon - Graphics Designer",
-    description: "Learn more about Saeid Hasan Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
+    title: "About | Saeid Emon - Graphics Designer",
+    description: "Learn more about Saeid Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
     openGraph: {
-        title: "About | Saeid Hasan Emon",
-        description: "Meet Saeid Hasan Emon, a creative professional graphics designer with years of experience in brand identity design.",
+        title: "About | Saeid Emon",
+        description: "Meet Saeid Emon, a creative professional graphics designer with years of experience in brand identity design.",
         url: "https://www.saeidemon.com",
-        siteName: "Saeid Hasan Emon",
+        siteName: "Saeid Emon",
         images: [
             {
                 url: "/emons-logo.png",
                 width: 1200,
                 height: 630,
-                alt: "Saeid Hasan Emon - About Page",
+                alt: "Saeid Emon - About Page",
             },
         ],
         locale: "en_US",
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "About | Saeid Hasan Emon",
-        description: "Learn more about Saeid Hasan Emon — a professional graphics designer specializing in logo and brand identity design.",
+        title: "About | Saeid Emon",
+        description: "Learn more about Saeid Emon — a professional graphics designer specializing in logo and brand identity design.",
         images: ["/emons-logo.png"],
         creator: "@saeidemon",
     },
@@ -92,10 +92,9 @@ const Author = () => {
         }
     };
 
-
-
     const handleLogout = async () => {
         try {
+            setLoading(true);
             const res = await instance.post(`/auth/logout`, {}, { withCredentials: true });
             if (res.data.success) {
                 toast.success(res.data.message);
@@ -104,9 +103,11 @@ const Author = () => {
             }
         } catch (error) {
             console.error("Logout failed", error);
+        } finally {
+            setLoading(false);
         }
     };
-
+    if (loading) return <Loader />
     return (
         <section aria-labelledby="author-heading" className="relative">
             {/* Profile Image */}
@@ -117,7 +118,7 @@ const Author = () => {
                         alt="User Avatar"
                         width={96}
                         height={96}
-                        className="rounded-full h-24 w-24 border-2 border-white object-cover"
+                        className="rounded-full h-24 w-24 border-2 border-seGray object-cover"
                         priority
                     />
 
@@ -207,8 +208,8 @@ const Author = () => {
                                 disabled={loading}
                                 onClick={handleSubmit}
                                 className={`bg-seRed text-seWhite px-4 py-2 rounded cursor-pointer ${loading || !avatarFile
-                                        ? "opacity-50 cursor-not-allowed"
-                                        : "hover:bg-red-700"
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-red-700"
                                     }`}
                             >
                                 {loading ? "Uploading..." : "Save"}
