@@ -13,6 +13,15 @@ const CreateProjectPage: React.FC = () => {
     const [loading, setLoading] = useState(false);
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+         if (!e.target.files || e.target.files.length === 0) {
+      toast.error("No files selected!");
+      return;
+    }
+    if (e.target.files.length > 4) {
+      toast.error("You can upload max 4 images");
+      return;
+    }
+
         if (e.target.files) {
             setImages(Array.from(e.target.files));
         }
@@ -33,6 +42,7 @@ const CreateProjectPage: React.FC = () => {
             images.forEach((img) => {
                 formData.append("images", img);
             });
+            setLoading(true)
             const res = await instance.post("/products/create", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -48,7 +58,8 @@ const CreateProjectPage: React.FC = () => {
             }
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
-                toast.error(err.response?.data?.message || "Something went wrong");
+            console.log('resss', err)
+                toast.error(err.response?.data?.message || "Images Need To Compress for Megabyte");
             } else {
                 toast.error("Something went wrong");
             }
@@ -95,7 +106,7 @@ const CreateProjectPage: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label className="block font-medium mb-2">Upload Images <span className="text-xs text-seGray/20">max 5 </span></label>
+                    <label className="block font-medium mb-2">Upload Images <span className="text-xs text-seGray">max 4 images less than 10 MB </span></label>
                     <input
                         type="file"
                         multiple
@@ -118,7 +129,7 @@ const CreateProjectPage: React.FC = () => {
                 <button
                     disabled={loading}
                     type="submit"
-                    className={`w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition ${loading ? 'opacity-50 cursor-not-allowed' : ''} `}
+                    className={`w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''} `}
                 >
                     {loading ? 'Publishing...' : 'Publish Project'}
                 </button>
