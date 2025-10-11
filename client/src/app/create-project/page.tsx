@@ -58,8 +58,7 @@ const CreateProjectPage: React.FC = () => {
             }
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
-            console.log('resss', err)
-                toast.error(err.response?.data?.message || "Images Need To Compress for Megabyte");
+                toast.error(err.response?.data?.message || "Images Need To Compress for MB or Dimension");
             } else {
                 toast.error("Something went wrong");
             }
