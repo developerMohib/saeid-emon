@@ -5,7 +5,8 @@ import { CloudinaryStorage } from "multer-storage-cloudinary";
 const storage = new CloudinaryStorage({
   cloudinary,
   params: async (req, file) => {
-    
+    console.log('requ 8 uplaod', req)
+    console.log('file 8 uplaod', file)
     const nameWithoutExt = file.originalname.replace(/\.[^.]+$/, "");
     const sanitizedName = nameWithoutExt.replace(/\s+/g, "-"); // Replace spaces with hyphens
     // Original file extension
@@ -27,18 +28,13 @@ const allowedMimeTypes = [
   "application/pdf",
 ];
 
-
-
-// Create Multer instance with Cloudinary storage
-// export const upload = multer({
-//   storage: storage,
-//   limits: { fileSize: 10 * 1024 * 1024 },
-// }); // 15 MB limit
-
 export const upload = multer({
   storage,
-  limits: { fileSize: 15 * 1024 * 1024 }, // 15 MB per file
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB per file
   fileFilter: (req, file, cb) => {
+    
+    console.log('requ 36 uplaod', req)
+    console.log('file 37 uplaod', file)
     if (allowedMimeTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {

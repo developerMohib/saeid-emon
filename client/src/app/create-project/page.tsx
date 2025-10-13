@@ -17,8 +17,8 @@ const CreateProjectPage: React.FC = () => {
       toast.error("No files selected!");
       return;
     }
-    if (e.target.files.length > 4) {
-      toast.error("You can upload max 4 images");
+    if (e.target.files.length > 5) {
+      toast.error("You can upload max 5 images");
       return;
     }
 
@@ -48,6 +48,7 @@ const CreateProjectPage: React.FC = () => {
                     "Content-Type": "multipart/form-data",
                 },
             });
+            console.log('res form create project',res)
             if (res?.data?.success) {
                 toast.success(res?.data.message);
                 setTitle("");
@@ -105,7 +106,7 @@ const CreateProjectPage: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label className="block font-medium mb-2">Upload Images <span className="text-xs text-seGray">max 4 images less than 10 MB </span></label>
+                    <label className="block font-medium mb-2">Upload Images <span className="text-xs text-seGray">max 5 images less than 10 MB </span></label>
                     <input
                         type="file"
                         multiple
