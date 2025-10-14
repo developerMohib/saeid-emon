@@ -9,13 +9,7 @@ import router from "./routes/routes";
 const app: Application = express();
 
 // ─── Middleware Order ────────────────────────────────
-
-// 1️⃣ Cookie & Body Parsers
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// 2️⃣ CORS (must come before routes)
+// CORS (must come before routes)
 app.use(
   cors({
     origin: [
@@ -27,12 +21,21 @@ app.use(
       "https://client-mohib-the-maziests-projects.vercel.app",
     ],
     credentials: true,
-  })
+  }),
 );
 
-// 3️⃣ Express built-in parsers (redundant but safe)
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Cookie & Body Parsers
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Express built-in parsers (redundant but safe)
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
 
 // ─── Routes ──────────────────────────────────────────
 app.use("/api", router);
@@ -62,24 +65,22 @@ app.use((_req: Request, res: Response) => {
 });
 
 // ─── Global Error Handler ────────────────────────────
-app.use(
-  (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
-    console.error("❌ Error:", err);
+app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  console.error("❌ Error:", err);
 
-    // Catch all Error objects
-    if (err instanceof Error) {
-      return res.status(500).json({
-        success: false,
-        message: err.message || "Internal Server Error",
-      });
-    }
-
-    // Fallback for unknown errors
-    res.status(500).json({
+  // Catch all Error objects
+  if (err instanceof Error) {
+    return res.status(500).json({
       success: false,
-      message: "An unexpected error occurred",
+      message: err.message || "Internal Server Error",
     });
   }
-);
+
+  // Fallback for unknown errors
+  res.status(500).json({
+    success: false,
+    message: "An unexpected error occurred",
+  });
+});
 
 export default app;
