@@ -111,14 +111,14 @@ const Author = () => {
     return (
         <section aria-labelledby="author-heading" className="relative">
             {/* Profile Image */}
-            <div className="absolute left-0 -top-16">
+            <div className="absolute left-0 -top-12">
                 <div className="relative h-24 w-24">
                     <Image
                         src={newdata?.avatar}
                         alt="User Avatar"
                         width={96}
                         height={96}
-                        className="rounded-full h-24 w-24 border-2 border-seGray object-cover"
+                        className="rounded-full h-24 w-24 border-[3px] border-seWhite/80 object-cover"
                         priority
                     />
 

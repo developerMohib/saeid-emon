@@ -61,14 +61,15 @@ const Banner = () => {
   };
 
   return (
-    <section className="relative w-full h-56 pt-0 -mt-3.5" aria-label="Banner Section">
+    <section className="relative w-full md:h-56 h-36 pt-0 -mt-3.5" aria-label="Banner Section">
       {/* Banner Image */}
       <Image
         src={newdata?.banner}
         alt="Banner"
         fill
-        className="object-cover md:object-contain"
+        className="object-cover"
         priority
+        sizes="100vw"
       />
 
       {/* Edit Button */}
