@@ -21,8 +21,8 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:4000",
+      "https://www.app.saeidemon.com",
       "https://www.saeidemon.com",
-      "https://saeid-hasan-emon.vercel.app",
       "https://saeid-emon.vercel.app",
       "https://client-mohib-the-maziests-projects.vercel.app",
     ],
