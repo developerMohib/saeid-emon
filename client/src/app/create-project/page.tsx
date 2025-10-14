@@ -1,8 +1,8 @@
 "use client"
 import instance from "@/hooks/instance";
-import axios from "axios";
+import axios, { AxiosProgressEvent } from "axios";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 const CreateProjectPage: React.FC = () => {
@@ -11,16 +11,32 @@ const CreateProjectPage: React.FC = () => {
     const [category, setCategory] = useState("");
     const [images, setImages] = useState<File[]>([]);
     const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState<number>(0);
+    const progressRef = useRef(progress);
+    progressRef.current = progress;
+    const smoothProgress = (target: number) => {
+        const step = () => {
+            setProgress((prev) => {
+                if (prev < target) return prev + 1;
+                return prev;
+            });
+            if (progressRef.current < target) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    };
+
+
+
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-         if (!e.target.files || e.target.files.length === 0) {
-      toast.error("No files selected!");
-      return;
-    }
-    if (e.target.files.length > 4) {
-      toast.error("You can upload max 4 images");
-      return;
-    }
+        if (!e.target.files || e.target.files.length === 0) {
+            toast.error("No files selected!");
+            return;
+        }
+        if (e.target.files.length > 5) {
+            toast.error("You can upload max 5 images");
+            return;
+        }
 
         if (e.target.files) {
             setImages(Array.from(e.target.files));
@@ -42,10 +58,19 @@ const CreateProjectPage: React.FC = () => {
             images.forEach((img) => {
                 formData.append("images", img);
             });
-            setLoading(true)
+            setLoading(true);
+            setProgress(0);
             const res = await instance.post("/products/create", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                },
+                onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+                    if (progressEvent.total) {
+                        const percent = Math.round(
+                            (progressEvent.loaded * 100) / progressEvent.total
+                        );
+                        smoothProgress(percent);
+                    }
                 },
             });
             if (res?.data?.success) {
@@ -55,6 +80,7 @@ const CreateProjectPage: React.FC = () => {
                 setCategory("");
                 setImages([]);
                 setLoading(false);
+                setProgress(100);
             }
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
@@ -67,8 +93,53 @@ const CreateProjectPage: React.FC = () => {
         }
     };
 
+
+    const radius = 20;
+    const stroke = 4;
+    const normalizedRadius = radius - stroke * 2;
+    const circumference = normalizedRadius * 2 * Math.PI;
+    const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+
     return (
         <div className="max-w-2xl mx-auto py-8">
+
+            {loading && (
+                <div className="fixed top-10 right-5 z-50">
+                    <svg height={radius * 2} width={radius * 2}>
+                        <circle
+                            stroke="#e5e7eb"
+                            fill="transparent"
+                            strokeWidth={stroke}
+                            r={normalizedRadius}
+                            cx={radius}
+                            cy={radius}
+                        />
+                        <circle
+                            stroke="#3b82f6"
+                            fill="transparent"
+                            strokeWidth={stroke}
+                            strokeLinecap="round"
+                            strokeDasharray={circumference + " " + circumference}
+                            strokeDashoffset={strokeDashoffset}
+                            r={normalizedRadius}
+                            cx={radius}
+                            cy={radius}
+                            className="transition-all duration-200"
+                        />
+                        <text
+                            x="50%"
+                            y="50%"
+                            dominantBaseline="middle"
+                            textAnchor="middle"
+                            className="text-xs font-bold fill-blue-600"
+                        >
+                            {progress}%
+                        </text>
+                    </svg>
+                </div>
+            )}
+
             <h1 className="text-3xl font-bold mb-6">Create New Project</h1>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -105,7 +176,7 @@ const CreateProjectPage: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label className="block font-medium mb-2">Upload Images <span className="text-xs text-seGray">max 4 images less than 10 MB </span></label>
+                    <label className="block font-medium mb-2">Upload Images <span className="text-xs text-seGray">max 5 images less than 10 MB </span></label>
                     <input
                         type="file"
                         multiple

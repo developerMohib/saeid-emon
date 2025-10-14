@@ -16,11 +16,11 @@ import Loader from "./Loader";
 import useGetBrand from "@/hooks/useBrandingApi";
 
 export const metadata: Metadata = {
-  title: "Services | Logo, Branding & Print Design by Saeid Emon",
+  title: "Services | Logo, Branding & Print Design by Saeid Hasan Emon",
   description:
-    "Explore creative design services by Saeid Emon — expert in logo design, brand identity, poster design, and marketing visuals.",
+    "Explore creative design services by Saeid Hasan Emon — expert in logo design, brand identity, poster design, and marketing visuals.",
   openGraph: {
-    title: "Services by Saeid Emon",
+    title: "Services by Saeid Hasan Emon",
     url: "https://www.saeidemon.com",
   },
 };
