@@ -61,7 +61,6 @@ const Dashboard = () => {
 
 
 const handleDelete = async (prod: ICard) => {
-  console.log('prod',prod)
   Swal.fire({
     title: "Are you sure?",
     text: "Are you sure you want to delete this product?",

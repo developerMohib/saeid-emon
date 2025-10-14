@@ -13,19 +13,19 @@ import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 
 export const metadata: Metadata = {
-    title: "About | Saeid Emon - Graphics Designer",
-    description: "Learn more about Saeid Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
+    title: "About | Saeid Hasan Emon - Graphics Designer",
+    description: "Learn more about Saeid Hasan Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
     openGraph: {
-        title: "About | Saeid Emon",
-        description: "Meet Saeid Emon, a creative professional graphics designer with years of experience in brand identity design.",
+        title: "About | Saeid Hasan Emon",
+        description: "Meet Saeid Hasan Emon, a creative professional graphics designer with years of experience in brand identity design.",
         url: "https://www.saeidemon.com",
-        siteName: "Saeid Emon",
+        siteName: "Saeid Hasan Emon",
         images: [
             {
                 url: "/emons-logo.png",
                 width: 1200,
                 height: 630,
-                alt: "Saeid Emon - About Page",
+                alt: "Saeid Hasan Emon - About Page",
             },
         ],
         locale: "en_US",
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "About | Saeid Emon",
-        description: "Learn more about Saeid Emon — a professional graphics designer specializing in logo and brand identity design.",
+        title: "About | Saeid Hasan Emon",
+        description: "Learn more about Saeid Hasan Emon — a professional graphics designer specializing in logo and brand identity design.",
         images: ["/emons-logo.png"],
         creator: "@saeidemon",
     },
