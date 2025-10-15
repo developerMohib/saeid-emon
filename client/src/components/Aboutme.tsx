@@ -8,13 +8,13 @@ import React from 'react';
 import Loader from './Loader';
 
 export const metadata: Metadata = {
-  title: "About | Saeid Hasan Emon - Graphics Designer",
+  title: "About | Saeid Emon - Graphics Designer",
   description:
-    "Learn more about Saeid Hasan Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
+    "Learn more about Saeid Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
   openGraph: {
-    title: "About | Saeid Hasan Emon",
+    title: "About | Saeid Emon",
     description:
-      "Meet Saeid Hasan Emon, a creative professional graphics designer with years of experience in brand identity design.",
+      "Meet Saeid Emon, a creative professional graphics designer with years of experience in brand identity design.",
     url: "https://www.saeidemon.com",
   },
 };

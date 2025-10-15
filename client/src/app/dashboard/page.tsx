@@ -101,14 +101,18 @@ const handleDelete = async (prod: ICard) => {
 
   const handleLogout = async () => {
     try {
+      setLoading(true)
       const res = await instance.post(`/auth/logout`, {}, { withCredentials: true });
       if (res.data.success) {
         toast.success(res.data.message);
         router.push("/");
         window.dispatchEvent(new Event("authChange"));
+        setLoading(false)
       }
     } catch (error) {
       console.error("Logout failed", error);
+    }finally{
+      setLoading(false)
     }
   };
 
