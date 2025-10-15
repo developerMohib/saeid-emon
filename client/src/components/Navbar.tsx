@@ -33,7 +33,7 @@ const Navbar = () => {
             <Link href="/" aria-label="Home">
               <Image
                 src="/emons-logo.png"
-                alt="Saeid Hasan Emon Logo"
+                alt="Saeid Emon Logo"
                 width={120}
                 height={40}
                 className="w-16 h-auto p-1  "
