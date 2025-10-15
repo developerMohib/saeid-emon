@@ -19,11 +19,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Saeid Hasan Emon | Graphics Designer",
+  title: "Saeid Emon | Graphics Designer",
   description:
-    "Saeid Hasan Emon is a professional graphics designer specializing in brand identity, logo design, business cards, and creative visual solutions. Elevate your brand with modern, aesthetic designs tailored to your vision.",
+    "Saeid Emon is a professional graphics designer specializing in brand identity, logo design, business cards, and creative visual solutions. Elevate your brand with modern, aesthetic designs tailored to your vision.",
   keywords: [
-    "Saeid Hasan Emon",
+    "Saeid Emon",
     "Graphics Designer",
     "Brand Identity Designer",
     "Logo Designer",
@@ -36,22 +36,22 @@ export const metadata: Metadata = {
     "Illustrator Expert",
     "Bangladesh Designer",
   ],
-  authors: [{ name: "Saeid Hasan Emon" }],
-  creator: "Saeid Hasan Emon",
-  publisher: "Saeid Hasan Emon",
+  authors: [{ name: "Saeid Emon" }],
+  creator: "Saeid Emon",
+  publisher: "Saeid Emon",
   metadataBase: new URL("https://www.saeidemon.com"),
   openGraph: {
-    title: "Saeid Hasan Emon | Professional Graphics Designer",
+    title: "Saeid Emon | Professional Graphics Designer",
     description:
       "Creative and professional graphics designer specializing in logos, brand identity, and print design. Transforming ideas into stunning visuals.",
     url: "https://www.saeidemon.com",
-    siteName: "Saeid Hasan Emon",
+    siteName: "Saeid Emon",
     images: [
       {
         url: "/emons-logo.png",
         width: 1200,
         height: 630,
-        alt: "Saeid Hasan Emon - Professional Graphics Designer",
+        alt: "Saeid Emon - Professional Graphics Designer",
       },
     ],
     locale: "en_US",
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Saeid Hasan Emon | Professional Graphics Designer",
+    title: "Saeid Emon | Professional Graphics Designer",
     description:
-      "Portfolio of Saeid Hasan Emon — a professional graphics designer specializing in logo and brand identity design.",
+      "Portfolio of Saeid Emon — a professional graphics designer specializing in logo and brand identity design.",
     images: ["/emons-logo.png"],
     creator: "@saeidemon", // Optional: Add your Twitter handle if you have one
   },
