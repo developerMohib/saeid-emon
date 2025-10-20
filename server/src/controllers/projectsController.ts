@@ -2,25 +2,7 @@ import { Request, Response } from "express";
 import { Product } from "../models/product";
 
 // ─── GET all cards ──────────────────────────────────────
-// export const getAllProjects = async (req: Request, res: Response) => {
-//   try {
-//     const cards = await Product.find();
-//     res.json({
-//       success: true,
-//       message: "All Data Retrieved Successfully",
-//       data: cards,
-//     });
-//   } catch (err: unknown) {
-//     if (err instanceof Error) {
-//       res.status(500).json({ error: err.message });
-//     } else {
-//       res.status(500).json({ error: "Unknown error occurred" });
-//     }
-//   }
-// };
 
-
-// controllers/productController.ts
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
     const page = parseInt(req.query.page as string) || 1;
