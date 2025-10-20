@@ -35,7 +35,7 @@ const useProducts = () => {
         : undefined;
     },
     initialPageParam: 1,
-    staleTime: 5 * 60 * 1000, // 5 minutes cache
+    staleTime: 5 * 60 * 1000,
   });
 
   // Flatten all products from all pages
