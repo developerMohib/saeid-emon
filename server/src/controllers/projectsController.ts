@@ -2,13 +2,32 @@ import { Request, Response } from "express";
 import { Product } from "../models/product";
 
 // ─── GET all cards ──────────────────────────────────────
+
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
-    const cards = await Product.find();
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 6;
+    const skip = (page - 1) * limit;
+
+    const cards = await Product.find()
+      .sort({ createdAt: -1 }) // Newest first
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Product.countDocuments();
+    const hasMore = total > page * limit;
+
     res.json({
       success: true,
-      message: "All Data Retrieved Successfully",
+      message: "Data Retrieved Successfully",
       data: cards,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(total / limit),
+        totalItems: total,
+        hasMore,
+        limit
+      }
     });
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -18,6 +37,7 @@ export const getAllProjects = async (req: Request, res: Response) => {
     }
   }
 };
+
 
 // ─── GET single card by ID ─────────────────────────────
 export const getProjectById = async (req: Request, res: Response) => {
