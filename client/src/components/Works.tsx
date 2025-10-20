@@ -92,7 +92,7 @@ const Works = () => {
 
         {/* Add Project Card (Authenticated Only) */}
         {isAuthenticated && (
-          <article className="w-80 h-80 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300 hover:border-seBlue transition-colors">
+          <article className="w-80 h-80 rounded-lg flex items-center justify-center border-2 border-dashed border-seGray/40 hover:border-seBlue transition-colors">
             <div className="text-center">
               <Plus className="h-8 w-8 mx-auto mb-4 rounded-full bg-seBlue text-white p-1" />
               <Link href="/create-project">
