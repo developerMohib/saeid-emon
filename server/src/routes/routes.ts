@@ -7,6 +7,7 @@ import {
   getProjectById,
   deleteProject,
   updateProject,
+  myProjects,
 } from "../controllers/projectsController";
 
 import {
@@ -41,6 +42,7 @@ router.post("/contact", contactwithUser);
 router.get("/resume", resumes);
 
 // ─── Project Routes ───────────────────────────────────────────
+router.get("/manages/dashboard", myProjects);
 router.get("/all", getAllProjects);
 router.get("/single/:id", getProjectById);
 router.post("/create", upload.array("images", 5), createProject);
