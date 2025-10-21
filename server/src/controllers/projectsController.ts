@@ -3,16 +3,45 @@ import { Product } from "../models/product";
 
 // ─── GET all cards ──────────────────────────────────────
 
+export const myProjects = async (req: Request, res: Response) => {
+  try {
+    const cards = await Product.find()
+      .select('title images category createdAt')
+      .sort({ createdAt: -1 })
+      .limit(100) // Prevent overload
+      .lean();
+
+    res.status(200).json({
+      success: true,
+      message: "Projects retrieved successfully",
+      data: cards,
+      count: cards.length,
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (err: unknown) {
+    console.error('Error fetching projects:', err);
+    
+    res.status(500).json({ 
+      success: false,
+      message: "Failed to retrieve projects",
+      error: "Internal server error"
+    });
+  }
+};
+
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 6;
+    const page = Math.max(1, parseInt(req.query.page as string) || 1);
+    const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 9));
     const skip = (page - 1) * limit;
 
     const cards = await Product.find()
-      .sort({ createdAt: -1 }) // Newest first
+      .select('title images category createdAt') 
+      .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .lean(); // Convert to plain objects for better performance
 
     const total = await Product.countDocuments();
     const hasMore = total > page * limit;
@@ -30,14 +59,15 @@ export const getAllProjects = async (req: Request, res: Response) => {
       }
     });
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(500).json({ error: "Unknown error occurred" });
-    }
+    console.error('Error fetching projects:', err);
+    const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
+    
+    res.status(500).json({ 
+      success: false,
+      error: errorMessage 
+    });
   }
 };
-
 
 // ─── GET single card by ID ─────────────────────────────
 export const getProjectById = async (req: Request, res: Response) => {
