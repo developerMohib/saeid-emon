@@ -62,13 +62,13 @@ const Works = () => {
                 alt={card.title}
                 width={320}
                 height={320}
-                priority={index < 3} // Priority load first 3 images
+                priority={index < 3}
                 className="w-full h-80 object-cover"
               />
             </div>
 
             {/* Overlay Details */}
-            <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-seBlack/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute inset-0 flex flex-col justify-end p-4 bg-linear-to-t from-seBlack/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <span className="text-seWhite text-sm">{card.category}</span>
               <div className="grid grid-rows-2 justify-between items-center gap-4 text-seWhite">
                 <div>
@@ -111,7 +111,7 @@ const Works = () => {
           <button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="flex items-center gap-3 px-8 py-3 bg-seBlue text-white rounded-lg hover:bg-seBlue/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+            className="flex items-center gap-3 px-8 py-3 bg-seBlack text-white rounded-lg hover:bg-seRed transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold cursor-pointer"
           >
             {isFetchingNextPage ? (
               <>
