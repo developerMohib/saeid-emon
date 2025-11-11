@@ -19,20 +19,20 @@ export const metadata: Metadata = {
 };
 
 const Works = () => {
-  const { 
-    data: cardsData, 
-    error, 
-    isPending, 
-    isError, 
-    fetchNextPage, 
-    hasNextPage, 
+  const {
+    data: cardsData,
+    error,
+    isPending,
+    isError,
+    fetchNextPage,
+    hasNextPage,
     isFetchingNextPage
   } = useProducts();
-  
+
   const { isAuthenticated, loading } = useCheckAuth();
 
   if (isPending || loading) return <Loader />;
-  
+
   if (isError) {
     return (
       <div className="flex justify-center items-center min-h-64">
@@ -64,6 +64,7 @@ const Works = () => {
                 height={320}
                 priority={index < 3}
                 className="w-full h-80 object-cover"
+                style={{ height: 'auto' }} // This maintains aspect ratio
               />
             </div>
 
@@ -111,7 +112,7 @@ const Works = () => {
           <button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="flex items-center gap-3 px-8 py-3 bg-seBlack text-white rounded-lg hover:bg-seRed transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold cursor-pointer"
+            className="flex items-center gap-3 px-8 py-3 bg-seBlack text-seWhite rounded-lg hover:bg-seRed transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold cursor-pointer"
           >
             {isFetchingNextPage ? (
               <>

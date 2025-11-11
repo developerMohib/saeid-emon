@@ -22,7 +22,7 @@ const useManageDashboard = () => {
     queryKey: ["my-projects"],
     queryFn: async (): Promise<MyProjectsResponse> => {
       const res = await instance.get("/api/manages/dashboard");
-      console.log('res dash',res)
+      
       if (!res.data?.success) {
         throw new Error(res.data?.message || "Failed to fetch projects");
       }

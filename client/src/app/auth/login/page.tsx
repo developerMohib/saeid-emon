@@ -90,7 +90,7 @@ const SignIn = () => {
                 placeholder="Username@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full mt-1 px-3 py-2 border border-seGray/50 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seSlack/50"
+                className="w-full mt-1 px-3 py-2 border border-seGray/50 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seSlack/50 text-seGray/80"
                 required
               />
             </div>
@@ -103,7 +103,7 @@ const SignIn = () => {
                 placeholder="***"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full mt-1 px-3 py-2 border border-seGray/50 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seSlack/50"
+                className="w-full mt-1 px-3 py-2 border border-seGray/50 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seSlack/50 text-seGray/80"
                 required
               />
 
@@ -140,7 +140,7 @@ const SignIn = () => {
                 placeholder="123456"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                className="w-full mt-1 px-3 py-2 border border-seGray/50 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seSlack/50"
+                className="w-full mt-1 px-3 py-2 border border-seGray/50 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seSlack/50 text-seGray/80"
                 required
               />
             </div>

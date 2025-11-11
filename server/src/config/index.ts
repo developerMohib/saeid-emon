@@ -22,7 +22,7 @@ interface Config {
 export const config: Config = {
   port: process.env.PORT || 4000,
   dbUri: process.env.DB_URI as string,
-  salt: process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS, 10) : 14,
+  salt: process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS, 10) : 10,
   jwtSecret: process.env.JWT_SECRET,
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
 };

@@ -56,7 +56,7 @@ const ForgetPassword: React.FC = () => {
           <div className="mb-4 text-left">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-seSlack mb-1"
             >
               Enter your email
             </label>
@@ -68,7 +68,7 @@ const ForgetPassword: React.FC = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEmail(e.target.value)
               }
-              className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg outline-none text-sm focus:ring-2 focus:ring-[#2c3e73]"
+              className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg outline-none text-sm focus:ring-2 focus:ring-seRed/40 text-seGray/70"
               required
             />
           </div>
