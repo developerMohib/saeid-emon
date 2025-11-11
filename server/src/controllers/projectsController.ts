@@ -25,7 +25,7 @@ export const myProjects = async (req: Request, res: Response) => {
     res.status(500).json({ 
       success: false,
       message: "Failed to retrieve projects",
-      error: "Internal server error"
+      error: "Internal error happened"
     });
   }
 };
@@ -128,7 +128,7 @@ export const createProject = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Internal error occured" });
   }
 };
 
