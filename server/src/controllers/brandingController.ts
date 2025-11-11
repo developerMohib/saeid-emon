@@ -17,7 +17,7 @@ export const createBranding = async (req: Request, res: Response): Promise<void>
     if (error instanceof Error) {
       res.status(500).json({ success: false, message: error.message });
     } else {
-      res.status(500).json({ success: false, message: "Unknown server error" });
+      res.status(500).json({ success: false, message: "Unknown error happened" });
     }
   }
 };
@@ -31,7 +31,7 @@ export const getBrands = async (_req: Request, res: Response): Promise<void> => 
     if (error instanceof Error) {
       res.status(500).json({ success: false, message: error.message });
     } else {
-      res.status(500).json({ success: false, message: "Unknown server error" });
+      res.status(500).json({ success: false, message: "Unknown error occurred" });
     }
   }
 };
@@ -59,7 +59,7 @@ export const updateBranding = async (req: Request<{ id: string }>, res: Response
     if (error instanceof Error) {
       res.status(500).json({ success: false, message: error.message });
     } else {
-      res.status(500).json({ success: false, message: "Unknown server error" });
+      res.status(500).json({ success: false, message: "Unknown error happened" });
     }
   }
 };
@@ -87,7 +87,7 @@ export const deleteBranding = async (req: Request<{ id: string }>, res: Response
     if (error instanceof Error) {
       res.status(500).json({ success: false, message: error.message });
     } else {
-      res.status(500).json({ success: false, message: "Unknown server error" });
+      res.status(500).json({ success: false, message: "Unknown error occured" });
     }
   }
 };

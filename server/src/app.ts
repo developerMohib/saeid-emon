@@ -68,7 +68,7 @@ app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   if (err instanceof Error) {
     return res.status(500).json({
       success: false,
-      message: err.message || "Internal Server Error",
+      message: err.message || "Internal Error occurred",
     });
   }
 

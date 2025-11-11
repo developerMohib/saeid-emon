@@ -31,7 +31,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
     if (!isMatch) {
       return res.status(400).json({
         success: false,
-        message: "Invalid credentials",
+        message: "Invalid email or password",
       });
     }
 
@@ -82,7 +82,7 @@ export const getAdminDetails = async (req: Request, res: Response) => {
 
     res.json({ data: users });
   } catch (err) {
-    res.status(500).json({ message: "Server error", err });
+    res.status(500).json({ message: "Internal error occured", err });
   }
 };
 
@@ -99,7 +99,7 @@ export const logoutAdmin = async (req: Request, res: Response) => {
   } catch (err) {
     return res
       .status(500)
-      .json({ success: false, message: "Server error", err });
+      .json({ success: false, message: "Internal error occured", err });
   }
 };
 
@@ -122,7 +122,7 @@ export const updateBanner = async (req: Request, res: Response) => {
 
     res.json({ success: true, message: "Banner updated successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Server error", err });
+    res.status(500).json({ message: "Internal error occured", err });
   }
 };
 
@@ -151,6 +151,6 @@ export const updateAvatar = async (req: Request, res: Response) => {
       data: user,
     });
   } catch (err) {
-    res.status(500).json({ message: "Server error", err });
+    res.status(500).json({ message: "Internal error occured", err });
   }
 };

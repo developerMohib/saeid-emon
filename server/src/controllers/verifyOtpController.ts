@@ -63,6 +63,6 @@ export const verifyAdminOtp = async (req: Request, res: Response) => {
     });
   } catch (error) {
     // ─── Error Handler ─────────────────────────────────
-    return res.status(500).json({ message: "Server error", error });
+    return res.status(500).json({ message: "Internal error occured", error });
   }
 };

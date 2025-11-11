@@ -11,34 +11,55 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 export const forgetPassword = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
-
+    
     // Validation
     if (!email) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Email is required" });
+      return res.status(400).json({ 
+        success: false, 
+        message: "Email is required" 
+      });
     }
 
     // Check if user exists
     const user = await User.isUserExistsByEmail(email);
     if (!user) {
-      return res.status(404).json({ message: "User not found!" });
+      console.log("User not found for email:", email);
+      return res.status(404).json({ 
+        success: false,
+        message: "User not found!" 
+      });
     }
 
     // Create JWT token for reset link
     const jwtPayload = { userEmail: user.email as string };
-    const resetToken = createToken(jwtPayload, config.jwtSecret as string, "1d");
+
+    if (!config.jwtSecret) {
+      throw new Error("JWT secret is not configured");
+    }
+
+    const resetToken = createToken(jwtPayload, config.jwtSecret, "1d");
 
     const resetUILink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
+    // Check email configuration
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      throw new Error("Email credentials not configured");
+    }
+
+    console.log("Email config - User:", process.env.EMAIL_USER);
+
     // Setup nodemailer transporter
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: "gmail",port: 587,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
+
+    // Verify transporter configuration
+    await transporter.verify();
+    console.log("Email transporter verified successfully");
 
     // Email options
     const mailOptions = {
@@ -46,28 +67,60 @@ export const forgetPassword = async (req: Request, res: Response) => {
       to: user.email,
       subject: "Password Reset Request",
       html: `
-        <h3>Password Reset Request</h3>
-        <p>Click the link below to reset your password (valid for 15 minutes):</p>
-        <a href="${resetUILink}" target="_blank">${resetUILink}</a>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333;">Password Reset Request</h2>
+          <p>Hello,</p>
+          <p>You requested to reset your password for your Saeid Emon Portfolio account.</p>
+          <p>Click the link below to reset your password (valid for 1 hour):</p>
+          <a href="${resetUILink}" 
+             style="display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; margin: 16px 0;">
+            Reset Your Password
+          </a>
+          <p>If the button doesn't work, copy and paste this link in your browser:</p>
+          <p style="word-break: break-all; color: #666;">${resetUILink}</p>
+          <p><small>If you didn't request this password reset, please ignore this email.</small></p>
+          <hr style="margin: 20px 0;">
+          <p style="color: #999; font-size: 12px;">This is an automated message from Saeid Emon Portfolio.</p>
+        </div>
       `,
     };
 
     // Send email
-    await transporter.sendMail(mailOptions);
+    console.log("Attempting to send email...");
+    const emailResult = await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully:", emailResult.messageId);
 
     // Response
     return res.status(200).json({
       success: true,
       message: "Reset link sent to your email.",
     });
+
   } catch (error) {
+    console.error("Forget password error details:", error);
+    
+    // More specific error messages
+    let errorMessage = "Something went wrong, please check email configuration.";
+    
+    if (error instanceof Error) {
+      if (error.message.includes("Invalid login")) {
+        errorMessage = "Email configuration error: Invalid credentials";
+      } else if (error.message.includes("ECONNREFUSED")) {
+        errorMessage = "Email service connection failed";
+      } else {
+        errorMessage = error.message;
+      }
+    }
+
     return res.status(500).json({
       success: false,
-      message: "Server error",
-      error,
+      message: errorMessage,
+      error: process.env.NODE_ENV === 'development' ? error : undefined
     });
   }
 };
+
+
 
 // ─── Reset Password ──────────────────────────────────────────
 export const resetPassword = async (req: Request, res: Response): Promise<Response> => {
