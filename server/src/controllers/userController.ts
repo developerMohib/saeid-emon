@@ -11,7 +11,6 @@ dotenv.config();
 export const loginAdmin = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -20,7 +19,6 @@ export const loginAdmin = async (req: Request, res: Response) => {
     }
 
     const admin = await User.findOne({ email });
-
     if (!admin) {
       return res.status(201).json({
         success: false,
@@ -48,7 +46,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
   } catch (err) {
     return res.status(500).json({
       success: false,
-      message: "Server error",
+      message: "Your Email or Password is incorrect",
       err,
     });
   }
