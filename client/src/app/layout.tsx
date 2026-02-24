@@ -1,19 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import ReactQueryProvider from "../provider/ReactQueryProvider";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
+import { Saira } from "next/font/google";
 
-const roboto = Roboto_Mono({
-  variable: "--font-roboto-mono",
-  subsets: ["latin"],
-  display: "swap"
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const saira = Saira({
+  variable: "--font-saira",
   subsets: ["latin"],
   display: "swap"
 });
@@ -89,7 +83,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <body
-        className={`${roboto.variable} ${geistMono.variable} antialiased`}
+        className={` ${saira.variable} antialiased`}
       >
         <main className="container mx-auto p-0 m-0">
           <ReactQueryProvider>
