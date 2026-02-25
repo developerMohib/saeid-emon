@@ -29,14 +29,14 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="relative py-24 sm:py-32 bg-transparent overflow-visible">
+    <section className="relative py-12 sm:py-16 bg-transparent overflow-visible">
       {/* Background Glows - Matching the previous sections */}
       <div className="absolute top-[50%] right-[-10%] w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-purple-600/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-sm font-mono tracking-[0.4em] text-blue-400 uppercase mb-4">Common Inquiries</h2>
+          <h2 className="text-sm tracking-[0.4em] text-blue-400 uppercase mb-4">Common Inquiries</h2>
           <h3 className="text-4xl font-bold text-white tracking-tight">Everything you <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-blue-500">need to know.</span></h3>
         </div>
 
@@ -71,7 +71,7 @@ const FAQSection = () => {
 
         {/* Designer Signature Detail */}
         <div className="mt-16 text-center">
-          <p className="text-gray-500 text-sm font-mono italic">Still have questions? <a href="#" className="text-blue-400 border-b border-blue-400/30 hover:text-purple-400 transition-colors">Shoot me a DM.</a></p>
+          <p className="text-gray-500 text-sm">Still have questions? <a href="#" className="text-blue-400 border-b border-blue-400/30 hover:text-purple-400 transition-colors">Shoot me a DM.</a></p>
         </div>
       </div>
     </section>

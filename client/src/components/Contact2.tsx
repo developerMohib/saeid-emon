@@ -3,7 +3,7 @@ import { FiSend, FiInstagram, FiTwitter, FiDribbble } from 'react-icons/fi';
 
 const ContactSection = () => {
   return (
-    <section className="relative py-24 sm:py-32 bg-transparent overflow-visible">
+    <section className="relative py-12 sm:py-16 bg-transparent overflow-visible">
       {/* The Final Background Glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/10 blur-[150px] rounded-full pointer-events-none opacity-50" />
       <div className="absolute bottom-[-5%] right-[-5%] w-[400px] h-[400px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none opacity-50" />
@@ -14,10 +14,10 @@ const ContactSection = () => {
           {/* Left Side: Branding & Info */}
           <div className="flex flex-col justify-between">
             <div>
-              <h2 className="text-sm font-mono tracking-[0.4em] text-blue-400 uppercase mb-4">Let&apos;s Connect</h2>
+              <h2 className="text-sm tracking-[0.4em] text-blue-400 uppercase mb-4">Let&apos;s Connect</h2>
               <h3 className="text-5xl font-bold text-white tracking-tight leading-tight">
                 Ready to define your <br />
-                <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-blue-500 italic">visual legacy?</span>
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-blue-500">visual legacy?</span>
               </h3>
               <p className="mt-6 text-lg text-gray-400 max-w-md">
                 Whether you need a timeless logo or a full teamwear identity, I’m here to help you stand out.
@@ -26,7 +26,7 @@ const ContactSection = () => {
 
             {/* Social Links for a Designer */}
             <div className="mt-12">
-              <p className="text-xs font-mono uppercase tracking-widest text-gray-500 mb-4 font-bold">Follow the process</p>
+              <p className="text-xs uppercase tracking-widest text-gray-500 mb-4 font-bold">Follow the process</p>
               <div className="flex gap-6">
                 <a href="#" className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:text-purple-400 hover:border-purple-400/50 transition-all">
                   <FiInstagram size={20} />
@@ -46,7 +46,7 @@ const ContactSection = () => {
             <form className="space-y-6">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-widest text-gray-500 mb-2 px-1">Name</label>
+                  <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 px-1">Name</label>
                   <input 
                     type="text" 
                     className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
@@ -54,7 +54,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-widest text-gray-500 mb-2 px-1">Email</label>
+                  <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 px-1">Email</label>
                   <input 
                     type="email" 
                     className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
@@ -64,7 +64,7 @@ const ContactSection = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-widest text-gray-500 mb-2 px-1">Project Type</label>
+                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 px-1">Project Type</label>
                 <select className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none">
                   <option>Logo & Branding</option>
                   <option>Jersey & Apparel</option>
@@ -74,7 +74,7 @@ const ContactSection = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-widest text-gray-500 mb-2 px-1">Message</label>
+                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 px-1">Message</label>
                 <textarea 
                   rows={4}
                   className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"

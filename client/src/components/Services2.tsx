@@ -29,17 +29,18 @@ const services = [
   ];
 
   return (
-    <section className="relative py-24 sm:py-32 bg-transparent overflow-visible">
+    <section className="relative py-12 sm:py-16 bg-transparent overflow-visible">
       {/* Continuing the seamless glow from previous sections */}
       <div className="absolute top-[30%] left-[-5%] w-[450px] h-[450px] bg-purple-600/10 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 container mx-auto px-6 lg:px-8">
         <div className="mb-16">
-          <h2 className="text-sm font-mono tracking-[0.5em] text-purple-400 uppercase mb-4">The Craft</h2>
-          <h3 className="text-4xl font-bold text-white tracking-tight leading-tight">
+          <h2 className="text-sm tracking-[0.5em] text-purple-400 uppercase">The Craft</h2>
+          <h3 className="text-5xl font-bold text-white tracking-tight leading-tight my-4">
             Distilling complex values into <br/> 
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-blue-500 italic">singular, iconic marks.</span>
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-blue-500">singular, iconic marks.</span>
           </h3>
+          <h2 className="text-sm tracking-[0.5em] text-purple-400 uppercase mb-4">Working Process</h2>
         </div>
 
         {/* Bento Grid */}
@@ -64,7 +65,7 @@ const services = [
                 </div>
                 
                 {/* Designer Detail: The Index Number */}
-                <div className="text-[10px] font-mono text-white/20 uppercase tracking-[0.2em]">
+                <div className="text-[10px] text-white/20 uppercase tracking-[0.2em]">
                   Service_0{index + 1}
                 </div>
               </div>

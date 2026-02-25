@@ -46,7 +46,7 @@ const Footer: FC = () => {
             href={href}
             target="_blank"
             aria-label={name}
-            className="w-10 h-10 rounded-full bg-seGray/20 flex items-center justify-center hover:bg-amber-500 transition-colors hover:-translate-y-0.5 duration-700"
+            className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:text-purple-400 hover:border-purple-400/50 transition-all"
           >
             <svg
               className="h-5 w-5"
