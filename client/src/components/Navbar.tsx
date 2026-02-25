@@ -4,9 +4,9 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import ThemeChanger from "./ThemeChanger";
 import useCheckAuth from "@/hooks/useCheckAuth";
 import Loader from "./Loader";
+import ThemeChanger from "./ThemeChanger";
 
 const Navbar = () => {
   const { isAuthenticated, loading } = useCheckAuth();
@@ -17,6 +17,8 @@ const Navbar = () => {
   // Navigation links data
   const navLinks = [
     { href: "/", label: "Home" },
+    { href: "/about-me", label: "About Me" },
+    { href: "/all-designs", label: "All Designs" },
     // Only show Dashboard if authenticated === true
     ...(isAuthenticated
       ? [{ href: "/dashboard", label: "Dashboard" }]
@@ -25,8 +27,8 @@ const Navbar = () => {
 
   return (
     <header className="backdrop-blur-sm sticky top-0 z-50 w-full py-1.5 bg-black">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-6 py-2">
 
           {/* Logo */}
           <div>
@@ -49,14 +51,13 @@ const Navbar = () => {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-medium text-white hover:text-seRed transition-colors"
+                  className="text-sm font-medium text-white hover:text-seRed transition-colors hover:border-b border-seRed"
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
-
-            <ThemeChanger />
+            <ThemeChanger/>
           </div>
         </div>
       </div>

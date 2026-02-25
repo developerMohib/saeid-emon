@@ -85,7 +85,7 @@ export default function RootLayout({
       <body
         className={` ${saira.variable} antialiased`}
       >
-        <main className="container mx-auto p-0 m-0">
+        <main className="overflow-hidden">
           <ReactQueryProvider>
             <Navbar />
             {children}
