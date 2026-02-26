@@ -12,8 +12,8 @@ import { ChevronDown } from "lucide-react";
 
 import type { Metadata } from "next";
 import { faqData } from "@/data/workCard";
-import Loader from "./Loader";
 import useGetBrand from "@/hooks/useBrandingApi";
+import Preloader from "./Preloader";
 
 export const metadata: Metadata = {
   title: "Services | Logo, Branding & Print Design by Saeid Emon",
@@ -65,7 +65,7 @@ const Services = () => {
 
   const { data: brands, isPending } = useGetBrand();
 
-  if (isPending) return <Loader />;
+  if (isPending) return <Preloader />;
 
   return (
     <main className="py-10">

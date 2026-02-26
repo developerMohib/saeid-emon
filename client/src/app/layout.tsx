@@ -5,6 +5,10 @@ import ReactQueryProvider from "../provider/ReactQueryProvider";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
 import { Saira } from "next/font/google";
+import { Suspense } from "react";
+import MyPreLoader from "./loading";
+import CustomCursor from "@/animations/CustomCursor";
+import ParticlesBg from "@/animations/ParticlesBg";
 
 const saira = Saira({
   variable: "--font-saira",
@@ -81,14 +85,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en" data-theme="dark">
       <body
         className={` ${saira.variable} antialiased`}
       >
-        <main className="overflow-hidden">
+          <main className="overflow-hidden">
           <ReactQueryProvider>
             <Navbar />
+            <Suspense fallback={<MyPreLoader />}>
+                  <CustomCursor />
+                  <ParticlesBg />
             {children}
+            </Suspense>
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{

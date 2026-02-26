@@ -4,15 +4,14 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import useCheckAuth from "@/hooks/useCheckAuth";
-import Loader from "./Loader";
-import ThemeChanger from "./ThemeChanger";
+import Preloader from "./Preloader";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const { isAuthenticated, loading } = useCheckAuth();
-
-
-  if (loading) return <Loader />;
+  const pathname = usePathname();
 
   // Navigation links data
   const navLinks = [
@@ -25,6 +24,7 @@ const Navbar = () => {
       : [{ href: "/contact", label: "Hire me" }]),
   ];
 
+  if (loading) return <Preloader />;
   return (
     <header className="backdrop-blur-sm sticky top-0 z-50 w-full py-1.5 bg-black">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,18 +46,32 @@ const Navbar = () => {
 
           {/* Navigation Links & Theme Changer */}
           <div className="flex items-center gap-6">
-            <nav aria-label="Primary Navigation" className="flex items-center gap-6">
-              {navLinks.map((link: any) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="text-sm font-medium text-white hover:text-seRed transition-colors hover:border-b border-seRed"
-                >
-                  {link.label}
-                </Link>
-              ))}
+           <nav aria-label="Primary Navigation" className="flex items-center gap-8">
+              {navLinks.map((link: any) => {
+                const isActive = pathname === link.href;
+
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className={`relative text-xs uppercase tracking-[0.2em] font-bold transition-colors duration-300 pb-1 ${
+                      isActive ? "text-seRed" : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    {link.label}
+
+                    {/* Animated Active Underline */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="nav-underline"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-seRed"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
-            <ThemeChanger/>
           </div>
         </div>
       </div>

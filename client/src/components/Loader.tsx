@@ -1,30 +1,32 @@
-
-
-import React from "react";
+"use client"
+import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
 
 const Loader = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate page load time
+    const timer = setTimeout(() => setLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!loading) return null;
+
   return (
-
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="relative">
-        <div className="relative w-32 h-32">
-          {/* Outer Spinner */}
-          <div
-            className="absolute w-full h-full rounded-full border-[2px] border-gray-100/20 border-r-[#0ff]/50 border-b-[#0ff]/50 animate-spin"
-            style={{ animationDuration: '3s' }}
-          />
-          {/* Inner Spinner */}
-          <div
-            className="absolute w-full h-full rounded-full border-[3px] border-gray-100/20 border-t-[#0ff]/50 animate-spin"
-            style={{ animationDuration: '2s', animationDirection: 'reverse' }}
-          />
-        </div>
-        {/* Soft Glow Background */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#0ff]/20 via-transparent to-[#0ff]/10 animate-pulse rounded-full blur-md" />
-      </div>
+    <div className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-[#050505]">
+      {/* Your Branding GIF */}
+      <Image  width={150} height={150}
+        src="/designing-work.gif" 
+        alt="Loading Design" 
+        className="w-48 h-48 object-contain"
+      />
+      
+      {/* Optional Brand Text */}
+      <p className="mt-4 text-[#0ff] text-[10px] tracking-[0.5em] uppercase animate-pulse">
+        Saeid Emon | Design Studio
+      </p>
     </div>
-
-
   );
 };
 

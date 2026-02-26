@@ -7,8 +7,9 @@ import { PenLine } from "lucide-react";
 import Link from "next/link";
 import { IResume } from "@/types/resumeTypes";
 import useCheckAuth from "@/hooks/useCheckAuth";
-import Loader from "@/components/Loader";
+// import Loader from "@/components/Loader";
 import { useAuthUser } from "@/hooks/useAuthUser";
+import Preloader from "@/components/Preloader";
 
 const ResumePage = () => {
   const { data: author, refetch } = useAuthUser();
@@ -17,7 +18,7 @@ const ResumePage = () => {
   const authorData = Array.isArray(author) && author.length > 0 ? author[0] : null;
   if (!authorData) return <div>No author data found.</div>;
 
-  if (isPending || loading) return <Loader />;
+  if (isPending || loading) return <Preloader />;
   if (isError) return <div>Error: {error?.message}</div>;
 
   // Ensure data exists and take the first resume
@@ -26,7 +27,7 @@ const ResumePage = () => {
 
   return (
     <main>
-      <div className="max-w-6xl mx-auto pb-5 md:pb-20 px-4 sm:px-6 lg:px-10">
+      <div className="container mx-auto pb-5 md:pb-20 px-4 sm:px-6 lg:px-10">
         {/* Top buttons */}
         <div className="py-6 sm:py-10 gap-4 text-right">
           <button onClick={() => window.print()} className="text-seBlack px-4 py-2 rounded-full border border-seGray/30 shadow-sm hover:bg-seGray/10 transition-colors cursor-pointer w-full sm:w-auto">

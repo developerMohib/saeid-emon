@@ -1,7 +1,8 @@
 
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
-import Works2 from "@/components/Works2";
+import Loader from "@/components/Loader";
+import Alldesigns from "@/components/Alldesigns";
 
 export const metadata: Metadata = {
     title: "Contact | Work with Saeid Emon",
@@ -14,15 +15,12 @@ export const metadata: Metadata = {
 
 const Works = () => {
 
-
     return (
-
-        <section
-            aria-label="Works Gallery"
-        >
-            <Works2 />
-
-        </section>
+        <Suspense fallback={<Loader />}>
+            <section aria-label="Works Gallery" >
+                <Alldesigns />
+            </section>
+        </Suspense>
     );
 };
 

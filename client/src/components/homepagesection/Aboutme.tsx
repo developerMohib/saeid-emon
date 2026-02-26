@@ -5,7 +5,7 @@ import { ChevronRight, SquareArrowOutUpRight } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from "next";
 import React from 'react';
-import Loader from './Loader';
+import Loader from '../Loader';
 
 export const metadata: Metadata = {
   title: "About | Saeid Emon - Graphics Designer",

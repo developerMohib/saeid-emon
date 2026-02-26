@@ -1,0 +1,128 @@
+"use client";
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiPlus, FiMinus } from 'react-icons/fi';
+
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const faqs = [
+    {
+      question: "What is included in a Brand Identity package?",
+      answer: "Beyond just a logo, you receive a full visual system: primary and secondary marks, a custom color palette, typography pairings, and a brand style guide to ensure consistency across all platforms."
+    },
+    {
+      question: "I need a Jersey design. Do you provide tech packs?",
+      answer: "Yes. For teamwear and apparel, I provide print-ready vector files and technical mockups that you can send directly to your manufacturer for production."
+    },
+    {
+      question: "How long does the logo design process take?",
+      answer: "Typically, a custom brand identity takes 1-2 weeks. This allows time for research, sketching, grid construction, and refinement based on your feedback."
+    },
+    {
+      question: "In what formats will I receive my files?",
+      answer: "You will receive high-resolution files in multiple formats: AI (Vector), EPS, SVG, PNG (transparent), and PDF. Perfect for everything from social media to large-scale printing."
+    },
+    {
+      question: "Do you handle the printing for business cards and merch?",
+      answer: "I specialize in the design and preparation of the files. I provide industry-standard 'bleed' and 'CMYK' files that any professional printer can use to get perfect results."
+    }
+  ];
+
+  return (
+    <section className="relative py-12 sm:py-16 bg-transparent overflow-visible">
+      {/* Background Glows */}
+      <div className="absolute top-[50%] right-[-10%] w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
+      <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-purple-600/10 blur-[130px] rounded-full pointer-events-none" aria-hidden="true" />
+
+      <div className="relative z-10 container mx-auto px-6">
+        <header className="text-center mb-16">
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-sm tracking-[0.4em] text-blue-400 uppercase mb-4"
+          >
+            Common Inquiries
+          </motion.h2>
+          <motion.h3 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl font-bold text-white tracking-tight"
+          >
+            Everything you <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-blue-500">need to know.</span>
+          </motion.h3>
+        </header>
+
+        {/* Semantic Description List */}
+        <dl className="max-w-3xl mx-auto space-y-4">
+          {faqs.map((faq, index) => (
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="rounded-2xl border border-white/5 bg-white/2 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-white/10"
+            >
+              <dt>
+                <button
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                  aria-expanded={openIndex === index}
+                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none group"
+                >
+                  <span className="text-lg font-medium text-white/90 group-hover:text-white transition-colors">
+                    {faq.question}
+                  </span>
+                  <span className="ml-4 shrink-0 text-purple-400">
+                    <motion.div
+                      animate={{ rotate: openIndex === index ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {openIndex === index ? <FiMinus size={20} /> : <FiPlus size={20} />}
+                    </motion.div>
+                  </span>
+                </button>
+              </dt>
+
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.dd
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                  >
+                    <div className="p-6 pt-0 text-gray-400 leading-relaxed border-t border-white/5 mt-2">
+                      {faq.answer}
+                    </div>
+                  </motion.dd>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </dl>
+
+        {/* Footer Detail */}
+        <motion.footer 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-gray-500 text-sm">
+            Still have questions?{" "}
+            <a href="#" className="text-blue-400 border-b border-blue-400/30 hover:text-purple-400 transition-all font-medium">
+              Shoot me a DM.
+            </a>
+          </p>
+        </motion.footer>
+      </div>
+    </section>
+  );
+};
+
+export default FAQSection;

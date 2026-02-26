@@ -7,7 +7,7 @@ import { PenLine } from "lucide-react";
 import instance from "@/hooks/instance";
 import toast from "react-hot-toast";
 import useCheckAuth from "@/hooks/useCheckAuth";
-import Loader from "./Loader";
+import Preloader from "./Preloader";
 
 const Banner = () => {
   const { isPending, isError, error, data, refetch } = useAuthUser();
@@ -18,7 +18,7 @@ const Banner = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [bannerFile, setBannerFile] = useState<File | null>(null);
 
-  if (isPending || isLoading) return <Loader />;
+  if (isPending || isLoading) return <Preloader />;
   if (isError) return <p>Error: {error?.message}</p>;
 
   const newdata = data?.[0] || {};

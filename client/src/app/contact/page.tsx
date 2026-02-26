@@ -3,7 +3,7 @@ import instance from "@/hooks/instance";
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { FiDribbble, FiInstagram, FiSend, FiTwitter } from "react-icons/fi";
+import { FiSend } from "react-icons/fi";
 
 const Contact: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -63,22 +63,6 @@ const Contact: React.FC = () => {
                             <p className="mt-6 text-lg text-gray-400 max-w-md">
                                 Whether you need a timeless logo or a full teamwear identity, I’m here to help you stand out.
                             </p>
-                        </div>
-
-                        {/* Social Links for a Designer */}
-                        <div className="mt-12">
-                            <p className="text-xs font-mono uppercase tracking-widest text-gray-500 mb-4 font-bold">Follow the process</p>
-                            <div className="flex gap-6">
-                                <a href="#" className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:text-purple-400 hover:border-purple-400/50 transition-all">
-                                    <FiInstagram size={20} />
-                                </a>
-                                <a href="#" className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:text-blue-400 hover:border-blue-400/50 transition-all">
-                                    <FiDribbble size={20} />
-                                </a>
-                                <a href="#" className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:text-white/60 transition-all">
-                                    <FiTwitter size={20} />
-                                </a>
-                            </div>
                         </div>
                     </div>
 
