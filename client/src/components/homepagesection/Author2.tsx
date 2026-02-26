@@ -24,40 +24,8 @@ const Author2 = () => {
             <div className="relative z-10 container mx-auto px-6 lg:px-8">
                 <div className="flex flex-col lg:flex-row items-center gap-16">
 
-                    {/* Left: Visual Representation */}
-                    <motion.aside
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
-                        className="relative w-full lg:w-1/3 max-w-[400px]"
-                    >
-                        <div className="relative aspect-5/4 rounded-[3rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm group">
-                            <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/80 z-10" />
-                            <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center">
-                                <Image
-                                    src="https://images.pexels.com/photos/36211200/pexels-photo-36211200.jpeg"
-                                    alt="Saeid Emon"
-                                    width={450}
-                                    height={450}
-                                    className="rounded-full border-[3px] border-white/80 object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                                    priority
-                                />
-                            </div>
 
-                            <div className="absolute bottom-4 left-6 z-20 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
-                                <p className="text-white text-[10px] font-mono uppercase tracking-[0.2em]">
-                                    Experience
-                                </p>
-                                <p className="text-2xl font-bold text-white">
-                                    08 Years
-                                </p>
-                            </div>
-                        </div>
-                        <div className="absolute -top-4 -left-4 w-full h-full border border-white/5 rounded-[3rem] -z-10" aria-hidden="true" />
-                    </motion.aside>
-
-                    {/* Right: Content */}
+                    {/* left: Content */}
                     <article className="flex-1 text-left">
                         <header>
                             <motion.h2
@@ -142,6 +110,42 @@ const Author2 = () => {
                             </nav>
                         </motion.footer>
                     </article>
+
+
+                    {/* Right: Visual Representation */}
+                    <motion.aside
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1 }}
+                        className="relative w-full lg:w-1/3 max-w-[400px]"
+                    >
+                        <div className="relative overflow-hidden backdrop-blur-sm group">
+                            <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/80 z-10" />
+                            <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center">
+                                <Image
+                                    src="https://res.cloudinary.com/dxcn3f9lu/image/upload/v1772104292/EMON_BANNERr_cge27q.png"
+                                    alt="Saeid Emon"
+                                    width={450}
+                                    height={450}
+                                    className="border-[3px] border-white/80 object-cover group-hover:grayscale grayscale-0 transition-all duration-700 rounded-md"
+                                    priority
+                                />
+                            </div>
+
+                            <div className="absolute bottom-4 left-6 z-20 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
+                                <p className="text-white text-[10px] font-mono uppercase tracking-[0.2em]">
+                                    Experience
+                                </p>
+                                <p className="text-2xl font-bold text-white">
+                                    08 Years
+                                </p>
+                            </div>
+                        </div>
+                    </motion.aside>
+
+
+
                 </div>
             </div>
         </section>

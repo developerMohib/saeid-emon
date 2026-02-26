@@ -4,14 +4,14 @@ import React from 'react';
 import useProduct from '@/hooks/useProduct';
 import ImageGallery from '@/components/ImageGallery';
 import { useParams } from 'next/navigation';
-import Preloader from '@/components/Preloader';
+import Loader from '@/components/Loader';
 
 const ProductDetails = () => {
     const params = useParams();
     const id = params?.id as string;
     const { data, isPending, isError, error } = useProduct(id);
-    
-    if (isPending) return <Preloader />;
+
+    if (isPending) return <Loader />;
     if (isError || error) return <p>Error: {(error as Error).message}</p>;
     return (
         <div className="py-6 px-10 container mx-auto">

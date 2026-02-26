@@ -1,13 +1,14 @@
 "use client";
-import useProducts from '@/hooks/useProducts';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { motion, Variants } from 'framer-motion'; // Added for animation
 import { FiArrowUpRight } from 'react-icons/fi';
+import useTopDesign from '@/hooks/useTopDesign';
+import Loader from '../Loader';
 
 const Works2card = () => {
-    const { data: cardsData } = useProducts();
+    const { data: latestDesign, isPending, error } = useTopDesign()
 
     // Animation Variants
     const containerVariants: Variants = {
@@ -26,7 +27,14 @@ const Works2card = () => {
             transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
         }
     };
-
+    if (isPending) return <Loader />
+    if (error) {
+        return (
+            <p className="text-gray-500 mt-2">
+                {error instanceof Error ? error.message : "An unexpected error occurred"}
+            </p>
+        )
+    }
     return (
         <section className="relative py-12 sm:py-16 bg-transparent overflow-visible">
             {/* Seamless Glow Transition */}
@@ -43,7 +51,7 @@ const Works2card = () => {
                             viewport={{ once: true }}
                             className="text-sm tracking-[0.3em] text-purple-400 uppercase mb-4 font-bold"
                         >
-                            Selected Works
+                            People choice&apos;s Designs
                         </motion.h2>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
@@ -55,9 +63,16 @@ const Works2card = () => {
                             Crafting digital <br />
                             <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-500 italic">
                                 narratives
-                            </span>
-                            <br /> through design.
+                            </span> through design.
                         </motion.p>
+                        <motion.h2
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="text-xs tracking-[0.3em] text-purple-400 uppercase mt-4 font-bold"
+                        >
+                            Latest Designs
+                        </motion.h2>
                     </div>
 
                     <nav>
@@ -74,9 +89,9 @@ const Works2card = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-10"
+                    className="grid grid-cols-1 md:grid-cols-4 gap-10"
                 >
-                    {cardsData?.map((card, index) => (
+                    {latestDesign?.map((card, index) => (
                         <motion.article
                             key={`${card._id}-${index}`}
                             variants={cardVariants}
@@ -92,8 +107,7 @@ const Works2card = () => {
                                     className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:rotate-1"
                                 />
 
-                                {/* Designer construction grid overlay */}
-                                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/graph-paper.png')]" aria-hidden="true" />
+
 
                                 {/* Category Tag */}
                                 <div className="absolute top-4 left-4 z-10">

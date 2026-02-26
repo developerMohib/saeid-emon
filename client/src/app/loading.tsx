@@ -1,5 +1,5 @@
-import Preloader from "@/components/Preloader";
+import Loader from "@/components/Loader";
 
 export default function MyPreLoader() {
-    return <Preloader />;
+    return <Loader />;
 }

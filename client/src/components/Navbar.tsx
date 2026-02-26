@@ -6,8 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import useCheckAuth from "@/hooks/useCheckAuth";
-import Preloader from "./Preloader";
 import { usePathname } from "next/navigation";
+import Loader from "./Loader";
 
 const Navbar = () => {
   const { isAuthenticated, loading } = useCheckAuth();
@@ -17,13 +17,13 @@ const Navbar = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about-me", label: "About Me" },
-    { href: "/all-designs", label: "All Designs" },
+    { href: "/all-designs", label: "Portfolio" },
     ...(isAuthenticated
       ? [{ href: "/dashboard", label: "Dashboard" }]
       : [{ href: "/contact", label: "Hire me" }]),
   ];
 
-  if (loading) return <Preloader />;
+  if (loading) return <Loader />;
 
   return (
     <motion.header 
@@ -64,7 +64,7 @@ const Navbar = () => {
                   >
                     <Link
                       href={link.href}
-                      className={`relative text-[10px] sm:text-xs uppercase tracking-[0.2em] font-bold transition-colors duration-300 pb-2 ${
+                      className={`relative text-base sm:text-xs uppercase tracking-[0.2em] font-bold transition-colors duration-300 pb-2 ${
                         isActive ? "text-white" : "text-gray-400 hover:text-white"
                       }`}
                     >

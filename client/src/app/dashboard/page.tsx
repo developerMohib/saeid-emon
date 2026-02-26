@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { Dialog } from "@headlessui/react";
 import Swal from "sweetalert2";
 import useManageDashboard from "@/hooks/useManageDashboard";
-import Preloader from "@/components/Preloader";
+import Loader from "@/components/Loader";
 
 const Dashboard = () => {
   const { isPending: userPending, data: user } = useAuthUser();
@@ -115,8 +115,7 @@ const Dashboard = () => {
     }
   };
 
-  // if (isPending || loading || userPending) return <Loader />;
-  if (isPending || loading || userPending) return <Preloader />;
+  if (isPending || loading || userPending) return <Loader />;
 
   if (isError || error) return <p>Error: {(error as Error).message}</p>;
   if (!projects || projects.length === 0) return <p className="text-center py-4">No design found.</p>;

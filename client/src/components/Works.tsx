@@ -7,7 +7,7 @@ import { Plus, Loader2 } from "lucide-react";
 import type { Metadata } from "next";
 import useProducts from "@/hooks/useProducts";
 import useCheckAuth from "@/hooks/useCheckAuth";
-import Preloader from "./Preloader";
+import Loader from "./Loader";
 
 export const metadata: Metadata = {
   title: "Contact | Work with Saeid Emon",
@@ -31,7 +31,7 @@ const Works = () => {
 
   const { isAuthenticated, loading } = useCheckAuth();
 
-  if (isPending || loading) return <Preloader />;
+  if (isPending || loading) return <Loader />;
 
   if (isError) {
     return (

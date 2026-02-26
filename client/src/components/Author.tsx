@@ -11,7 +11,7 @@ import useCheckAuth from "@/hooks/useCheckAuth";
 // import Loader from "./Loader";
 import { Metadata } from "next";
 import { useRouter } from "next/navigation";
-import Preloader from "./Preloader";
+import Loader from "./Loader";
 
 export const metadata: Metadata = {
     title: "About | Saeid Emon - Graphics Designer",
@@ -51,7 +51,7 @@ const Author = () => {
     const [preview, setPreview] = useState<string | null>(null);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
-    if (isPending || isLoading) return <Preloader />;
+    if (isPending || isLoading) return <Loader />;
     if (isError) return <p>Error: {error?.message}</p>;
     console.log('data', data)
     const newdata = data[0];
@@ -108,7 +108,7 @@ const Author = () => {
             setLoading(false);
         }
     };
-    if (loading) return <Preloader />
+    if (loading) return <Loader />
     return (
         <section aria-labelledby="author-heading" className="relative">
             {/* Profile Image */}

@@ -32,8 +32,8 @@ export const myProjects = async (req: Request, res: Response) => {
 
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
-    const page = Math.max(1, parseInt(req.query.page as string) || 1);
-    const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 9));
+const page = Math.max(1, parseInt(req.query.page as string) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 12)); 
     const skip = (page - 1) * limit;
 
     const cards = await Product.find()
@@ -43,19 +43,33 @@ export const getAllProjects = async (req: Request, res: Response) => {
       .limit(limit)
       .lean(); // Convert to plain objects for better performance
 
-    const total = await Product.countDocuments();
-    const hasMore = total > page * limit;
+    const [projects, totalItems] = await Promise.all([
+      Product.find()
+        .select('title images category createdAt') 
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Product.countDocuments()
+    ]);
 
-    res.json({
+    // 3. Calculate Pagination Meta-data
+    const totalPages = Math.ceil(totalItems / limit);
+    const hasMore = page < totalPages;
+
+    // 4. Semantic Response
+    res.status(200).json({
       success: true,
-      message: "Data Retrieved Successfully",
-      data: cards,
+      message: "Projects fetched successfully",
+      data: projects,
       pagination: {
+        totalItems,
+        totalPages,
         currentPage: page,
-        totalPages: Math.ceil(total / limit),
-        totalItems: total,
+        limit,
         hasMore,
-        limit
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1
       }
     });
   } catch (err: unknown) {
@@ -69,6 +83,30 @@ export const getAllProjects = async (req: Request, res: Response) => {
   }
 };
 
+export const getTopDesign = async (req: Request, res: Response) => {
+  try {
+    // Only fetch the 4 latest designs
+    const cards = await Product.find()
+      .select('title images category createdAt') 
+      .sort({ createdAt: -1 })
+      .limit(4)
+      .lean();
+
+    res.json({
+      success: true,
+      message: "Latest 4 designs retrieved successfully",
+      data: cards
+    });
+  } catch (err: unknown) {
+    console.error('Error fetching latest designs:', err);
+    const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
+    
+    res.status(500).json({ 
+      success: false,
+      error: errorMessage 
+    });
+  }
+};
 // ─── GET single card by ID ─────────────────────────────
 export const getProjectById = async (req: Request, res: Response) => {
   try {

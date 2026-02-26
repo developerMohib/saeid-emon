@@ -12,31 +12,32 @@ const HeroVisual = () => {
       className="relative flex justify-center lg:justify-end"
     >
       <div className="relative w-[300px] h-[300px] md:w-[420px] md:h-[420px]">
-        
+
         {/* Outer Architectural Ring */}
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 rounded-full border border-dashed border-seRed/30"
+          className="absolute inset-0 rounded-full border border-dashed border-red-600/50"
         />
 
         {/* Inner Pulsing Ring */}
         <motion.div
-          animate={{ scale: [1, 1.05, 1], opacity: [0.2, 0.5, 0.2] }}
+          animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.6, 0.3] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-6 rounded-full border border-purple-500/40"
+          className="absolute inset-6 rounded-full border border-purple-500"
         />
 
         {/* The Avatar Container */}
         <div className="absolute inset-10 rounded-full overflow-hidden border-2 border-white/10 group">
           <Image
-            src="https://images.pexels.com/photos/36211200/pexels-photo-36211200.jpeg"
-            alt="Saeid Emon - Portrait"
-            fill
-            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-110 group-hover:scale-100"
+            src="https://res.cloudinary.com/dxcn3f9lu/image/upload/v1772104292/EMON_BANNERr_cge27q.png"
+            alt="Saeid Emon"
+            width={450}
+            height={450}
+            className="border-[3px] border-white/80 object-cover group-hover:grayscale grayscale-0 transition-all duration-700 rounded-md"
             priority
           />
-          
+
           {/* Subtle Overlay on Hover */}
           <div className="absolute inset-0 bg-seRed/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
