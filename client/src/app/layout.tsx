@@ -86,38 +86,45 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dark">
-      <body
-        className={` ${saira.variable} antialiased`}
-      >
-          <main className="overflow-hidden">
-          <ReactQueryProvider>
-            <Navbar />
+      <body className={`${saira.variable} antialiased`}>
+        <ReactQueryProvider>
+          {/* 1. Global Navigation (outside main) */}
+          <Navbar />
+
+          {/* 2. Page Content */}
+          <main className="relative overflow-hidden min-h-screen">
             <Suspense fallback={<MyPreLoader />}>
-                  <CustomCursor />
-                  <ParticlesBg />
-            {children}
+              {/* Background & Interactive elements */}
+              <CustomCursor />
+              <ParticlesBg />
+
+              {children}
             </Suspense>
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "Person",
-                  name: "Saeid Emon",
-                  jobTitle: "Professional Graphics Designer",
-                  url: "https://www.saeidemon.com",
-                  sameAs: [
-                    "https://www.facebook.com/saeid.emon29",
-                    "https://www.freelancer.com/u/saeidemon",
-                    "https://www.fiverr.com/saeidemon",
-                  ],
-                }),
-              }}
-            />
-            <Toaster />
-            <Footer />
-          </ReactQueryProvider>
-        </main>
+          </main>
+
+          {/* 3. Global Footer (outside main) */}
+          <Footer />
+
+          {/* 4. Utilities & Metadata */}
+          <Toaster />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Person",
+                name: "Saeid Emon",
+                jobTitle: "Professional Graphics Designer",
+                url: "https://www.saeidemon.com",
+                sameAs: [
+                  "https://www.facebook.com/saeid.emon29",
+                  "https://www.freelancer.com/u/saeidemon",
+                  "https://www.fiverr.com/saeidemon",
+                ],
+              }),
+            }}
+          />
+        </ReactQueryProvider>
       </body>
     </html>
   );
