@@ -92,20 +92,16 @@ export default function RootLayout({
           <Navbar />
 
           {/* 2. Page Content */}
-          <main className="relative overflow-hidden min-h-screen">
+          <main className="relative overflow-hidden min-h-screen z-10 bg-background">
             <Suspense fallback={<MyPreLoader />}>
-              {/* Background & Interactive elements */}
               <CustomCursor />
               <ParticlesBg />
 
               {children}
             </Suspense>
           </main>
-
-          {/* 3. Global Footer (outside main) */}
           <Footer />
 
-          {/* 4. Utilities & Metadata */}
           <Toaster />
           <script
             type="application/ld+json"

@@ -3,7 +3,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
-// Import the type definitions
 import type { IOptions, RecursivePartial } from "@tsparticles/engine";
 
 export default function ParticlesBg() {
@@ -17,9 +16,9 @@ export default function ParticlesBg() {
     });
   }, []);
 
-  // Explicitly type the useMemo
   const particlesOptions: RecursivePartial<IOptions> = useMemo(() => ({
-    fullScreen: { enable: true, zIndex: -1 },
+    // FIX: Set to false, we will handle positioning via CSS class
+    fullScreen: { enable: false },
     background: {
       color: { value: "transparent" },
     },
@@ -33,32 +32,32 @@ export default function ParticlesBg() {
       },
       modes: {
         bubble: {
-          distance: 300,
-          size: 6,
+          distance: 200,
+          size: 4,
           duration: 2,
-          opacity: 1,
+          opacity: 0.8,
         },
       },
     },
     particles: {
       color: {
-        // Added your seRed color #F54927 to the mix!
-        value: ["#a855f7", "#3b82f6", "#ffffff", "#F54927"],
+        // FIX: Use your CSS variables here for theme support
+        value: ["var(--accent)", "var(--seBlue)", "#ffffff", "var(--seRed)"],
       },
       move: {
         enable: true,
-        direction: "none", // Now TypeScript knows this is the "none" MoveDirection
+        direction: "none",
         outModes: { default: "out" },
         random: true,
-        speed: 0.4,
+        speed: 0.3,
         straight: false,
       },
       number: {
-        density: { enable: true, area: 800 },
-        value: 80,
+        density: { enable: true, area: 1000 },
+        value: 60,
       },
       opacity: {
-        value: { min: 0.1, max: 0.5 },
+        value: { min: 0.1, max: 0.4 },
         animation: {
           enable: true,
           speed: 1,
@@ -69,7 +68,7 @@ export default function ParticlesBg() {
         type: "circle",
       },
       size: {
-        value: { min: 1, max: 3 },
+        value: { min: 1, max: 2 },
       },
     },
     detectRetina: true,
@@ -80,7 +79,8 @@ export default function ParticlesBg() {
       <Particles
         id="tsparticles"
         options={particlesOptions}
-        className="absolute inset-0 pointer-events-none"
+        // FIX: Fixed positioning to span behind everything
+        className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
       />
     );
   }

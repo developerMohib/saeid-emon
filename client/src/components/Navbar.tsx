@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import useCheckAuth from "@/hooks/useCheckAuth";
 import { usePathname } from "next/navigation";
 import Loader from "./Loader";
+import ThemeChanger from "./ThemeChanger";
 
 const Navbar = () => {
   const { isAuthenticated, loading } = useCheckAuth();
@@ -26,7 +27,7 @@ const Navbar = () => {
   if (loading) return <Loader />;
 
   return (
-    <motion.header 
+    <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -56,7 +57,7 @@ const Navbar = () => {
                 const isActive = pathname === link.href;
 
                 return (
-                  <motion.li 
+                  <motion.li
                     key={link.label}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -64,9 +65,8 @@ const Navbar = () => {
                   >
                     <Link
                       href={link.href}
-                      className={`relative text-base sm:text-xs uppercase tracking-[0.2em] font-bold transition-colors duration-300 pb-2 ${
-                        isActive ? "text-white" : "text-gray-400 hover:text-white"
-                      }`}
+                      className={`relative text-base sm:text-xs uppercase tracking-[0.2em] font-bold transition-colors duration-300 pb-2 ${isActive ? "text-white" : "text-gray-400 hover:text-white"
+                        }`}
                     >
                       {link.label}
 
@@ -84,7 +84,7 @@ const Navbar = () => {
               })}
             </ul>
           </nav>
-
+          <ThemeChanger />
         </div>
       </div>
     </motion.header>

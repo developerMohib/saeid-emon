@@ -30,10 +30,10 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="relative py-12 sm:py-16 bg-transparent overflow-visible">
-      {/* Background Glows */}
-      <div className="absolute top-[50%] right-[-10%] w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
-      <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-purple-600/10 blur-[130px] rounded-full pointer-events-none" aria-hidden="true" />
+    <section className="relative py-16 sm:py-24 bg-background transition-colors duration-500 overflow-visible">
+      {/* Background Glows - Linked to your seBlue and accent variables */}
+      <div className="absolute top-[50%] right-[-10%] w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-seBlue/10 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
+      <div className="absolute bottom-[-10%] left-[-5%] w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-accent/10 blur-[130px] rounded-full pointer-events-none" aria-hidden="true" />
 
       <div className="relative z-10 container mx-auto px-6">
         <header className="text-center mb-16">
@@ -41,7 +41,7 @@ const FAQSection = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-sm tracking-[0.4em] text-blue-400 uppercase mb-4"
+            className="text-xs sm:text-sm tracking-[0.4em] text-seBlue uppercase mb-4 font-bold"
           >
             Common Inquiries
           </motion.h2>
@@ -50,13 +50,13 @@ const FAQSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl font-bold text-white tracking-tight"
+            className="text-3xl sm:text-5xl font-black text-seBlack tracking-tight"
           >
-            Everything you <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-blue-500">need to know.</span>
+            Everything you <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-seBlue">need to know.</span>
           </motion.h3>
         </header>
 
-        {/* Semantic Description List */}
+        {/* FAQ List */}
         <dl className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq, index) => (
             <motion.div 
@@ -65,18 +65,18 @@ const FAQSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="rounded-2xl border border-white/5 bg-white/2 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-white/10"
+              className="rounded-2xl border border-seGray/10 bg-seWhite backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-accent/30 shadow-sm"
             >
               <dt>
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                   aria-expanded={openIndex === index}
-                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none group"
+                  className="w-full flex items-center justify-between p-5 sm:p-6 text-left focus:outline-none group"
                 >
-                  <span className="text-lg font-medium text-white/90 group-hover:text-white transition-colors">
+                  <span className="text-base sm:text-lg font-bold text-seBlack/90 group-hover:text-accent transition-colors">
                     {faq.question}
                   </span>
-                  <span className="ml-4 shrink-0 text-purple-400">
+                  <span className="ml-4 shrink-0 text-accent">
                     <motion.div
                       animate={{ rotate: openIndex === index ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
@@ -95,7 +95,7 @@ const FAQSection = () => {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
                   >
-                    <div className="p-6 pt-0 text-gray-400 leading-relaxed border-t border-white/5 mt-2">
+                    <div className="p-6 pt-0 text-seGray leading-relaxed border-t border-seGray/5 mt-2 font-medium">
                       {faq.answer}
                     </div>
                   </motion.dd>
@@ -113,9 +113,9 @@ const FAQSection = () => {
           transition={{ delay: 0.5 }}
           className="mt-16 text-center"
         >
-          <p className="text-gray-500 text-sm">
+          <p className="text-seGray text-sm font-medium">
             Still have questions?{" "}
-            <a href="#" className="text-blue-400 border-b border-blue-400/30 hover:text-purple-400 transition-all font-medium">
+            <a href="#" className="text-seBlue border-b-2 border-seBlue/20 hover:text-accent hover:border-accent transition-all font-bold">
               Shoot me a DM.
             </a>
           </p>
