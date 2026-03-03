@@ -10,7 +10,7 @@ const ProductDetails = () => {
     const params = useParams();
     const id = params?.id as string;
     const { data, isPending, isError, error } = useProduct(id);
-    
+
     if (isPending) return <Loader />;
     if (isError || error) return <p>Error: {(error as Error).message}</p>;
     return (

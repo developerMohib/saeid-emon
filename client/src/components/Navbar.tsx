@@ -4,63 +4,90 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import ThemeChanger from "./ThemeChanger";
+import { motion } from "framer-motion";
 import useCheckAuth from "@/hooks/useCheckAuth";
+import { usePathname } from "next/navigation";
 import Loader from "./Loader";
+import ThemeChanger from "./ThemeChanger";
 
 const Navbar = () => {
   const { isAuthenticated, loading } = useCheckAuth();
-
-
-  if (loading) return <Loader />;
+  const pathname = usePathname();
 
   // Navigation links data
   const navLinks = [
     { href: "/", label: "Home" },
-    // Only show Dashboard if authenticated === true
+    { href: "/about-me", label: "About Me" },
+    { href: "/all-designs", label: "Portfolio" },
     ...(isAuthenticated
       ? [{ href: "/dashboard", label: "Dashboard" }]
       : [{ href: "/contact", label: "Hire me" }]),
   ];
 
-  return (
-    <header className="backdrop-blur-sm sticky top-0 z-50 w-full py-1.5 bg-black">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-6">
+  if (loading) return <Loader />;
 
-          {/* Logo */}
-          <div>
-            <Link href="/" aria-label="Home">
+  return (
+    <motion.header
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="backdrop-blur-md sticky top-0 z-50 w-full py-2 bg-black border-b border-white/5"
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-6 py-2">
+
+          {/* Logo Section */}
+          <div className="shrink-0">
+            <Link href="/" aria-label="Saeid Emon - Home">
               <Image
                 src="/emons-logo.png"
                 alt="Saeid Emon Logo"
                 width={120}
                 height={40}
-                className="w-16 h-auto p-1  "
+                className="w-16 h-auto p-1 hover:opacity-80 transition-opacity"
                 priority
               />
             </Link>
           </div>
 
-          {/* Navigation Links & Theme Changer */}
-          <div className="flex items-center gap-6">
-            <nav aria-label="Primary Navigation" className="flex items-center gap-6">
-              {navLinks.map((link: any) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="text-sm font-medium text-white hover:text-seRed transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+          {/* Primary Navigation */}
+          <nav aria-label="Main Navigation">
+            <ul className="flex items-center gap-4 sm:gap-8">
+              {navLinks.map((link: any, index: number) => {
+                const isActive = pathname === link.href;
 
-            <ThemeChanger />
-          </div>
+                return (
+                  <motion.li
+                    key={link.label}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 * index + 0.5 }}
+                  >
+                    <Link
+                      href={link.href}
+                      className={`relative text-base sm:text-xs uppercase tracking-[0.2em] font-bold transition-colors duration-300 pb-2 ${isActive ? "text-white" : "text-gray-400 hover:text-white"
+                        }`}
+                    >
+                      {link.label}
+
+                      {/* Animated Active Underline */}
+                      {isActive && (
+                        <motion.div
+                          layoutId="nav-underline"
+                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                    </Link>
+                  </motion.li>
+                );
+              })}
+            </ul>
+          </nav>
+          <ThemeChanger />
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 };
 

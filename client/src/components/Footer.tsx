@@ -4,7 +4,7 @@ import { FC } from "react";
 const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
 
-  // ✅ Social links in JSON format
+  // Social links
   const socialLinks = [
     {
       name: "Facebook",
@@ -37,8 +37,8 @@ const Footer: FC = () => {
   ];
 
   return (
-    <footer className="flex flex-col items-center md:space-y-10 justify-center p-10">
-      {/* ✅ Social Links */}
+    <footer className="flex flex-col items-center bg-background md:space-y-10 justify-center py-6 container mx-auto text-seBlack">
+      {/* Social Links */}
       <nav aria-label="Social Media Links" className="flex space-x-4">
         {socialLinks?.map(({ name, href, icon }) => (
           <Link
@@ -46,7 +46,7 @@ const Footer: FC = () => {
             href={href}
             target="_blank"
             aria-label={name}
-            className="w-10 h-10 rounded-full bg-seGray/20 flex items-center justify-center hover:bg-amber-500 transition-colors hover:-translate-y-0.5 duration-700"
+            className="p-3 rounded-full border bg-seGray/10 text-seBlack hover:text-accent hover:border-seRed transition-all duration-300"
           >
             <svg
               className="h-5 w-5"
@@ -60,15 +60,15 @@ const Footer: FC = () => {
         ))}
       </nav>
 
-      {/* ✅ Copyright */}
-      <p className="text-center text-sm text-seBlack/70 font-medium md:mt-0 mt-3.5 capitalize">
+      {/* Copyright */}
+      <p className="text-center text-sm text-seBlack font-medium md:mt-0 mt-3.5 capitalize">
         &copy; {currentYear} All rights reserved by{" "}
-        <span className="font-semibold">Saeid Emon</span>. <br className="md:hidden block" />
+        <span className="font-semibold text-seBlack">Saeid Emon</span>. <br className="md:hidden block" />
         Powered by{" "}
         <Link
           href="https://mohibullahmohim.com"
           target="_blank"
-          className="text-seBlack hover:text-seRed hover:no-underline underline"
+          className="text-seBlack hover:text-seRed transition-colors hover:no-underline underline"
         >
           mohibullah mohim
         </Link>
