@@ -46,7 +46,7 @@ const Footer: FC = () => {
             href={href}
             target="_blank"
             aria-label={name}
-            className="p-3 rounded-full border border-seGray/10 text-seWhite hover:text-accent hover:border-accent/50 transition-all duration-300"
+            className="p-3 rounded-full border bg-seGray/10 text-seBlack hover:text-accent hover:border-seRed transition-all duration-300"
           >
             <svg
               className="h-5 w-5"
@@ -61,7 +61,7 @@ const Footer: FC = () => {
       </nav>
 
       {/* Copyright */}
-      <p className="text-center text-sm text-seGray font-medium md:mt-0 mt-3.5 capitalize">
+      <p className="text-center text-sm text-seBlack font-medium md:mt-0 mt-3.5 capitalize">
         &copy; {currentYear} All rights reserved by{" "}
         <span className="font-semibold text-seBlack">Saeid Emon</span>. <br className="md:hidden block" />
         Powered by{" "}

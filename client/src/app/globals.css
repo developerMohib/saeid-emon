@@ -44,3 +44,9 @@
     --color-accent: #a78bfa;
   }
 }
+
+@layer base {
+  body {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+}

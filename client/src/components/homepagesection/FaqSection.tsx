@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiPlus, FiMinus } from 'react-icons/fi';
+import Link from 'next/link';
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -52,7 +53,7 @@ const FAQSection = () => {
             transition={{ delay: 0.1 }}
             className="text-3xl sm:text-5xl font-black text-seBlack tracking-tight"
           >
-            Everything you <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-seBlue">need to know.</span>
+            Everything you <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-seBlue">need to know.</span>
           </motion.h3>
         </header>
 
@@ -115,9 +116,9 @@ const FAQSection = () => {
         >
           <p className="text-seGray text-sm font-medium">
             Still have questions?{" "}
-            <a href="#" className="text-seBlue border-b-2 border-seBlue/20 hover:text-accent hover:border-accent transition-all font-bold">
-              Shoot me a DM.
-            </a>
+            <Link href="/contact" className="text-seBlue border-b-2 border-seBlue/20 hover:text-accent hover:border-accent transition-all font-bold">
+              Get A Custom Qoute
+            </Link>
           </p>
         </motion.footer>
       </div>

@@ -31,7 +31,7 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="backdrop-blur-md sticky top-0 z-50 w-full py-2 bg-black/80 border-b border-white/5"
+      className="backdrop-blur-md sticky top-0 z-50 w-full py-2 bg-black border-b border-white/5"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-6 py-2">

@@ -40,7 +40,7 @@ const Alldesigns = () => {
     if (isError) {
         return (
             <section role="alert" className="flex justify-center items-center min-h-64">
-                <p className="text-red-600 text-lg">
+                <p className="text-seRed text-lg font-bold">
                     An error has occurred: {error?.message || "Failed to load products"}
                 </p>
             </section>
@@ -48,10 +48,10 @@ const Alldesigns = () => {
     }
 
     return (
-        <main className="py-20 overflow-hidden relative bg-transparent">
-            {/* Background Accents */}
-            <div className="absolute top-0 left-[-10%] w-[600px] h-[600px] bg-purple-600/10 blur-[180px] rounded-full pointer-events-none" aria-hidden="true" />
-            <div className="absolute bottom-0 right-[-10%] w-[500px] h-[500px] bg-blue-500/10 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
+        <main className="py-20 overflow-hidden relative bg-background text-foreground transition-colors duration-300">
+            {/* 1. Dynamic Background Accents - Using your accent variable */}
+            <div className="absolute top-0 left-[-10%] w-[600px] h-[600px] bg-accent/10 blur-[180px] rounded-full pointer-events-none" aria-hidden="true" />
+            <div className="absolute bottom-0 right-[-10%] w-[500px] h-[500px] bg-seBlue/10 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
@@ -68,10 +68,11 @@ const Alldesigns = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-5xl md:text-7xl font-black tracking-wider text-white"
+                        // 2. Swapped text-white for text-seBlack (Primary Text)
+                        className="text-5xl md:text-7xl font-black tracking-wider text-seBlack"
                     >
                         Curated Visual <br />
-                        <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 via-pink-500 to-seRed">
+                        <span className="text-transparent bg-clip-text bg-linear-to-r from-accent via-seRed to-seRed">
                             Excellence.
                         </span>
                     </motion.h1>
@@ -80,7 +81,8 @@ const Alldesigns = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        className="text-white/80 mt-6 max-w-lg mx-auto font-medium leading-relaxed"
+                        // 3. Swapped text-white/80 for text-seGray (Secondary Text)
+                        className="text-seGray mt-6 max-w-lg mx-auto font-medium leading-relaxed"
                     >
                         An extensive collection of brand identities, packaging solutions,
                         and digital merchandise crafted over 8 years of design exploration.
@@ -98,7 +100,8 @@ const Alldesigns = () => {
                         <motion.article
                             key={`${card._id}-${index}`}
                             variants={itemVariants}
-                            className="group relative overflow-hidden rounded-4xl border border-white/5 bg-[#0f0f0f] transition-all duration-500 hover:border-purple-500/30 hover:shadow-[0_20px_50px_rgba(168,85,247,0.1)]"
+                            // 4. Swapped bg-[#0f0f0f] for bg-seWhite and border-white/5 for foreground/10
+                            className="group relative overflow-hidden rounded-4xl border border-foreground/10 bg-seWhite transition-all duration-500 hover:border-accent/30 hover:shadow-[0_20px_50px_rgba(124,58,237,0.1)]"
                         >
                             <div className="relative aspect-4/5 overflow-hidden">
                                 <Image
@@ -111,17 +114,19 @@ const Alldesigns = () => {
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/graph-paper.png')]" aria-hidden="true" />
 
                                 <div className="absolute top-5 left-5 z-10">
-                                    <span className="px-4 py-1.5 rounded-full text-[9px] font-bold tracking-[0.2em] uppercase bg-seRed/90 backdrop-blur-md text-white border border-white/10">
+                                    <span className="px-4 py-1.5 rounded-full text-[9px] font-bold tracking-[0.2em] uppercase bg-seRed text-white border border-white/10">
                                         {card.category}
                                     </span>
                                 </div>
 
+                                {/* 5. Overlay: Swapped hardcoded black for a gradient using foreground colors */}
                                 <div className="absolute inset-0 flex flex-col justify-end p-8 bg-linear-to-t from-black via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500">
                                     <h2 className="text-2xl font-bold text-white mb-4 tracking-tight">
                                         {card.title}
                                     </h2>
                                     <Link
                                         href={`/design-details/${card._id}`}
+                                        // 6. Button: Swapped white/black for seBlack/seWhite
                                         className="w-full py-3 rounded-xl bg-white text-black text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-seRed hover:text-white transition-all group shadow-sm active:scale-[0.98]"
                                     >
                                         View The Design
@@ -140,7 +145,8 @@ const Alldesigns = () => {
                     <button
                         onClick={() => fetchNextPage()}
                         disabled={isFetchingNextPage}
-                        className="flex items-center justify-center gap-3 px-8 py-4 bg-white text-black rounded-xl hover:bg-red-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed group w-64 shadow-lg active:scale-95"
+                        // 7. Load More: Swapped white for seBlack (background) and black for seWhite (text)
+                        className="flex items-center justify-center gap-3 px-8 py-4 bg-seBlack text-seWhite rounded-xl hover:bg-seRed hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed group w-64 shadow-lg active:scale-95"
                     >
                         {isFetchingNextPage ? (
                             <>
@@ -160,10 +166,10 @@ const Alldesigns = () => {
             {/* End of Results */}
             {!hasNextPage && cardsData?.length > 0 && (
                 <footer className="text-center py-12">
-                    <div className="inline-flex items-center gap-4 text-gray-500">
-                        <div className="h-px w-16 bg-white/10"></div>
+                    <div className="inline-flex items-center gap-4 text-seGray">
+                        <div className="h-px w-16 bg-foreground/10"></div>
                         <span className="text-[10px] font-bold uppercase tracking-[0.2em]">All projects loaded</span>
-                        <div className="h-px w-16 bg-white/10"></div>
+                        <div className="h-px w-16 bg-foreground/10"></div>
                     </div>
                 </footer>
             )}

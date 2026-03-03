@@ -22,11 +22,7 @@ const Banner2 = () => {
 
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 w-full transition-colors duration-500">
-      {/* Dynamic Mesh Gradient - Using opacity to keep it subtle in both modes */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-20 dark:opacity-40 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute top-[-10%] left-[-10%] w-full sm:w-[50%] h-[50%] rounded-full bg-accent blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-full sm:w-[50%] h-[50%] rounded-full bg-seBlue blur-[120px]" />
-      </div>
+     
 
       <div className="relative container mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:items-center">
