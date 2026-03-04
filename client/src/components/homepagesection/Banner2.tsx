@@ -1,6 +1,5 @@
 "use client";
 
-import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { EmblaOptionsType } from 'embla-carousel';
 import Link from 'next/link';
@@ -23,7 +22,6 @@ const Banner2 = () => {
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 w-full transition-colors duration-500">
      
-
       <div className="relative container mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:items-center">
 
@@ -72,7 +70,7 @@ const Banner2 = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="relative w-full max-w-[500px] mx-auto lg:ml-auto"
+            className="relative w-full max-w-125 mx-auto lg:ml-auto"
           >
             <div className="rounded-3xl overflow-hidden border border-seGray/10 bg-seWhite shadow-2xl">
               <EmblaCarousel slides={SLIDES} options={OPTIONS} />

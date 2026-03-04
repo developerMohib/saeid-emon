@@ -6,13 +6,28 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Fade from 'embla-carousel-fade';
 import Image from 'next/image';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import useTopDesign from '@/hooks/useTopDesign';
+import Loader from './Loader';
 
 type PropType = {
   slides: number[];
   options?: EmblaOptionsType;
 };
 
+const sliders = [
+  {
+    image1: 'https://res.cloudinary.com/dsqqllu6n/image/upload/v1760321376/projects/2-two-mock-1760321376054.jpg',
+    image2: 'https://res.cloudinary.com/dsqqllu6n/image/upload/v1760321376/projects/2-two-mock-1760321376054.jpg',
+    image3: 'https://res.cloudinary.com/dsqqllu6n/image/upload/v1760321376/projects/2-two-mock-1760321376054.jpg',
+    image4: 'https://res.cloudinary.com/dsqqllu6n/image/upload/v1760321376/projects/2-two-mock-1760321376054.jpg',
+    image5: 'https://res.cloudinary.com/dsqqllu6n/image/upload/v1760321376/projects/2-two-mock-1760321376054.jpg',
+    image: 'https://res.cloudinary.com/dsqqllu6n/image/upload/v1760321376/projects/2-two-mock-1760321376054.jpg',
+  }
+]
+
 const EmblaCarousel = ({ slides, options }: PropType) => {
+  const { data: latestDesign, isPending, error } = useTopDesign();
+
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Fade()]);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
@@ -36,15 +51,27 @@ const EmblaCarousel = ({ slides, options }: PropType) => {
     };
   }, [emblaApi, onSelect]);
 
+
+  console.log('latestDesign', latestDesign)
+  if (isPending) return <Loader />;
+  if (error) {
+    return (
+      <p className="text-seGray mt-2 text-center">
+        {error instanceof Error ? error.message : "An unexpected error occurred"}
+      </p>
+    );
+  }
+
+
   return (
     <div className="relative w-full container mx-auto">
       {/* Viewport: Uses var colors for border and bg */}
-      <div 
-        className="overflow-hidden rounded-3xl border border-seGray/20 bg-seWhite transition-colors duration-500" 
+      <div
+        className="overflow-hidden rounded-3xl border border-seGray/20 bg-seWhite transition-colors duration-500"
         ref={emblaRef}
       >
         <div className="flex">
-          {slides.map((index) => (
+          {slides?.map((index) => (
             <div className="relative flex-[0_0_100%] min-w-0" key={index}>
               <Image
                 width={1200}
@@ -54,10 +81,10 @@ const EmblaCarousel = ({ slides, options }: PropType) => {
                 alt={`Project ${index}`}
                 priority={index === 0}
               />
-              
+
               {/* Dynamic Overlay: Dark gradient in dark mode, Light gradient in light mode */}
               <div className="absolute inset-0  pointer-events-none" />
-              
+
               <div className="absolute bottom-4 left-4 md:bottom-6 md:left-8 z-10">
                 <p className="text-accent text-[10px] tracking-[0.4em] uppercase mb-1 font-bold">
                   Project _ 0{index + 1}
