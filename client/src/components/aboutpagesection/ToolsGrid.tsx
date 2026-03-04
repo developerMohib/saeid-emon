@@ -1,12 +1,22 @@
 "use client";
 import { motion } from "framer-motion";
 import { FiCpu } from "react-icons/fi";
+<<<<<<< HEAD
 import { SiAdobephotoshop, SiAdobeillustrator, SiFigma, SiBlender } from "react-icons/si";
 
 const tools = [
   // Swapped hardcoded hover colors for your theme-aware seRed and seBlue
   { icon: <SiAdobeillustrator />, name: "Illustrator", level: "98%", color: "group-hover:text-seRed" },
   { icon: <SiAdobephotoshop />, name: "Photoshop", level: "90%", color: "group-hover:text-seBlue" },
+=======
+import {  SiFigma, SiBlender } from "react-icons/si";
+import { TbBrandAdobeIllustrator, TbBrandAdobePhotoshop } from "react-icons/tb";
+
+const tools = [
+  // Swapped hardcoded hover colors for your theme-aware seRed and seBlue
+  { icon: <TbBrandAdobeIllustrator />, name: "Illustrator", level: "98%", color: "group-hover:text-seRed" },
+  { icon: <TbBrandAdobePhotoshop />, name: "Photoshop", level: "90%", color: "group-hover:text-seBlue" },
+>>>>>>> 2eb5f5f (Fix: update Next.js security and local changes)
   { icon: <SiFigma />, name: "Figma", level: "85%", color: "group-hover:text-accent" },
   { icon: <SiBlender />, name: "Blender", level: "70%", color: "group-hover:text-seRed" },
 ];
