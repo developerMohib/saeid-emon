@@ -1,20 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import useCheckAuth from "@/hooks/useCheckAuth";
 import { usePathname } from "next/navigation";
 import Loader from "./Loader";
 import ThemeChanger from "./ThemeChanger";
+import { Menu, X } from "lucide-react"; 
+import Image from "next/image";
 
 const Navbar = () => {
   const { isAuthenticated, loading } = useCheckAuth();
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Navigation links data
+  // Lock scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+  }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about-me", label: "About Me" },
@@ -30,63 +40,118 @@ const Navbar = () => {
     <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="backdrop-blur-md sticky top-0 z-50 w-full py-2 bg-black border-b border-white/5"
+      className="backdrop-blur-md sticky top-0 z-50 w-full bg-black/90 border-b border-white/5"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-6 py-2">
-
-          {/* Logo Section */}
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16">
+          
+          {/* LOGO - Stays Left */}
           <div className="shrink-0">
-            <Link href="/" aria-label="Saeid Emon - Home">
-              <Image
+            <Link href="/">
+              <Image width={80} height={80}
                 src="/emons-logo.png"
-                alt="Saeid Emon Logo"
-                width={120}
-                height={40}
-                className="w-16 h-auto p-1 hover:opacity-80 transition-opacity"
-                priority
+                alt="Logo"
+                className="w-auto h-8 p-1"
               />
             </Link>
           </div>
 
-          {/* Primary Navigation */}
-          <nav aria-label="Main Navigation">
-            <ul className="flex items-center gap-4 sm:gap-8">
-              {navLinks.map((link: any, index: number) => {
-                const isActive = pathname === link.href;
-
-                return (
-                  <motion.li
-                    key={link.label}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * index + 0.5 }}
-                  >
+          {/* RIGHT SIDE: Desktop Nav, Theme, and Mobile Hamburger */}
+          <div className="flex items-center gap-2 sm:gap-6">
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:block">
+              <ul className="flex items-center gap-6 lg:gap-8">
+                {navLinks.map((link) => (
+                  <li key={link.label}>
                     <Link
                       href={link.href}
-                      className={`relative text-base sm:text-xs uppercase tracking-[0.2em] font-bold transition-colors duration-300 pb-2 ${isActive ? "text-white" : "text-gray-400 hover:text-white"
-                        }`}
+                      className={`relative text-[10px] lg:text-xs uppercase tracking-[0.2em] font-bold transition-colors ${
+                        pathname === link.href ? "text-white" : "text-gray-400 hover:text-white"
+                      }`}
                     >
                       {link.label}
-
-                      {/* Animated Active Underline */}
-                      {isActive && (
+                      {pathname === link.href && (
                         <motion.div
                           layoutId="nav-underline"
-                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
-                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-seRed"
                         />
                       )}
                     </Link>
-                  </motion.li>
-                );
-              })}
-            </ul>
-          </nav>
-          <ThemeChanger />
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {/* Theme Changer - Always visible */}
+            <ThemeChanger />
+
+            {/* Mobile Hamburger - Right Side */}
+            <button
+              onClick={() => setIsOpen(true)}
+              className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+              aria-label="Open Menu"
+            >
+              <Menu size={28} />
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* MOBILE DRAWER SYSTEM */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-black backdrop-blur-md z-60 md:hidden"
+            />
+
+            {/* Slide from LEFT Drawer */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 left-0 bottom-0 w-full bg-black border-r border-white/10 z-70 md:hidden flex flex-col"
+            >
+              <div className="flex items-center justify-between p-4">
+                <Image width={80} height={80} src="/emons-logo.png" alt="Logo" className="w-auto h-6" />
+                <button 
+                  onClick={() => setIsOpen(false)} 
+                  className="text-white bg-white/5 rounded-full"
+                >
+                  <X size={28} />
+                </button>
+              </div>
+
+              <nav className="flex flex-col gap-4 bg-black border-t border-seGray p-4">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.label}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Link
+                      href={link.href}
+                      className={`text-base uppercase font-black ${
+                        pathname === link.href ? "text-seRed" : "text-white"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 };

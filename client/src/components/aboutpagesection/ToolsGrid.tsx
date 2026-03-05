@@ -1,12 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
 import { FiCpu } from "react-icons/fi";
-import { SiAdobephotoshop, SiAdobeillustrator, SiFigma, SiBlender } from "react-icons/si";
+import { SiFigma, SiBlender } from "react-icons/si";
+import { TbBrandAdobeIllustrator, TbBrandAdobePhotoshop } from "react-icons/tb";
 
 const tools = [
   // Swapped hardcoded hover colors for your theme-aware seRed and seBlue
-  { icon: <SiAdobeillustrator />, name: "Illustrator", level: "98%", color: "group-hover:text-seRed" },
-  { icon: <SiAdobephotoshop />, name: "Photoshop", level: "90%", color: "group-hover:text-seBlue" },
+  { icon: <TbBrandAdobeIllustrator />, name: "Illustrator", level: "98%", color: "group-hover:text-seRed" },
+  { icon: <TbBrandAdobePhotoshop />, name: "Photoshop", level: "90%", color: "group-hover:text-seBlue" },
   { icon: <SiFigma />, name: "Figma", level: "85%", color: "group-hover:text-accent" },
   { icon: <SiBlender />, name: "Blender", level: "70%", color: "group-hover:text-seRed" },
 ];
@@ -35,13 +36,13 @@ export default function ToolsGrid() {
 
             {/* 4. Updated Progress Bar Background (using foreground/10 for adaptive contrast) */}
             <div className="w-full h-0.5 bg-foreground/10 mt-4 overflow-hidden">
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: tool.level }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.5, ease: "circOut" }}
                 // 5. Updated gradient to use your accent and seRed variables
-                className="h-full bg-linear-to-r from-accent to-seRed" 
+                className="h-full bg-linear-to-r from-accent to-seRed"
               />
             </div>
 

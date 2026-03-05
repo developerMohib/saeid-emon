@@ -39,7 +39,7 @@ const Works2card = () => {
     return (
         <section className="relative py-12 sm:py-24 bg-background overflow-visible transition-colors duration-500">
             {/* Seamless Glow - Uses theme accent */}
-            <div className="absolute top-[-10%] right-[-5%] w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-accent/10 blur-[100px] sm:blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
+            <div className="absolute top-[-10%] right-[-5%] w-75 sm:w-125 h-75 sm:h-125 bg-accent/10 blur-[100px] sm:blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
 
             <div className="relative z-10 container mx-auto px-6 lg:px-8">
 
