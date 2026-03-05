@@ -53,7 +53,7 @@ const Author = () => {
 
     if (isPending || isLoading) return <Loader />;
     if (isError) return <p>Error: {error?.message}</p>;
-    console.log('data', data)
+
     const newdata = data[0];
 
     // Handle file selection

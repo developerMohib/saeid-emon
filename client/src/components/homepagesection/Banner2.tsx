@@ -1,8 +1,6 @@
 "use client";
 
-import React from 'react';
 import { motion, Variants } from 'framer-motion';
-import { EmblaOptionsType } from 'embla-carousel';
 import Link from 'next/link';
 import EmblaCarousel from '../EmblaCarousel';
 
