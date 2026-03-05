@@ -7,8 +7,8 @@ import { PenLine } from "lucide-react";
 import Link from "next/link";
 import { IResume } from "@/types/resumeTypes";
 import useCheckAuth from "@/hooks/useCheckAuth";
-import Loader from "@/components/Loader";
 import { useAuthUser } from "@/hooks/useAuthUser";
+import Loader from "@/components/Loader";
 
 const ResumePage = () => {
   const { data: author, refetch } = useAuthUser();
@@ -26,7 +26,7 @@ const ResumePage = () => {
 
   return (
     <main>
-      <div className="max-w-6xl mx-auto pb-5 md:pb-20 px-4 sm:px-6 lg:px-10">
+      <div className=" mx-auto pb-5 md:pb-20 px-4 sm:px-6 lg:px-10">
         {/* Top buttons */}
         <div className="py-6 sm:py-10 gap-4 text-right">
           <button onClick={() => window.print()} className="text-seBlack px-4 py-2 rounded-full border border-seGray/30 shadow-sm hover:bg-seGray/10 transition-colors cursor-pointer w-full sm:w-auto">

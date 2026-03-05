@@ -1,19 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import ReactQueryProvider from "../provider/ReactQueryProvider";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
+import { Saira } from "next/font/google";
+import { Suspense } from "react";
+import MyPreLoader from "./loading";
+import CustomCursor from "@/animations/CustomCursor";
+import ParticlesBg from "@/animations/ParticlesBg";
 
-const roboto = Roboto_Mono({
-  variable: "--font-roboto-mono",
-  subsets: ["latin"],
-  display: "swap"
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const saira = Saira({
+  variable: "--font-saira",
   subsets: ["latin"],
   display: "swap"
 });
@@ -87,35 +85,42 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
-      <body
-        className={`${roboto.variable} ${geistMono.variable} antialiased`}
-      >
-        <main className="container mx-auto p-0 m-0">
-          <ReactQueryProvider>
-            <Navbar />
-            {children}
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "Person",
-                  name: "Saeid Emon",
-                  jobTitle: "Professional Graphics Designer",
-                  url: "https://www.saeidemon.com",
-                  sameAs: [
-                    "https://www.facebook.com/saeid.emon29",
-                    "https://www.freelancer.com/u/saeidemon",
-                    "https://www.fiverr.com/saeidemon",
-                  ],
-                }),
-              }}
-            />
-            <Toaster />
-            <Footer />
-          </ReactQueryProvider>
-        </main>
+    <html lang="en" data-theme="dark">
+      <body className={`${saira.variable} antialiased`}>
+        <ReactQueryProvider>
+          {/* 1. Global Navigation (outside main) */}
+          <Navbar />
+
+          {/* 2. Page Content */}
+          <main className="relative overflow-hidden min-h-screen z-10 bg-background">
+            <Suspense fallback={<MyPreLoader />}>
+              <CustomCursor />
+              <ParticlesBg />
+
+              {children}
+            </Suspense>
+          </main>
+          <Footer />
+
+          <Toaster />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Person",
+                name: "Saeid Emon",
+                jobTitle: "Professional Graphics Designer",
+                url: "https://www.saeidemon.com",
+                sameAs: [
+                  "https://www.facebook.com/saeid.emon29",
+                  "https://www.freelancer.com/u/saeidemon",
+                  "https://www.fiverr.com/saeidemon",
+                ],
+              }),
+            }}
+          />
+        </ReactQueryProvider>
       </body>
     </html>
   );

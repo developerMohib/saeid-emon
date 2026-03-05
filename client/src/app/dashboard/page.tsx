@@ -13,9 +13,9 @@ import { ICard } from "@/types/workCardTypes";
 import { MapPinCheck, School } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dialog } from "@headlessui/react";
-import Loader from "@/components/Loader";
 import Swal from "sweetalert2";
 import useManageDashboard from "@/hooks/useManageDashboard";
+import Loader from "@/components/Loader";
 
 const Dashboard = () => {
   const { isPending: userPending, data: user } = useAuthUser();
@@ -116,6 +116,7 @@ const Dashboard = () => {
   };
 
   if (isPending || loading || userPending) return <Loader />;
+
   if (isError || error) return <p>Error: {(error as Error).message}</p>;
   if (!projects || projects.length === 0) return <p className="text-center py-4">No design found.</p>;
 

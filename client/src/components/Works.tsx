@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Plus, Loader2 } from "lucide-react";
 import type { Metadata } from "next";
-import Loader from "./Loader";
 import useProducts from "@/hooks/useProducts";
 import useCheckAuth from "@/hooks/useCheckAuth";
+import Loader from "./Loader";
 
 export const metadata: Metadata = {
   title: "Contact | Work with Saeid Emon",

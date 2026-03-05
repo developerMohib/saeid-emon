@@ -1,5 +1,6 @@
-import Aboutme from "./Aboutme";
+
 import Author from "./Author";
+import Aboutme from "./homepagesection/Aboutme";
 import Tabs from "./Tab";
 
 const Homepage = () => {

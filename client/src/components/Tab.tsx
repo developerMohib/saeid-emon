@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import Works from "./Works";
 import Services from "./Services";
-import Aboutme from "./Aboutme";
 import { TabConfig, TabsProps } from "@/types/tabsInfoTypes";
+import Aboutme from "./homepagesection/Aboutme";
 
 const Tabs = ({ tabsConfig, defaultTab = 1 }: TabsProps) => {
   const [openTab, setOpenTab] = useState<number>(defaultTab);

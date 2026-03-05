@@ -12,8 +12,8 @@ import { ChevronDown } from "lucide-react";
 
 import type { Metadata } from "next";
 import { faqData } from "@/data/workCard";
-import Loader from "./Loader";
 import useGetBrand from "@/hooks/useBrandingApi";
+import Loader from "./Loader";
 
 export const metadata: Metadata = {
   title: "Services | Logo, Branding & Print Design by Saeid Emon",
