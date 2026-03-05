@@ -82,7 +82,7 @@ export const forgetPassword = async (req: Request, res: Response) => {
     };
 
     // Send email
-    const emailResult = await transporter.sendMail(mailOptions);
+   await transporter.sendMail(mailOptions);
 
     // Response
     return res.status(200).json({
