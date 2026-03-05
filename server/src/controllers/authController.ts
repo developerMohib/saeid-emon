@@ -23,7 +23,6 @@ export const forgetPassword = async (req: Request, res: Response) => {
     // Check if user exists
     const user = await User.isUserExistsByEmail(email);
     if (!user) {
-      console.log("User not found for email:", email);
       return res.status(404).json({ 
         success: false,
         message: "User not found!" 
@@ -46,8 +45,6 @@ export const forgetPassword = async (req: Request, res: Response) => {
       throw new Error("Email credentials not configured");
     }
 
-    console.log("Email config - User:", process.env.EMAIL_USER);
-
     // Setup nodemailer transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",port: 587,
@@ -59,7 +56,6 @@ export const forgetPassword = async (req: Request, res: Response) => {
 
     // Verify transporter configuration
     await transporter.verify();
-    console.log("Email transporter verified successfully");
 
     // Email options
     const mailOptions = {
@@ -86,9 +82,7 @@ export const forgetPassword = async (req: Request, res: Response) => {
     };
 
     // Send email
-    console.log("Attempting to send email...");
     const emailResult = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully:", emailResult.messageId);
 
     // Response
     return res.status(200).json({
