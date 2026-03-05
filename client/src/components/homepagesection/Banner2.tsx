@@ -1,13 +1,8 @@
 "use client";
 
 import { motion, Variants } from 'framer-motion';
-import { EmblaOptionsType } from 'embla-carousel';
 import Link from 'next/link';
 import EmblaCarousel from '../EmblaCarousel';
-
-const OPTIONS: EmblaOptionsType = { loop: true, duration: 30 };
-const SLIDE_COUNT = 5;
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
 const Banner2 = () => {
   const fadeInUp: Variants = {
@@ -18,10 +13,8 @@ const Banner2 = () => {
       transition: { delay: i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }
     })
   };
-
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 w-full transition-colors duration-500">
-     
       <div className="relative container mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:items-center">
 
@@ -59,7 +52,7 @@ const Banner2 = () => {
                 View Work
               </Link>
 
-              <Link href="#process" className="text-sm font-bold uppercase tracking-widest leading-6 text-seBlack group flex items-center gap-2">
+              <Link href="#process" className="text-sm font-bold uppercase tracking-widest leading-6 text-seBlack hover:text-seRed hover:border-b border-seRed group flex items-center gap-2">
                 The Process
                 <span className="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
               </Link>
@@ -73,7 +66,7 @@ const Banner2 = () => {
             className="relative w-full max-w-125 mx-auto lg:ml-auto"
           >
             <div className="rounded-3xl overflow-hidden border border-seGray/10 bg-seWhite shadow-2xl">
-              <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+              <EmblaCarousel />
             </div>
           </motion.aside>
 

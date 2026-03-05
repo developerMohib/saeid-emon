@@ -25,6 +25,7 @@ app.use(
   }),
 );
 
+
 // Cookie & Body Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,7 +38,6 @@ app.use("/api", router);
 app.use("/api/cards", router);
 app.use("/products", router);
 app.use("/auth", router);
-
 
 // ─── Health Check ────────────────────────────────────
 app.get("/health", (_req: Request, res: Response) => {
