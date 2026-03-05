@@ -1,7 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import { FiCpu } from "react-icons/fi";
+<<<<<<< HEAD
 import { SiFigma, SiBlender } from "react-icons/si";
+=======
+import {  SiFigma, SiBlender } from "react-icons/si";
+>>>>>>> 6b12e069c0e7f51e4eff9f7d739a2ec1236380c7
 import { TbBrandAdobeIllustrator, TbBrandAdobePhotoshop } from "react-icons/tb";
 
 const tools = [
