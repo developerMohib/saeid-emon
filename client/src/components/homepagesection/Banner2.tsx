@@ -1,10 +1,26 @@
 "use client";
 
 import { motion, Variants } from 'framer-motion';
-import Link from 'next/link';
 import EmblaCarousel from '../EmblaCarousel';
+import { PenLine } from 'lucide-react';
+import { useState } from 'react';
+import Editbannermodal from '../modals/Editbannermodal';
 
 const Banner2 = () => {
+  const isAuthenticated = true; // Replace with actual authentication logic
+  const [showModal, setShowModal] = useState(false);
+
+
+  const [bannerData, setBannerData] = useState({
+    badge: "Available for Freelance",
+    titleLine1: "Design That",
+    highlight: "Works Harder",
+    titleLine3: "Than Words.",
+    description:
+      "Distilling brand values into iconic marks and modern apparel through intentional, grid-based design.",
+  });
+
+
   const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
@@ -23,42 +39,47 @@ const Banner2 = () => {
               custom={0} initial="hidden" animate="visible" variants={fadeInUp}
               className="inline-block rounded-full border border-seGray/20 bg-seGray/5 px-3 py-1 text-xs font-bold tracking-widest uppercase text-accent mb-6"
             >
-              Available for Freelance
+              {bannerData.badge}
             </motion.span>
 
             <motion.h1
               custom={1} initial="hidden" animate="visible" variants={fadeInUp}
               className="text-4xl font-black tracking-tight text-seBlack sm:text-7xl leading-[1.1]"
             >
-              Design That <br />
+              {bannerData.titleLine1} <br />
               <span className="text-transparent bg-clip-text bg-linear-to-r from-accent via-seBlue to-seRed">
-                Works Harder
+                {bannerData.highlight}
               </span><br />
-              Than Works.
+              {bannerData.titleLine3}
             </motion.h1>
 
             <motion.p
               custom={2} initial="hidden" animate="visible" variants={fadeInUp}
               className="mt-6 text-lg leading-8 text-seGray max-w-md font-medium"
             >
-              Distilling brand values into iconic marks and modern apparel through intentional, grid-based design.
+              {bannerData.description}
             </motion.p>
-
-            <motion.nav
-              custom={3} initial="hidden" animate="visible" variants={fadeInUp}
-              className="mt-10 flex flex-wrap items-center gap-6"
-            >
-              <Link href="/all-designs" className="rounded-xl bg-seBlack px-8 py-4 text-sm font-bold text-seWhite transition-all hover:bg-seRed hover:scale-105 active:scale-95 shadow-lg">
-                View Work
-              </Link>
-
-              <Link href="#process" className="text-sm font-bold uppercase tracking-widest leading-6 text-seBlack hover:text-seRed hover:border-b border-seRed group flex items-center gap-2">
-                The Process
-                <span className="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
-              </Link>
-            </motion.nav>
           </header>
 
+          {isAuthenticated && (
+            <button
+              title="Edit Heading and Subheading"
+              onClick={() => setShowModal(true)}
+              className="absolute top-4 right-4 bg-seRed p-2 rounded-full shadow cursor-pointer text-white hover:bg-red-700 transition"
+              aria-label="Edit Banner"
+            >
+              <PenLine size={16} />
+            </button>
+          )}
+
+
+          {showModal && (
+            <Editbannermodal
+              initialData={bannerData}
+              onClose={() => setShowModal(false)}
+              onSave={(data) => setBannerData(data)}
+            />
+          )}
           <motion.aside
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
