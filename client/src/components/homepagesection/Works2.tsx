@@ -59,7 +59,7 @@ const Works2card = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="text-3xl sm:text-5xl font-black tracking-tight text-seBlack leading-[1.1]"
+                            className="text-4xl md:text-5xl font-black tracking-wide text-seBlack leading-[1.1]"
                         >
                             Crafting digital <br />
                             <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-seRed italic">

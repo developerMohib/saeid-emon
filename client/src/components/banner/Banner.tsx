@@ -1,10 +1,10 @@
 "use client";
 
 import { motion, Variants } from 'framer-motion';
-import EmblaCarousel from '../EmblaCarousel';
 import { PenLine } from 'lucide-react';
 import { useState } from 'react';
-import BannerModal from '../banner/BannerModal';
+import EmblaCarousel from '../EmblaCarousel';
+import BannerModal from './BannerModal';
 
 const Banner2 = () => {
   const isAuthenticated = true;

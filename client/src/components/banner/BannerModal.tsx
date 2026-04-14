@@ -15,7 +15,7 @@ interface Props {
   onSave: (data: BannerData) => void;
 }
 
-const EditBannerModal = ({ initialData, onClose, onSave }: Props) => {
+const BannerModal = ({ initialData, onClose, onSave }: Props) => {
   const [formData, setFormData] = useState<BannerData>(initialData);
 
   const handleChange = (key: keyof BannerData, value: string) => {
@@ -114,4 +114,4 @@ const EditBannerModal = ({ initialData, onClose, onSave }: Props) => {
   );
 };
 
-export default EditBannerModal;
+export default BannerModal;
