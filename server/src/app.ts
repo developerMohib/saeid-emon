@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cors from "cors";
 import router from "./routes/routes";
+import bannerRouter from "./routes/banner.route";
 
 const app: Application = express();
 
@@ -35,6 +36,7 @@ app.use(cookieParser());
 
 // ─── Routes ──────────────────────────────────────────
 app.use("/api", router);
+app.use("/api", bannerRouter);
 app.use("/api/cards", router);
 app.use("/products", router);
 app.use("/auth", router);

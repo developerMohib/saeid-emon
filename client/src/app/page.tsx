@@ -1,4 +1,5 @@
-import Banner from "@/components/Banner";
+
+import Banner from "@/components/banner/Banner";
 import Author2 from "@/components/homepagesection/Author2";
 import ContactSection from "@/components/homepagesection/Contact2";
 import FAQSection from "@/components/homepagesection/FaqSection";

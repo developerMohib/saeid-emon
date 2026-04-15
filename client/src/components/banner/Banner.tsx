@@ -6,7 +6,7 @@ import { useState } from 'react';
 import EmblaCarousel from '../EmblaCarousel';
 import BannerModal from './BannerModal';
 
-const Banner2 = () => {
+const Banner = () => {
   const isAuthenticated = true;
   const [showModal, setShowModal] = useState(false);
 
@@ -97,4 +97,4 @@ const Banner2 = () => {
   );
 };
 
-export default Banner2;
+export default Banner;
