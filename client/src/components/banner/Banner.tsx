@@ -5,6 +5,7 @@ import { PenLine } from 'lucide-react';
 import { useState } from 'react';
 import EmblaCarousel from '../EmblaCarousel';
 import BannerModal from './BannerModal';
+import BannerSkeleton from './BannerSkeleton';
 
 const Banner = () => {
   const isAuthenticated = true;
@@ -29,6 +30,9 @@ const Banner = () => {
       transition: { delay: i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }
     })
   };
+  if (!bannerData) {
+    return <BannerSkeleton />;
+  }
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 w-full transition-colors duration-500">
       <div className="relative container mx-auto px-6 lg:px-8">
