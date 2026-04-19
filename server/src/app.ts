@@ -36,7 +36,7 @@ app.use(cookieParser());
 
 // ─── Routes ──────────────────────────────────────────
 app.use("/api", router);
-app.use("/api", bannerRouter);
+app.use("/api/banner", bannerRouter);
 app.use("/api/cards", router);
 app.use("/products", router);
 app.use("/auth", router);

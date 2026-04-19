@@ -29,17 +29,30 @@ export const getBanner2 = async (req: Request, res: Response) => {
  */
 
 export const updateBanner2 = async (req: Request, res: Response) => {
-  try {
+try {
+    const {data} = req.body;
+    const updatedBanner = await Banner.findOneAndUpdate({}, data, {
+      new: true,
+      runValidators: true,
+    });
 
-    console.log("Received banner update data:");
-    
+    if (!updatedBanner) {
+      return res.status(404).json({
+        success: false,
+        message: "No banner found to update",
+      });
+    }
 
     res.status(200).json({
       success: true,
-      message: "Banner saved successfully",
-      data: " hello world",
+      message: "Banner updated successfully",
+      data: "updatedBanner",
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Save failed", error });
+    res.status(500).json({
+      success: false,
+      message: "Failed to update banner",
+      error,
+    });
   }
 };

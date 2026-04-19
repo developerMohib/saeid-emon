@@ -4,13 +4,17 @@ import { motion, Variants } from 'framer-motion';
 import { PenLine } from 'lucide-react';
 import { useState } from 'react';
 import EmblaCarousel from '../EmblaCarousel';
-import BannerModal from './BannerModal';
+import BannerModal from '../modals/BannerModal';
 import BannerSkeleton from './BannerSkeleton';
+import useBanner from '@/hooks/useBanner';
+import useCheckAuth from '@/hooks/useCheckAuth';
 
 const Banner = () => {
   const isAuthenticated = true;
   const [showModal, setShowModal] = useState(false);
-
+  const { isPending, isError, data, refetch } = useBanner()
+      const { loading: isLoading } = useCheckAuth();
+  console.log('banner ', isAuthenticated)
 
   const [bannerData, setBannerData] = useState({
     badge: "Available for Freelance",
@@ -30,9 +34,11 @@ const Banner = () => {
       transition: { delay: i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }
     })
   };
-  if (!bannerData) {
+  if (isPending || isLoading) {
     return <BannerSkeleton />;
   }
+
+
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 w-full transition-colors duration-500">
       <div className="relative container mx-auto px-6 lg:px-8">

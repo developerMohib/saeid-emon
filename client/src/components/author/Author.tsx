@@ -1,12 +1,58 @@
 "use client";
 
+import { useState } from "react";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import { FiArrowUpRight, FiCheckCircle, FiPenTool, FiInstagram, FiDribbble } from "react-icons/fi";
+import { PenLine } from "lucide-react";
+import BannerModal from "../modals/BannerModal";
 
-const Author2 = () => {
-    // Animation Variants
+export const metadata: Metadata = {
+    title: "About | Saeid Emon - Graphics Designer",
+    description: "Learn more about Saeid Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
+    openGraph: {
+        title: "About | Saeid Emon",
+        description: "Meet Saeid Emon, a creative professional graphics designer with years of experience in brand identity design.",
+        url: "https://www.saeidemon.com",
+        siteName: "Saeid Emon",
+        images: [
+            {
+                url: "/emons-logo.png",
+                width: 1200,
+                height: 630,
+                alt: "Saeid Emon - About Page",
+            },
+        ],
+        locale: "en_US",
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "About | Saeid Emon",
+        description: "Learn more about Saeid Emon — a professional graphics designer specializing in logo and brand identity design.",
+        images: ["/emons-logo.png"],
+        creator: "@saeidemon",
+    },
+};
+
+const Author = () => {
+    const isAuthenticated = true;
+    const [loading, setLoading] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
+    const [bannerData, setBannerData] = useState({
+        badge: "Available for Freelance",
+        titleLine1: "Design That",
+        highlight: "Works Harder",
+        titleLine3: "Than Words.",
+        description:
+            "Distilling brand values into iconic marks and modern apparel through intentional, grid-based design.",
+    });
+
+
+
     const fadeInUp: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: (i = 0) => ({
@@ -15,6 +61,8 @@ const Author2 = () => {
             transition: { delay: i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }
         })
     };
+
+
 
     return (
         <section className="relative py-24 overflow-hidden transition-colors duration-500 bg-background">
@@ -88,6 +136,30 @@ const Author2 = () => {
                                 <SocialLink href="https://dribbble.com" icon={<FiDribbble />} label="Fiverr" />
                             </nav>
                         </motion.footer>
+
+
+
+                        {isAuthenticated && (
+                            <button
+                                title="Edit Heading and Subheading"
+                                onClick={() => setShowModal(true)}
+                                className="absolute top-4 left-0 bg-seRed p-2 rounded-full shadow cursor-pointer text-white hover:bg-red-700 transition"
+                                aria-label="Edit Banner"
+                            >
+                                <PenLine size={16} />
+                            </button>
+                        )}
+
+
+                        {showModal && (
+                            <BannerModal
+                                initialData={bannerData}
+                                onClose={() => setShowModal(false)}
+                                onSave={(data) => setBannerData(data)}
+                            />
+                        )}
+
+
                     </article>
 
                     {/* Right: Visual Representation */}
@@ -96,11 +168,11 @@ const Author2 = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 1 }}
-                        className="relative w-full lg:w-1/3 max-w-[400px]"
+                        className="relative w-full lg:w-1/3 max-w-100"
                     >
                         <div className="relative overflow-hidden rounded-2xl group ">
-                           
-                            
+
+
                             <div className="w-full h-full flex items-center justify-center p-2">
                                 <Image
                                     src="https://res.cloudinary.com/dxcn3f9lu/image/upload/v1772104292/EMON_BANNERr_cge27q.png"
@@ -130,6 +202,8 @@ const Author2 = () => {
     );
 };
 
+export default Author;
+
 /* Helper Component for Social Links */
 const SocialLink = ({ href, icon, label }: { href: string, icon: React.ReactNode, label: string }) => (
     <Link
@@ -141,5 +215,3 @@ const SocialLink = ({ href, icon, label }: { href: string, icon: React.ReactNode
         {icon} {label}
     </Link>
 );
-
-export default Author2;

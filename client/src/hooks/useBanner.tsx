@@ -1,16 +1,16 @@
 "use client"
-import { useQuery } from "@tanstack/react-query";
-import instance from "./instance";
+import instance from './instance';
+import { useQuery } from '@tanstack/react-query';
 
-const useResume = () => {
+const useBanner = () => {
     const { isPending, isError, error, data, refetch } = useQuery({
-        queryKey: ["resume"],
+        queryKey: ["banner"],
         queryFn: async () => {
-            const res = await instance.get(`/api/resume`);
+            const res = await instance.get(`/api/banner/banner`);
             return res?.data?.data || null;
         },
     });
     return { isPending, isError, error, data, refetch };
 };
 
-export default useResume;
+export default useBanner;
