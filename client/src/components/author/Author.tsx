@@ -41,6 +41,11 @@ const Author = () => {
     const isAuthenticated = true;
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [inputfield, setInputfield] = useState(false)
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
+
+
 
     const [bannerData, setBannerData] = useState({
         badge: "Available for Freelance",
@@ -61,8 +66,20 @@ const Author = () => {
             transition: { delay: i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }
         })
     };
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
 
+        setSelectedImage(file);
 
+        const imageUrl = URL.createObjectURL(file);
+        setPreview(imageUrl);
+    };
+    const handleCancel = () => {
+        setInputfield(false);
+        setPreview(null);
+        setSelectedImage(null);
+    };
 
     return (
         <section className="relative py-24 overflow-hidden transition-colors duration-500 bg-background">
@@ -170,29 +187,125 @@ const Author = () => {
                         transition={{ duration: 1 }}
                         className="relative w-full lg:w-1/3 max-w-100"
                     >
-                        <div className="relative overflow-hidden rounded-2xl group ">
+                        <div className="relative overflow-hidden rounded-2xl group">
 
-
+                            {/* Main Image */}
                             <div className="w-full h-full flex items-center justify-center p-2">
                                 <Image
-                                    src="https://res.cloudinary.com/dxcn3f9lu/image/upload/v1772104292/EMON_BANNERr_cge27q.png"
-                                    alt="Saeid Emon"
+                                    src={
+                                        "https://res.cloudinary.com/dxcn3f9lu/image/upload/v1772104292/EMON_BANNERr_cge27q.png"
+                                    }
+                                    alt="Banner"
                                     width={450}
                                     height={450}
-                                    className="object-cover grayscale-0 group-hover:grayscale transition-all duration-700 rounded-lg"
+                                    className="object-cover transition-all duration-700 rounded-lg"
                                     priority
                                 />
                             </div>
 
-                            {/* Experience Badge - High contrast theme badge */}
+                            {/* Experience Badge */}
                             <div className="absolute bottom-4 left-6 z-20 bg-seBlack/80 backdrop-blur-md border border-seWhite/10 p-4 rounded-2xl">
                                 <p className="text-seWhite opacity-70 text-[10px] uppercase tracking-[0.2em]">
                                     Experience
                                 </p>
-                                <p className="text-2xl font-black text-seWhite">
-                                    08 Years
-                                </p>
+                                <p className="text-2xl font-black text-seWhite">08 Years</p>
                             </div>
+
+                            {/* Edit Button */}
+                            {isAuthenticated && (
+                                <button
+                                    title="Image change"
+                                    onClick={() => setInputfield(true)}
+                                    className="absolute top-4 right-4 bg-seRed p-2 rounded-full shadow cursor-pointer text-white hover:bg-red-700 transition"
+                                >
+                                    <PenLine size={16} />
+                                </button>
+                            )}
+
+                            {/* Upload Modal */}
+                            {inputfield && (
+                                <div className="absolute top-5 right-6 z-50">
+                                    <div className="max-w-md mx-auto p-6 bg-white dark:bg-gray-800 rounded-md shadow-lg">
+
+                                        <h2 className="text-xl font-semibold text-center mb-4 dark:text-white">
+                                            Upload Image
+                                        </h2>
+
+                                        {/* Upload Box */}
+                                        <div className="relative border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-md px-2 py-3 text-center">
+
+                                            <input
+                                                type="file"
+                                                className="hidden"
+                                                id="fileInput"
+                                                accept="image/*"
+                                                onChange={handleFileChange}
+                                            />
+
+                                            {!preview ? (
+                                                <>
+                                                    <svg
+                                                        className="mx-auto h-16 w-16 text-gray-400 mb-4"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M16 17l-4 4m0 0l-4-4m4 4V3"
+                                                        />
+                                                    </svg>
+
+                                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                        Drag & Drop or{" "}
+                                                        <label
+                                                            htmlFor="fileInput"
+                                                            className="cursor-pointer text-blue-500 hover:underline"
+                                                        >
+                                                            browse
+                                                        </label>
+                                                    </p>
+                                                </>
+                                            ) : (
+                                                <div className="relative">
+                                                    <Image
+                                                        src={preview}
+                                                        alt="Preview"
+                                                        width={400}
+                                                        height={200}
+                                                        className="w-full h-40 object-cover rounded-md"
+                                                    />
+
+                                                    <label
+                                                        htmlFor="fileInput"
+                                                        className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded cursor-pointer"
+                                                    >
+                                                        Change
+                                                    </label>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Buttons */}
+                                        <div className="flex gap-2 mt-4">
+                                            <button
+                                               onClick={handleCancel}
+                                                className="w-full bg-gray-400 hover:bg-gray-500 text-white py-2 rounded"
+                                            >
+                                                Cancel
+                                            </button>
+
+                                            <button
+                                                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
+                                            >
+                                                Upload
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </motion.aside>
 

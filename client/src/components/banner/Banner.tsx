@@ -10,10 +10,10 @@ import useBanner from '@/hooks/useBanner';
 import useCheckAuth from '@/hooks/useCheckAuth';
 
 const Banner = () => {
-  const isAuthenticated = true;
+  const isdevelopment = true;
   const [showModal, setShowModal] = useState(false);
   const { isPending, isError, data, refetch } = useBanner()
-      const { loading: isLoading } = useCheckAuth();
+      const {isAuthenticated, loading: isLoading } = useCheckAuth();
   console.log('banner ', isAuthenticated)
 
   const [bannerData, setBannerData] = useState({
@@ -25,7 +25,7 @@ const Banner = () => {
       "Distilling brand values into iconic marks and modern apparel through intentional, grid-based design.",
   });
 
-
+console.log('banner',data)
   const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
@@ -71,7 +71,7 @@ const Banner = () => {
             </motion.p>
           </header>
 
-          {isAuthenticated && (
+          {isdevelopment && (
             <button
               title="Edit Heading and Subheading"
               onClick={() => setShowModal(true)}

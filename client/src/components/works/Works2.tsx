@@ -1,14 +1,38 @@
 "use client";
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { FiArrowUpRight } from 'react-icons/fi';
 import useTopDesign from '@/hooks/useTopDesign';
 import Loader from '../Loader';
+import useCheckAuth from '@/hooks/useCheckAuth';
+import useProducts from '@/hooks/useProducts';
 
-const Works2card = () => {
+const Works = () => {
     const { data: latestDesign, isPending, error } = useTopDesign();
+    const {
+        data: cardsData,
+        error :userError,
+        isPending: userPending,
+        isError,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage
+    } = useProducts();
+
+    const { isAuthenticated, loading } = useCheckAuth();
+
+    if (isPending || loading) return <Loader />;
+
+    if (isError) {
+        return (
+            <div className="flex justify-center items-center min-h-64">
+                <p className="text-red-600 text-lg">
+                    An error has occurred: {error?.message || "Failed to load products"}
+                </p>
+            </div>
+        );
+    }
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -138,4 +162,4 @@ const Works2card = () => {
     );
 };
 
-export default Works2card;
+export default Works;
