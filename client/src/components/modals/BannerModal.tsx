@@ -2,11 +2,7 @@
 import { useState } from "react";
 
 interface BannerData {
-  badge: string;
-  titleLine1: string;
-  highlight: string;
-  titleLine3: string;
-  description: string;
+  badge: string, titleLine: string, highlight: string, subTitleLine: string, description: string,
 }
 
 interface Props {
@@ -26,7 +22,7 @@ const BannerModal = ({ initialData, onClose, onSave }: Props) => {
     onSave(formData);
     onClose();
   };
-console.log(formData)
+  console.log(formData)
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-5 transform transition-all duration-300 ease-out scale-95 animate-[fadeIn_0.3s_ease-out]">
@@ -49,8 +45,8 @@ console.log(formData)
             <label className="text-sm font-medium text-gray-700">Title</label>
             <input
               type="text"
-              value={formData.titleLine1}
-              onChange={(e) => handleChange("titleLine1", e.target.value)}
+              value={formData.titleLine}
+              onChange={(e) => handleChange("titleLine", e.target.value)}
               className="w-full mt-1 px-3 py-1.5 border rounded-md focus:ring-2 focus:ring-seRed focus:outline-none"
               maxLength={60}
             />
@@ -73,8 +69,8 @@ console.log(formData)
             <label className="text-sm font-medium text-gray-700">Heading</label>
             <input
               type="text"
-              value={formData.titleLine3}
-              onChange={(e) => handleChange("titleLine3", e.target.value)}
+              value={formData.subTitleLine}
+              onChange={(e) => handleChange("subTitleLine", e.target.value)}
               className="w-full mt-1 px-3 py-1.5 border rounded-md focus:ring-2 focus:ring-seRed focus:outline-none"
               maxLength={60}
             />

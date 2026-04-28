@@ -12,7 +12,7 @@ export const getBanner2 = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: "Banner data is retrieved successfully",
-      data : banners
+      data: banners,
     });
   } catch (error) {
     res.status(500).json({
@@ -29,24 +29,26 @@ export const getBanner2 = async (req: Request, res: Response) => {
  */
 
 export const updateBanner2 = async (req: Request, res: Response) => {
-try {
-    const {data} = req.body;
+  try {
+    const data = req.body;
+
     const updatedBanner = await Banner.findOneAndUpdate({}, data, {
       new: true,
       runValidators: true,
     });
 
     if (!updatedBanner) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: "No banner found to update",
       });
+       return
     }
 
     res.status(200).json({
       success: true,
       message: "Banner updated successfully",
-      data: "updatedBanner",
+      data: updatedBanner,
     });
   } catch (error) {
     res.status(500).json({

@@ -2,30 +2,54 @@
 
 import { motion, Variants } from 'framer-motion';
 import { PenLine } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EmblaCarousel from '../EmblaCarousel';
 import BannerModal from '../modals/BannerModal';
 import BannerSkeleton from './BannerSkeleton';
 import useBanner from '@/hooks/useBanner';
 import useCheckAuth from '@/hooks/useCheckAuth';
+import instance from '@/hooks/instance';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { IBannerData } from '@/types/banner.type';
 
 const Banner = () => {
   const isdevelopment = true;
   const [showModal, setShowModal] = useState(false);
-  const { isPending, isError, data, refetch } = useBanner()
-      const {isAuthenticated, loading: isLoading } = useCheckAuth();
-  console.log('banner ', isAuthenticated)
+  const { isPending, data } = useBanner()
+  const { isAuthenticated, loading: isLoading } = useCheckAuth();
+  const [loading, setLoading] = useState(false);
 
-  const [bannerData, setBannerData] = useState({
-    badge: "Available for Freelance",
-    titleLine1: "Design That",
-    highlight: "Works Harder",
-    titleLine3: "Than Words.",
-    description:
-      "Distilling brand values into iconic marks and modern apparel through intentional, grid-based design.",
-  });
 
-console.log('banner',data)
+  const [bannerData, setBannerData] = useState<IBannerData | null>(null)
+
+  useEffect(() => {
+    if (data && data[0]) {
+      setBannerData(data[0]);
+    }
+  }, [data]);
+
+
+  const handleSave = async (data: typeof bannerData) => {
+    try {
+      setLoading(true)
+      const res = await instance.put("/api/banner/update/banner", data);
+      if (res?.data?.success) {
+        toast.success(res.data.message)
+      }
+    } catch (err) {
+
+      if (axios.isAxiosError(err)) {
+        const message = err.response?.data?.message || "Request failed";
+        toast.error(message);
+      } else {
+        toast.error("Database Busy");
+      }
+    } finally { setLoading(false) }
+  };
+
+
+
   const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
@@ -34,7 +58,8 @@ console.log('banner',data)
       transition: { delay: i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }
     })
   };
-  if (isPending || isLoading) {
+
+  if (isPending || isLoading || !bannerData || loading) {
     return <BannerSkeleton />;
   }
 
@@ -56,11 +81,11 @@ console.log('banner',data)
               custom={1} initial="hidden" animate="visible" variants={fadeInUp}
               className="text-4xl font-black tracking-tight text-seBlack sm:text-7xl leading-[1.1]"
             >
-              {bannerData.titleLine1} <br />
+              {bannerData.titleLine} <br />
               <span className="text-transparent bg-clip-text bg-linear-to-r from-accent via-seBlue to-seRed">
                 {bannerData.highlight}
               </span><br />
-              {bannerData.titleLine3}
+              {bannerData.subTitleLine}
             </motion.h1>
 
             <motion.p
@@ -83,11 +108,11 @@ console.log('banner',data)
           )}
 
 
-          {showModal && (
+          {showModal && bannerData && (
             <BannerModal
               initialData={bannerData}
               onClose={() => setShowModal(false)}
-              onSave={(data) => setBannerData(data)}
+              onSave={handleSave}
             />
           )}
           <motion.aside

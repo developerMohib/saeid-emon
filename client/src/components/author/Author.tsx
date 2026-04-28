@@ -8,6 +8,7 @@ import { motion, Variants } from "framer-motion";
 import { FiArrowUpRight, FiCheckCircle, FiPenTool, FiInstagram, FiDribbble } from "react-icons/fi";
 import { PenLine } from "lucide-react";
 import BannerModal from "../modals/BannerModal";
+import useAuthor from "@/hooks/useAuthor";
 
 export const metadata: Metadata = {
     title: "About | Saeid Emon - Graphics Designer",
@@ -39,19 +40,19 @@ export const metadata: Metadata = {
 
 const Author = () => {
     const isAuthenticated = true;
-    const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [inputfield, setInputfield] = useState(false)
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
-
+  const { isPending, data } = useAuthor()
+console.log("Author data from hook:", data);
 
 
     const [bannerData, setBannerData] = useState({
-        badge: "Available for Freelance",
-        titleLine1: "Design That",
+        badge: "Availablew for Freelance",
+        titleLine: "Design That",
         highlight: "Works Harder",
-        titleLine3: "Than Words.",
+        subTitleLine: "Than Words.",
         description:
             "Distilling brand values into iconic marks and modern apparel through intentional, grid-based design.",
     });
@@ -291,7 +292,7 @@ const Author = () => {
                                         {/* Buttons */}
                                         <div className="flex gap-2 mt-4">
                                             <button
-                                               onClick={handleCancel}
+                                                onClick={handleCancel}
                                                 className="w-full bg-gray-400 hover:bg-gray-500 text-white py-2 rounded"
                                             >
                                                 Cancel
