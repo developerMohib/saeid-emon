@@ -13,33 +13,7 @@ import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import Loader from "./Loader";
 
-export const metadata: Metadata = {
-    title: "About | Saeid Emon - Graphics Designer",
-    description: "Learn more about Saeid Emon — a passionate graphics designer specializing in logo design, branding, and visual storytelling.",
-    openGraph: {
-        title: "About | Saeid Emon",
-        description: "Meet Saeid Emon, a creative professional graphics designer with years of experience in brand identity design.",
-        url: "https://www.saeidemon.com",
-        siteName: "Saeid Emon",
-        images: [
-            {
-                url: "/emons-logo.png",
-                width: 1200,
-                height: 630,
-                alt: "Saeid Emon - About Page",
-            },
-        ],
-        locale: "en_US",
-        type: "website",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "About | Saeid Emon",
-        description: "Learn more about Saeid Emon — a professional graphics designer specializing in logo and brand identity design.",
-        images: ["/emons-logo.png"],
-        creator: "@saeidemon",
-    },
-};
+
 
 
 const Author = () => {

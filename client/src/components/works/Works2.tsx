@@ -1,14 +1,38 @@
 "use client";
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { FiArrowUpRight } from 'react-icons/fi';
 import useTopDesign from '@/hooks/useTopDesign';
 import Loader from '../Loader';
+import useCheckAuth from '@/hooks/useCheckAuth';
+import useProducts from '@/hooks/useProducts';
 
-const Works2card = () => {
+const Works = () => {
     const { data: latestDesign, isPending, error } = useTopDesign();
+    const {
+        data: cardsData,
+        error :userError,
+        isPending: userPending,
+        isError,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage
+    } = useProducts();
+
+    const { isAuthenticated, loading } = useCheckAuth();
+
+    if (isPending || loading) return <Loader />;
+
+    if (isError) {
+        return (
+            <div className="flex justify-center items-center min-h-64">
+                <p className="text-red-600 text-lg">
+                    An error has occurred: {error?.message || "Failed to load products"}
+                </p>
+            </div>
+        );
+    }
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -59,7 +83,7 @@ const Works2card = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="text-3xl sm:text-5xl font-black tracking-tight text-seBlack leading-[1.1]"
+                            className="text-4xl md:text-5xl font-black tracking-wide text-seBlack leading-[1.1]"
                         >
                             Crafting digital <br />
                             <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-seRed italic">
@@ -138,4 +162,4 @@ const Works2card = () => {
     );
 };
 
-export default Works2card;
+export default Works;
