@@ -11,7 +11,7 @@ const HeroVisual = () => {
       transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       className="relative flex justify-center lg:justify-end"
     >
-      <div className="relative w-[300px] h-[300px] md:w-[420px] md:h-[420px]">
+      <div className="relative w-75 h-75 md:w-105 md:h-105">
 
         {/* Outer Architectural Ring */}
         <motion.div
