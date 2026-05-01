@@ -10,11 +10,11 @@ export interface IBanner extends Document {
 
 const BannerSchema = new Schema<IBanner>(
   {
-    badge: { type: String },
-    titleLine: { type: String },
-    highlight: { type: String },
-    subTitleLine: { type: String },
-    description: { type: String },
+    badge: { type: String ,default: "Welcome to Saeid Emon's Portfolio"},
+    titleLine: { type: String ,default: "Hi, I'm Saeid Emon"},
+    highlight: { type: String ,default: "a Full Stack Developer"},
+    subTitleLine: { type: String ,default: "I build exceptional digital experiences" },
+    description: { type: String ,default: "I am a passionate full-stack developer with experience in creating modern web applications." },
   },
   { timestamps: true },
 );

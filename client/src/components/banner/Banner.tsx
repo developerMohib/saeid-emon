@@ -14,9 +14,9 @@ import axios from 'axios';
 import { IBannerData } from '@/types/banner.type';
 
 const Banner = () => {
-  const isdevelopment = true;
+  // const isdevelopment = true;
   const [showModal, setShowModal] = useState(false);
-  const { isPending, data } = useBanner()
+  const { isPending, data,refetch } = useBanner()
   const { isAuthenticated, loading: isLoading } = useCheckAuth();
   const [loading, setLoading] = useState(false);
 
@@ -36,6 +36,7 @@ const Banner = () => {
       const res = await instance.put("/api/banner/update/banner", data);
       if (res?.data?.success) {
         toast.success(res.data.message)
+        refetch();
       }
     } catch (err) {
 
@@ -96,7 +97,7 @@ const Banner = () => {
             </motion.p>
           </header>
 
-          {isdevelopment && (
+          {isAuthenticated && (
             <button
               title="Edit Heading and Subheading"
               onClick={() => setShowModal(true)}
