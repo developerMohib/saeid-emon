@@ -36,13 +36,13 @@ export default function ToolsGrid() {
 
             {/* 4. Updated Progress Bar Background (using foreground/10 for adaptive contrast) */}
             <div className="w-full h-0.5 bg-foreground/10 mt-4 overflow-hidden">
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: tool.level }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.5, ease: "circOut" }}
                 // 5. Updated gradient to use your accent and seRed variables
-                className="h-full bg-linear-to-r from-accent to-seRed" 
+                className="h-full bg-linear-to-r from-accent to-seRed"
               />
             </div>
 

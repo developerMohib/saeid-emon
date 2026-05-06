@@ -9,7 +9,7 @@ const useTopDesign = () => {
         queryKey: ["topdesign"],
         queryFn: async (): Promise<ICard[]> => {
             const res = await instance.get(`/api/top/design`);
-            return res.data.data || [];
+            return res?.data?.data || [];
         }
     });
     return { data, isPending, error }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import useCheckAuth from "@/hooks/useCheckAuth";
@@ -42,8 +42,8 @@ const Navbar = () => {
       animate={{ y: 0, opacity: 1 }}
       className="backdrop-blur-md sticky top-0 z-50 w-full bg-black/90 border-b border-white/5"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16">
           
           {/* LOGO - Stays Left */}
           <div className="shrink-0">

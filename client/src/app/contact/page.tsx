@@ -46,7 +46,7 @@ const Contact: React.FC = () => {
     return (
         <section id="contact" className="relative py-24 sm:py-32 bg-background text-foreground transition-colors duration-300 overflow-hidden">
             {/* 1. Dynamic Background Accents */}
-            <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-accent/10 blur-[150px] rounded-full pointer-events-none opacity-50" />
+            <div className="absolute top-[-10%] left-[-10%] w-125 h-125 bg-accent/10 blur-[150px] rounded-full pointer-events-none opacity-50" />
             <div className="absolute bottom-[-5%] right-[-5%] bg-seBlue/10 blur-[130px] rounded-full pointer-events-none opacity-50" />
 
             <div className="relative z-10 container mx-auto px-6 lg:px-8">

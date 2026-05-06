@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cors from "cors";
 import router from "./routes/routes";
+import bannerRouter from "./routes/banner.route";
+import authorRouter from "./routes/author.route";
 
 const app: Application = express();
 
@@ -25,6 +27,7 @@ app.use(
   }),
 );
 
+
 // Cookie & Body Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,10 +37,11 @@ app.use(cookieParser());
 
 // ─── Routes ──────────────────────────────────────────
 app.use("/api", router);
+app.use("/api/banner", bannerRouter);
+app.use("/api/author", authorRouter);
 app.use("/api/cards", router);
 app.use("/products", router);
 app.use("/auth", router);
-
 
 // ─── Health Check ────────────────────────────────────
 app.get("/health", (_req: Request, res: Response) => {

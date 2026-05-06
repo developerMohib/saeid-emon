@@ -57,7 +57,7 @@ const Loader = () => {
                   <Image
                     src="/favicon.png"
                     alt="Saeid Emon Logo Full"
-                    fill
+                    fill sizes=""
                     className="object-contain drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
                   />
                 </motion.div>

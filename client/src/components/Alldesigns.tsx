@@ -50,8 +50,8 @@ const Alldesigns = () => {
     return (
         <main className="py-20 overflow-hidden relative bg-background text-foreground transition-colors duration-300">
             {/* 1. Dynamic Background Accents - Using your accent variable */}
-            <div className="absolute top-0 left-[-10%] w-[600px] h-[600px] bg-accent/10 blur-[180px] rounded-full pointer-events-none" aria-hidden="true" />
-            <div className="absolute bottom-0 right-[-10%] w-[500px] h-[500px] bg-seBlue/10 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
+            <div className="absolute top-0 left-[-10%] w-150 h-150 bg-accent/10 blur-[180px] rounded-full pointer-events-none" aria-hidden="true" />
+            <div className="absolute bottom-0 right-[-10%] w-125 h-125 bg-seBlue/10 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
