@@ -73,7 +73,7 @@ const SignIn = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-[350px] bg-seWhite rounded-2xl p-6 shadow-md text-center">
+      <div className="w-87.5 bg-seWhite rounded-2xl p-6 shadow-md text-center">
         <div className="w-20 h-20 bg-seRed/80 rounded-full mx-auto mb-6 flex justify-center items-center">
           <span className="text-4xl text-seWhite">&#9679;&#9679;&#9679;</span>
         </div>
