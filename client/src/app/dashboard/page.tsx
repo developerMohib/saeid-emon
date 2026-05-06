@@ -6,16 +6,13 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import instance from "@/hooks/instance";
-import { TbHttpDelete } from "react-icons/tb";
-import { FiEdit3 } from "react-icons/fi";
 
 import { ICard } from "@/types/workCardTypes";
-import { MapPinCheck, School } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Dialog } from "@headlessui/react";
 import Swal from "sweetalert2";
 import useManageDashboard from "@/hooks/useManageDashboard";
 import Loader from "@/components/Loader";
+import { Briefcase, Edit3, Eye, LogOut, MapPin, Menu, Plus, Trash2, X } from "lucide-react";
 
 const Dashboard = () => {
   const { isPending: userPending, data: user } = useAuthUser();
@@ -23,11 +20,21 @@ const Dashboard = () => {
   const { data:projects, isPending, isError, error, refetch } = useManageDashboard();
   const router = useRouter();
 
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editProduct, setEditProduct] = useState<ICard | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editCategory, setEditCategory] = useState("");
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterCategory, setFilterCategory] = useState("All");
+ 
+  const categories = ["All", ...new Set(projects?.map(p => p.category) || [])];
+  const filteredProjects = projects?.filter(p => {
+    const matchSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchCategory = filterCategory === "All" || p.category === filterCategory;
+    return matchSearch && matchCategory;
+  });
+ 
   const openEditModal = (prod: ICard) => {
     setEditProduct(prod);
     setEditTitle(prod.title ?? "");
@@ -123,152 +130,339 @@ const Dashboard = () => {
   const { avatar, name, proffession, location } = user[0];
 
   return (
-    <>
-      <div className="grid grid-cols-4 gap-4 container mx-auto py-6">
-        {/* LEFT SIDEBAR */}
-        <div className="col-span-1">
-          {/* Sidebar content */}
-          <div className="rounded-xl shadow-lg overflow-hidden bg-seWhite">
-            <div className="relative h-32 bg-seBlue/70">
+    <div className="">
+      {/* MOBILE SIDEBAR TOGGLE */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="fixed top-4 left-4 z-40 md:hidden p-2 rounded-lg bg-white shadow-lg hover:shadow-xl transition-shadow"
+      >
+        {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+ 
+      {/* OVERLAY FOR MOBILE */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+ 
+      {/* FIXED SIDEBAR */}
+      <aside
+        className={`fixed left-0 top-0 h-screen w-80 shadow-2xl z-40 transform transition-transform duration-300 overflow-y-auto
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        `}
+      >
+        {/* PROFILE SECTION */}
+        <div >
+          {/* linear Background */}
+          
+ 
+          {/* Avatar */}
+          <div className="relative px-6 pb-6">
+            <div className="top-0 left-6 shadow-xl">
               <Image
                 src={avatar}
                 alt={name}
                 width={96}
                 height={96}
-                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-seWhite"
+                className="w-24 h-24 rounded-full object-cover"
               />
             </div>
-
-            <div className="pt-16 pb-6 px-6 text-start">
-              <h1 className="text-2xl font-bold text-seSlack ml-1.5">{name}</h1>
-              <p className="text-seSlack flex items-center text-xs font-light">
-                <School className="mr-2 w-5" /> {proffession}
-              </p>
-              <p className="text-seSlack flex items-center text-xs font-light">
-                <MapPinCheck className="mr-2 w-5" /> {location}
-              </p>
-            </div>
-
-            <div className="px-6 mb-4">
-              <Link href="/create-project">
-                <button className="w-full bg-seRed text-white py-2 rounded-lg hover:bg-indigo-600 transition-colors cursor-pointer">
-                  Create Project
-                </button>
-              </Link>
-            </div>
-
-            <div className="bg-gray-50 px-6 py-4">
-              <button
-                onClick={handleLogout}
-                className="w-full bg-red-600 cursor-pointer text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
-              >
-                Logout
-              </button>
+ 
+            {/* User Info */}
+            <div className="pt-16 space-y-3">
+              <div>
+                <h1 className="text-2xl font-bold text-seBlack">{name}</h1>
+                <p className="text-sm font-medium text-indigo-600">Creator</p>
+              </div>
+ 
+              <div className="space-y-2 pt-2">
+                <div className="flex items-center gap-3 text-sm text-slate-800">
+                  <Briefcase size={16} className="text-indigo-600 shrink-0" />
+                  <span>{proffession}</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-slate-800">
+                  <MapPin size={16} className="text-indigo-600 shrink-0" />
+                  <span>{location}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* RIGHT CONTENT */}
-        <div className="col-span-3">
-          <table className="w-full divide-y divide-gray-200">
-            <thead className="">
-              <tr className="bg-gray-100 dark:bg-gray-800">
-                {["#", "Image", "Name", "Category", "Visit", "Action"].map((head) => (
-                  <th
-                    key={head}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider"
-                  >
-                    {head}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-
-            <tbody className="my-2">
-              {projects?.map((prod, i) => (
-                <tr key={prod._id}>
-                  <td className="px-6">{i + 1}</td>
-                  <td className="px-6">
-                    <Image
-                      src={prod.images[0]}
-                      alt={prod.title}
-                      width={100}
-                      height={100}
-                      className="w-24 h-24 object-cover rounded-lg"
-                    />
-                  </td>
-                  <td className="px-6">{prod.title}</td>
-                  <td className="px-6">{prod.category}</td>
-                  <td className="px-6">
-                    <Link
-                      href={`/design-details/${prod._id}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      View
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4 flex items-center">
-                    <button title="Edit"
-                      onClick={() => openEditModal(prod)}
-                      className="px-4 cursor-pointer py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                    >
-                      <FiEdit3 />
-                    </button>
-                    <button title="Delete"
-                      onClick={() => handleDelete(prod)}
-                      className="ml-2 cursor-pointer px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                    >
-                      <TbHttpDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+ 
+       
+ 
+        {/* ACTION BUTTONS */}
+        <div className="px-6 space-y-3">
+          <Link href="/create-project" className="block">
+            <button className="w-full group relative overflow-hidden bg-linear-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/30 active:scale-95">
+              <span className="flex items-center justify-center gap-2">
+                <Plus size={18} />
+                Create Project
+              </span>
+              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
+            </button>
+          </Link>
+ 
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-600 py-3 px-4 rounded-lg font-semibold transition-all border border-transparent hover:border-red-200"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
         </div>
-      </div>
-
+ 
+        {/* FOOTER STATS */}
+        <div className="bottom-0 left-0 right-0 px-6 py-4 bg-linear-to-t">
+          <div className="flex justify-around text-center">
+            <div>
+              <p className="text-2xl font-bold text-indigo-600">{projects?.length || 0}</p>
+              <p className="text-xs text-slate-500 font-medium">Projects</p>
+            </div>
+            <div className="h-8 w-px bg-slate-200" />
+            <div>
+              <p className="text-2xl font-bold text-indigo-600">{projects?.length || 0}</p>
+              <p className="text-xs text-slate-500 font-medium">Created</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+ 
+      {/* MAIN CONTENT */}
+      <main className="md:ml-80 pt-16 md:pt-6">
+        <div className="p-4 md:p-8">
+          {/* HEADER */}
+          <div className="mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-seBlack mb-2">My Projects</h2>
+            <p className="text-seBlack/70">Manage and showcase your creative work</p>
+          </div>
+ 
+          {/* SEARCH & FILTERS */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="md:col-span-2">
+              <input
+                type="text"
+                placeholder="Search projects..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-slate-200 text-seBlack placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all shadow-sm hover:shadow-md"
+              />
+            </div>
+            <div>
+              <select
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border bg-background border-slate-200 text-seBlack focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all shadow-sm hover:shadow-md cursor-pointer"
+              >
+                {categories.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+ 
+          {/* PROJECTS TABLE - DESKTOP */}
+          <div className="hidden md:block">
+            <div className="rounded-xl shadow-lg overflow-hidden border border-seGray ">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    {["#", "Image", "Name", "Category", "Action"].map((head) => (
+                      <th
+                        key={head}
+                        className="px-6 py-4 text-left text-base font-bold text-seBlack uppercase tracking-wider"
+                      >
+                        {head}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-seGray">
+                  {filteredProjects?.map((project, i) => (
+                    <tr key={project._id} className="hover:bg-seGray/10 transition-colors group">
+                      <td className="px-6 py-4 text-sm font-medium text-seBlack/90">{i + 1}</td>
+                      <td className="px-6 py-4">
+                        <div className="relative overflow-hidden rounded-lg w-16 h-16 shadow-md group-hover:shadow-lg transition-shadow">
+                          <Image
+                            src={project?.images[0] || '/placeholder.jpg'}
+                            alt={project.title}
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div>
+                          <p className="text-sm font-semibold text-seBlack/80">{project.title}</p>
+                          <p className="text-xs text-seBlack/70 mt-1">ID: {project._id}</p>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-700">
+                          {project.category}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-2">
+                          <Link href={`/design-details/${project._id}`}>
+                            <button className="p-2 text-indigo-600 rounded-lg transition-colors" title="View">
+                              <Eye size={18} />
+                            </button>
+                          </Link>
+                          <button
+                            onClick={() => openEditModal(project)}
+                            className="p-2 text-blue-600 rounded-lg transition-colors"
+                            title="Edit"
+                          >
+                            <Edit3 size={18} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(project)}
+                            className="p-2 text-red-600 rounded-lg transition-colors"
+                            title="Delete"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {filteredProjects?.length === 0 && (
+                <div className="px-6 py-12 text-center">
+                  <Briefcase size={48} className="mx-auto text-seWhite mb-4" />
+                  <p className="text-slate-600 font-medium">No projects found</p>
+                  <p className="text-sm text-slate-500">Create your first project to get started</p>
+                </div>
+              )}
+            </div>
+          </div>
+ 
+          {/* PROJECTS GRID - MOBILE */}
+          <div className="md:hidden grid grid-cols-1 gap-4">
+            {filteredProjects?.map((project) => (
+              <div
+                key={project._id}
+                className="rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-seGray"
+              >
+                <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+                  <Image
+                    src={project?.images[0] || '/placeholder.jpg'}
+                    alt={project.title}
+                    fill
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-bold text-seBlack mb-2">{project.title}</h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-700">
+                      {project.category}
+                    </span>
+                    <p className="text-xs text-slate-500">ID: {project._id?.slice(-6)}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Link href={`/design-details/${project._id}`} className="flex-1">
+                      <button className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium">
+                        <Eye size={16} />
+                        View
+                      </button>
+                    </Link>
+                    <button
+                      onClick={() => openEditModal(project)}
+                      className="flex-1 flex items-center justify-center gap-2 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+                    >
+                      <Edit3 size={16} />
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(project)}
+                      className="flex-1 flex items-center justify-center gap-2 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors text-sm font-medium"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {filteredProjects?.length === 0 && (
+              <div className="text-center py-12">
+                <Briefcase size={48} className="mx-auto text-slate-300 mb-4" />
+                <p className="text-slate-600 font-medium">No projects found</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+ 
       {/* EDIT MODAL */}
-      <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} className="relative z-50">
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="mx-auto max-w-md rounded bg-seWhite p-6">
-            <Dialog.Title className="text-lg font-bold mb-4">Edit Product</Dialog.Title>
-
-            <input
-              type="text"
-              value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
-              placeholder="Title"
-              className="w-full border p-2 mb-3 rounded"
-            />
-            <input
-              type="text"
-              value={editCategory}
-              onChange={(e) => setEditCategory(e.target.value)}
-              placeholder="Category"
-              className="w-full border p-2 mb-3 rounded"
-            />
-
-            <div className="flex justify-end gap-2">
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-in zoom-in-50 duration-300">
+            {/* MODAL HEADER */}
+            <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-4 flex items-center justify-between">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <Edit3 size={20} />
+                Edit Project
+              </h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 cursor-pointer bg-gray-300 rounded hover:bg-gray-400"
+                className="text-white hover:bg-white/20 p-1 rounded transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+ 
+            {/* MODAL CONTENT */}
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Project Title</label>
+                <input
+                  type="text"
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                  placeholder="Enter project title"
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                />
+              </div>
+ 
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Category</label>
+                <input
+                  type="text"
+                  value={editCategory}
+                  onChange={(e) => setEditCategory(e.target.value)}
+                  placeholder="Enter category"
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                />
+              </div>
+            </div>
+ 
+            {/* MODAL FOOTER */}
+            <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 rounded-b-2xl flex items-center justify-end gap-3">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-6 py-2 rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 font-medium transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleEditSubmit}
-                className="px-4 py-2 cursor-pointer bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="px-6 py-2 rounded-lg bg-linear-to-r from-blue-600 to-indigo-600 text-white hover:shadow-lg hover:shadow-blue-500/30 font-medium transition-all active:scale-95"
               >
-                Save
+                Save Changes
               </button>
             </div>
-          </Dialog.Panel>
+          </div>
         </div>
-      </Dialog>
-    </>
+      )}
+    </div>
   );
-};
+}
+
 
 export default Dashboard;
