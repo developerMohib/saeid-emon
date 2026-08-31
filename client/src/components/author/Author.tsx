@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
-import { FiArrowUpRight, FiCheckCircle, FiPenTool, FiInstagram, FiDribbble } from "react-icons/fi";
+import { FiArrowUpRight, FiCheckCircle, FiPenTool, FiDribbble } from "react-icons/fi";
 import { RiFiverrLine } from "react-icons/ri";
 import { PenLine } from "lucide-react";
 import BannerModal from "../modals/BannerModal";
@@ -41,7 +41,6 @@ export const metadata: Metadata = {
 };
 
 const Author = () => {
-    // const isAuthenticated = true;
     const [showModal, setShowModal] = useState(false);
     const [inputfield, setInputfield] = useState(false)
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
