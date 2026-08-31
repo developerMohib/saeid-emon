@@ -48,8 +48,8 @@ const Author = () => {
     const [preview, setPreview] = useState<string | null>(null);
     const { isPending, data: author } = useAuthor();
     const isAuthenticated = Array.isArray(author) && author.length > 0;
-    console.log(11, author);
-    console.log(22, isAuthenticated);
+    // console.log(11, author);
+    // console.log(22, isAuthenticated);
 
 
     const [bannerData, setBannerData] = useState({
