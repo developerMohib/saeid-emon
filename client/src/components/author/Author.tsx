@@ -6,9 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import { FiArrowUpRight, FiCheckCircle, FiPenTool, FiInstagram, FiDribbble } from "react-icons/fi";
+import { RiFiverrLine } from "react-icons/ri";
 import { PenLine } from "lucide-react";
 import BannerModal from "../modals/BannerModal";
 import useAuthor from "@/hooks/useAuthor";
+import { SiFreelancer } from "react-icons/si";
 
 export const metadata: Metadata = {
     title: "About | Saeid Emon - Graphics Designer",
@@ -54,7 +56,7 @@ const Author = () => {
         badge: "Available for Freelance",
         titleLine: "Design That",
         highlight: "Works Harder",
-        subTitleLine: "Than Words.",
+        subTitleLine: "Than Works.",
         description:
             "Distilling brand values into iconic marks and modern apparel through intentional, grid-based design.",
     });
@@ -167,23 +169,15 @@ const Author = () => {
                             </Link>
 
                             <nav className="flex items-center gap-6 border-l border-seGray/20 pl-0 sm:pl-8">
-                                <SocialLink href="https://instagram.com" icon={<FiInstagram />} label="Freelancer" />
-                                <SocialLink href="https://dribbble.com" icon={<FiDribbble />} label="Fiverr" />
+                                <SocialLink href="https://www.freelancer.com/u/saeidemon" icon={<SiFreelancer />} label="Freelancer" />
+                                <SocialLink href="https://dribbble.com" icon={<FiDribbble />} label="Dribbble" />
+                                <SocialLink href="https://www.fiverr.com/saeidemon" icon={<RiFiverrLine />} label="Fiverr" />
                             </nav>
                         </motion.footer>
 
 
 
-                        {isAuthenticated && (
-                            <button
-                                title="Edit Heading and Subheading"
-                                onClick={() => setShowModal(true)}
-                                className="absolute top-4 left-0 bg-seRed p-2 rounded-full shadow cursor-pointer text-white hover:bg-red-700 transition"
-                                aria-label="Edit Banner"
-                            >
-                                <PenLine size={16} />
-                            </button>
-                        )}
+                        
 
 
                         {showModal && (
@@ -343,7 +337,7 @@ const SocialLink = ({ href, icon, label }: { href: string, icon: React.ReactNode
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="flex items-center gap-2 text-seGray hover:text-seRed transition-colors text-xs tracking-widest uppercase font-bold"
+        className="flex items-center gap-2 text-seGray hover:text-seRed transition-colors text-sm tracking-widest uppercase font-bold"
     >
         {icon} {label}
     </Link>

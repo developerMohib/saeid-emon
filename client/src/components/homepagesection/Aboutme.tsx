@@ -4,7 +4,6 @@ import { useAuthUser } from '@/hooks/useAuthUser';
 import { ChevronRight, SquareArrowOutUpRight } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from "next";
-import React from 'react';
 import { motion, Variants } from 'framer-motion'; // 1. Import motion
 import Loader from '../Loader';
 

@@ -1,5 +1,4 @@
 "use client";
-import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { FiSend, FiMapPin, FiClock } from 'react-icons/fi';
 
@@ -17,8 +16,8 @@ const ContactSection = () => {
   return (
     <section className="relative py-12 sm:py-24 bg-background transition-colors duration-500 overflow-visible">
       {/* Background Glows - Linked to theme variables */}
-      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-accent/5 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
-      <div className="absolute bottom-[-5%] right-[-5%] w-[400px] h-[400px] bg-seBlue/5 blur-[130px] rounded-full pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-[-10%] left-[-10%] w-125 h-125 bg-accent/5 blur-[150px] rounded-full pointer-events-none" aria-hidden="true" />
+      <div className="absolute bottom-[-5%] right-[-5%] w-125 h-100 bg-seBlue/5 blur-[130px] rounded-full pointer-events-none" aria-hidden="true" />
 
       <div className="relative z-10 container mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:gap-x-16">
