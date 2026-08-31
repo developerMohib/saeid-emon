@@ -50,7 +50,7 @@ const Services2 = () => {
   return (
     <section id='process' className="relative py-16 sm:py-24 bg-background transition-colors duration-500 overflow-visible">
       {/* Dynamic Background Glow - Uses your accent color variable */}
-      <div className="absolute top-[30%] left-[-5%] w-[450px] h-[450px] bg-accent/10 blur-[140px] rounded-full pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-[30%] left-[-5%] w-112.5 h-112.5 bg-accent/10 blur-[140px] rounded-full pointer-events-none" aria-hidden="true" />
 
       <div className="relative z-10 container mx-auto px-6 lg:px-8">
         <header className="mb-16">
@@ -112,7 +112,7 @@ const Services2 = () => {
                   <h4 className="text-xl sm:text-2xl font-bold text-seBlack mb-3 tracking-tight">
                     {service.title}
                   </h4>
-                  <p className="text-sm text-seGray leading-relaxed max-w-[280px] font-medium">
+                  <p className="text-sm text-seGray leading-relaxed max-w-70 font-medium">
                     {service.desc}
                   </p>
                 </div>

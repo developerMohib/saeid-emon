@@ -49,7 +49,7 @@ const ForgetPassword: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen ">
-      <div className="w-[350px] rounded-2xl p-6 shadow-md text-center">
+      <div className="w-87.5 rounded-2xl p-6 shadow-md text-center">
         <h2 className="text-lg font-semibold mb-4">Forgot Password</h2>
 
         <form onSubmit={handleSubmit}>

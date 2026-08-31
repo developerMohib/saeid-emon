@@ -17,6 +17,7 @@ interface Config {
   salt: number | undefined;
   jwtSecret: string | undefined;
   JWT_EXPIRES_IN?: string | undefined;
+  BACKEND_URL?: string | undefined;
 }
 
 export const config: Config = {
@@ -25,6 +26,7 @@ export const config: Config = {
   salt: process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS, 10) : 10,
   jwtSecret: process.env.JWT_SECRET,
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+  BACKEND_URL: process.env.BACKEND_URL,
 };
 
 // ✅ Configure Cloudinary safely
