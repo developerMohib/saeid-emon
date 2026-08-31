@@ -41,6 +41,7 @@ export const metadata: Metadata = {
 };
 
 const Author = () => {
+    // const isAuthenticated = true;
     const [showModal, setShowModal] = useState(false);
     const [inputfield, setInputfield] = useState(false)
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
