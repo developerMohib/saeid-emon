@@ -41,16 +41,12 @@ export const metadata: Metadata = {
 };
 
 const Author = () => {
-    // const isAuthenticated = true;
     const [showModal, setShowModal] = useState(false);
     const [inputfield, setInputfield] = useState(false)
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const { isPending, data: author } = useAuthor();
     const isAuthenticated = Array.isArray(author) && author.length > 0;
-    // console.log(11, author);
-    // console.log(22, isAuthenticated);
-
 
     const [bannerData, setBannerData] = useState({
         badge: "Available for Freelance",
