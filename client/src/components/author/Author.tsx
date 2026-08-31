@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
-import { FiArrowUpRight, FiCheckCircle, FiPenTool, FiInstagram, FiDribbble } from "react-icons/fi";
+import { FiArrowUpRight, FiCheckCircle, FiPenTool, FiDribbble } from "react-icons/fi";
 import { RiFiverrLine } from "react-icons/ri";
 import { PenLine } from "lucide-react";
 import BannerModal from "../modals/BannerModal";
@@ -41,22 +41,25 @@ export const metadata: Metadata = {
 };
 
 const Author = () => {
-    const isAuthenticated = true;
+    // const isAuthenticated = true;
     const [showModal, setShowModal] = useState(false);
     const [inputfield, setInputfield] = useState(false)
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
+    const { isPending, data: author } = useAuthor();
+    const isAuthenticated = Array.isArray(author) && author.length > 0;
+    console.log(11, author);
+    console.log(22, isAuthenticated);
 
 
     const [bannerData, setBannerData] = useState({
-        badge: "Availablew for Freelance",
+        badge: "Available for Freelance",
         titleLine: "Design That",
         highlight: "Works Harder",
         subTitleLine: "Than Works.",
         description:
             "Distilling brand values into iconic marks and modern apparel through intentional, grid-based design.",
     });
-
 
 
     const fadeInUp: Variants = {
@@ -77,11 +80,27 @@ const Author = () => {
         setPreview(imageUrl);
     };
     const handleCancel = () => {
+        if (preview) {
+            URL.revokeObjectURL(preview);
+        }
+
         setInputfield(false);
         setPreview(null);
         setSelectedImage(null);
     };
+    const handleUpload = async () => {
+        if (!selectedImage) return;
 
+        try {
+            // upload image to backend/cloudinary
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    if (isPending) {
+        return <div>Loading...</div>;
+    }
     return (
         <section className="relative py-24 overflow-hidden transition-colors duration-500 bg-background">
             {/* Dynamic Background Glow - Uses your accent color */}
@@ -291,7 +310,9 @@ const Author = () => {
                                             </button>
 
                                             <button
-                                                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
+                                                onClick={handleUpload}
+                                                disabled={!selectedImage}
+                                                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded disabled:opacity-50"
                                             >
                                                 Upload
                                             </button>
