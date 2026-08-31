@@ -69,15 +69,7 @@ export default function useCheckAuth(): UseCheckAuthReturn {
       }
     } catch (err: unknown) {
       const error = err as AxiosError;
-      
-      console.error("Auth check failed:", {
-        name: error.name,
-        message: error.message,
-        code: error.code
-      });
-
       setIsAuthenticated(false);
-
       // Handle different error types
       if (error.code === 'NETWORK_ERROR' || error.code === 'ECONNABORTED') {
         // Network issue - retry after delay
